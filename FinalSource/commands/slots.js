@@ -262,7 +262,7 @@ function execute(commandData, discordUser) {
                                 case 3:
                                     _c.sent();
                                     if (!(betAmountOld_1 > guildMemberData_1.currency.wallet)) return [3 /*break*/, 5];
-                                    msgString3_1 = "__**Slot Results:**__\n[:x:] [:x:] [:x:]\n\n                [:x:] [:x:] [:x:]\n\n                [:x:] [:x:] [:x:]\n------\n__**Your Wager:**__ " + betAmountOld_1 + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName + "\n\n                __**Game Results:**__\n__**Payout:**__ NSF __**Result Type:**__ Non-Sufficient Funcds\n__**Your New Wallet Balance:**__ " + guildMemberData_1.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
+                                    msgString3_1 = "__**Slot Results:**__\n[:x:] [:x:] [:x:]\n\n                [:x:] [:x:] [:x:]\n\n                [:x:] [:x:] [:x:]\n------\n__**Your Wager:**__ " + betAmountOld_1 + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName + "\n\n                __**Game Results:**__\n__**Payout:**__ NSF __**Result Type:**__ Non-Sufficient Funds\n__**Your New Wallet Balance:**__ " + guildMemberData_1.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
                                     msgStrings_1.push(msgString3_1);
                                     msgEmbed_1 = new Discord.MessageEmbed()
                                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
