@@ -10,11 +10,11 @@ import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
 
-module HelperFunctions{
+module HelperFunctions {
     /**
      * Function for sending out a message, using the appropriate channel.
      */
-    export async function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message>{
+    export async function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message> {
         try{
             let returnMessage: Discord.Message;
             if (commandData.toTextChannel instanceof Discord.WebhookClient){

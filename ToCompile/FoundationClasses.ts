@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 
-module FoundationClasses{
+module FoundationClasses {
     /**
      * Class representing a single card from a standard Deck.
      */
