@@ -176,46 +176,28 @@ function execute(commandData, discordUser) {
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg_4 = new Discord.Message(commandData.guild.client, msg_4, commandData.fromTextChannel);
                     }
-                    setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var msgString1, msgEmbed;
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    msgString1 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + "] [:question:] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[8]] + "] [:question:] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[9]] + "] [:question:] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
-                                    msgStrings_1.push(msgString1);
-                                    msgEmbed = new Discord.MessageEmbed()
-                                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                                        .setColor([0, 0, 255])
-                                        .setDescription(msgStrings_1[1])
-                                        .setTimestamp(Date())
-                                        .setTitle('__**Slots Game:**__');
-                                    return [4 /*yield*/, msg_4.edit(msgEmbed)];
-                                case 1:
-                                    _a.sent();
-                                    return [2 /*return*/];
-                            }
-                        });
-                    }); }, 3000);
-                    setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var msgString2, msgEmbed;
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    msgString2 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + " [" + slotReel_1[reelIndices2_1[7]] + "] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[8]] + "] [" + slotReel_1[reelIndices2_1[8]] + "] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[9]] + "] [" + slotReel_1[reelIndices2_1[9]] + "] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
-                                    msgStrings_1.push(msgString2);
-                                    msgEmbed = new Discord.MessageEmbed()
-                                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                                        .setColor([0, 0, 255])
-                                        .setDescription(msgStrings_1[2])
-                                        .setTimestamp(Date())
-                                        .setTitle('__**Slots Game:**__');
-                                    return [4 /*yield*/, msg_4.edit(msgEmbed)];
-                                case 1:
-                                    _a.sent();
-                                    return [2 /*return*/];
-                            }
-                        });
-                    }); }, 6000);
+                    setTimeout(function () {
+                        var msgString1 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + "] [:question:] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[8]] + "] [:question:] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[9]] + "] [:question:] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
+                        msgStrings_1.push(msgString1);
+                        var msgEmbed = new Discord.MessageEmbed()
+                            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                            .setColor([0, 0, 255])
+                            .setDescription(msgStrings_1[1])
+                            .setTimestamp(Date())
+                            .setTitle('__**Slots Game:**__');
+                        msg_4.edit(msgEmbed);
+                    }, 3000);
+                    setTimeout(function () {
+                        var msgString2 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + " [" + slotReel_1[reelIndices2_1[7]] + "] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[8]] + "] [" + slotReel_1[reelIndices2_1[8]] + "] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[9]] + "] [" + slotReel_1[reelIndices2_1[9]] + "] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
+                        msgStrings_1.push(msgString2);
+                        var msgEmbed = new Discord.MessageEmbed()
+                            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                            .setColor([0, 0, 255])
+                            .setDescription(msgStrings_1[2])
+                            .setTimestamp(Date())
+                            .setTitle('__**Slots Game:**__');
+                        msg_4.edit(msgEmbed);
+                    }, 6000);
                     setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
                         var msgString3_1, msgEmbed_1, msgString3, msgEmbed;
                         var _a, _b;

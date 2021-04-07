@@ -134,7 +134,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
         }
 
-        setTimeout(async () => {
+        setTimeout(() => {
             const msgString1 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7] as number]}] [:question:] [:question:]\n
             [${slotReel[reelIndices1[8] as number]}] [:question:] [:question:]\n
             [${slotReel[reelIndices1[9] as number]}] [:question:] [:question:]\n\n__**Your Wager:**__ ${betAmountOld} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}`;
@@ -146,10 +146,10 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setDescription(msgStrings[1])
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Slots Game:**__');
-            await msg.edit(msgEmbed);
+            msg.edit(msgEmbed);
         }, 3000);
 
-        setTimeout(async () => {
+        setTimeout(() => {
             const msgString2 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7]!]} [${slotReel[reelIndices2[7]!]}] [:question:]\n
             [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [:question:]\n
             [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [:question:]\n\n__**Your Wager:**__ ${betAmountOld} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}`;
@@ -161,7 +161,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setDescription(msgStrings[2])
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Slots Game:**__');
-            await msg.edit(msgEmbed);
+            msg.edit(msgEmbed);
         }, 6000);
     
         setTimeout(async () => {
