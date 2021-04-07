@@ -52,7 +52,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
         }
     }
     async writeToDataBase(){
-        if (this.userName === ''){
+        if (this.userName === ''|| this.displayName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";
             error.message = "You've forgotten to initialize the GuildMemberData structure!";
