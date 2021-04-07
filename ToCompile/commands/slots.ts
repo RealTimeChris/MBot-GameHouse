@@ -200,16 +200,33 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await guildData.writeToDataBase();
 
             await guildMemberData.getFromDataBase();
+            if (betAmountOld > guildMemberData.currency.wallet){
+                const msgString3 = `__**Slot Results:**__\n[:x:] [:x:] [:x:]\n
+                [:x:] [:x:] [:x:]\n
+                [:x:] [:x:] [:x:]\n------\n__**Your Wager:**__ ${betAmountOld}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}\n
+                __**Game Results:**__\n__**Payout:**__ NSF __**Result Type:**__ Non-Sufficient Funcds\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
+
+                msgStrings.push(msgString3);
+                let msgEmbed = new Discord.MessageEmbed()
+                    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                    .setColor([255, 0, 0])
+                    .setDescription(msgString3)
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle('__**Slots Game:**__');
+                    await msg.edit(msgEmbed);
+                    return commandReturnData;
+            }
             guildMemberData.currency.wallet += payoutAmount;
+
             await guildMemberData.writeToDataBase();
-    
+
             const msgString3 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7]!]}] [${slotReel[reelIndices2[7]!]}] [${slotReel[reelIndices3[7]!]}]\n
-                [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [${slotReel[reelIndices3[8]!]}]\n
-                [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [${slotReel[reelIndices3[9]!]}]\n------\n__**Your Wager:**__ ${betAmountOld}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}\n
-                __**Game Results:**__\n__**Payout:**__ ${payoutAmount} ${discordUser.userData.currencyName} __**Result Type:**__ ${gameResultType}\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
-    
+            [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [${slotReel[reelIndices3[8]!]}]\n
+            [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [${slotReel[reelIndices3[9]!]}]\n------\n__**Your Wager:**__ ${betAmountOld}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}\n
+            __**Game Results:**__\n__**Payout:**__ ${payoutAmount} ${discordUser.userData.currencyName} __**Result Type:**__ ${gameResultType}\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
+
             msgStrings.push(msgString3);
-    
+
             let msgEmbed = new Discord.MessageEmbed();
             if (gameResultType === 'Loss'){
                 msgEmbed
@@ -227,11 +244,10 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Slots Game:**__');
             }
-            
-            await msg.edit(msgEmbed);
-        }, 9000);
-
-        return commandReturnData;
+                await msg.edit(msgEmbed);
+                return commandReturnData;
+            }, 9000);
+            return commandReturnData;
     }
     catch(error){
         return new Promise((resolve, reject) => {
