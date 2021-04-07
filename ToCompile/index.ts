@@ -64,6 +64,10 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 			commandData.args[0] = user;
 		}
 	}
+	if (name_full === 'botinfo'){
+		const name = 'gamehouse';
+		commandData.args[0] = name;
+	}
 	if (name_full === 'buy'){
 		const objectName = options_full[0].value;
 		commandData.args[0] = objectName;

@@ -131,6 +131,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         // Create Global Command
         await interaction.createApplicationCommand(blackjack).then(value => console.log(value)).catch(error => console.log(error.message));
 
+        const botinfo = {
+            "name": "botinfo",
+            "description": "Displays info about the current bot.",
+            "options":[]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(botinfo).then(error => console.log(error)).catch(error => console.log(error.message));
+
         const buy = {
             "name": "buy",
             "description": "Purchase an item from the server's shop.",
