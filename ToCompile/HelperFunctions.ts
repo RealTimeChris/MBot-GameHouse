@@ -12,7 +12,7 @@ import GuildData from './GuildData';
 
 module HelperFunctions{
     /**
-     * Functino for sending out a message, using the appropriate channel.
+     * Function for sending out a message, using the appropriate channel.
      */
     export async function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message>{
         try{
@@ -45,9 +45,7 @@ module HelperFunctions{
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
 
-            return new Promise((resolve, reject) => {
-                resolve(returnMessage);
-            });
+            return returnMessage!;
         }
         catch(error){
             return new Promise((resolve, reject) => {
@@ -128,9 +126,7 @@ module HelperFunctions{
                     await message.reactions.removeAll();
                 }
             });
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -174,13 +170,9 @@ module HelperFunctions{
                 }
                 msg.delete({timeout: 20000});
                 
-                return new Promise((resolve, reject) => {
-                    resolve(true);
-                });
+                return true;
             }
-            return new Promise((resolve, reject) => {
-                resolve(false);
-            });
+            return false;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -206,9 +198,7 @@ module HelperFunctions{
             discordUser.userData.botCommanders);
 
             if (areTheyAnAdmin === true || areTheyACommander === true) {
-                return new Promise((resolve, reject) => {
-                resolve(true);
-            });
+                return true;
             }
 
             const msgString = `------\n**Sorry, but you don't have the permissions required for that!**\n------`
@@ -224,9 +214,7 @@ module HelperFunctions{
                 msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout:20000});
-            return new Promise((resolve, reject) => {
-                resolve(false);
-            });
+            return false;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -267,14 +255,10 @@ module HelperFunctions{
                         msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout:20000});
-                    return new Promise((resolve, reject) => {
-                        resolve(isItFound);
-                    });
+                    return isItFound;
                 }
             }
-            return new Promise((resolve, reject) => {
-                resolve(isItFound);
-            });
+            return isItFound;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);

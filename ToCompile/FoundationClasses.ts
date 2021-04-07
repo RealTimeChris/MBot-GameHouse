@@ -236,6 +236,7 @@ module FoundationClasses{
                     this.toTextChannel = await this.guildMember.createDM(true);
                     this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
                 }
+                return;
             }
             catch(error){
                 return new Promise((resolve, reject) => {
