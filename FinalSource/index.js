@@ -1,4 +1,4 @@
-// index.ts - The main entry point for my Discord Bot!
+// Index.ts - The main entry point for my Discord Bot!
 // Jan 28, 2021
 // Chris M.
 // https://github.com/RealTimeChris
