@@ -228,7 +228,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	}	
 	const returnData = await botCommands.get(nameSolid)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
-})
+});
 
 client.once('ready', async () => {
 	try {
