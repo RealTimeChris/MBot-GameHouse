@@ -122,7 +122,7 @@ var GuildMemberData = /** @class */ (function (_super) {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        if (this.userName === '') {
+                        if (this.userName === '' || this.displayName === '') {
                             error = new Error();
                             error.name = "Non-Initialized Structure";
                             error.message = "You've forgotten to initialize the GuildMemberData structure!";

@@ -22,7 +22,7 @@ const command: FoundationClasses.BotCommand = {
  * Checks the value of a player's card and adjusts the value of it
  * and the other ace cards if necessary.
  */
-function checkAndSetAceValues(playerHand: FoundationClasses.Card[], playerAceIndices: number[]): void {
+function checkAndSetAceValues(playerHand: FoundationClasses.Card[], playerAceIndices: number[]) {
 	const newPlayerAceIndices = playerAceIndices;
 	if (playerHand[playerHand.length - 1]!.type === 'Ace') {
 		newPlayerAceIndices.length += 1;
@@ -50,7 +50,7 @@ function checkAndSetAceValues(playerHand: FoundationClasses.Card[], playerAceInd
 /**
  * Refreshes a blackjack stack of Cards.
  */
-function refreshBlackjackStack(cardStack: FoundationClasses.Card[]): void {
+function refreshBlackjackStack(cardStack: FoundationClasses.Card[]) {
 	const newCardStack = cardStack;
 	if (newCardStack.length === 0) {
 		newCardStack.length = 312;
@@ -66,7 +66,7 @@ function refreshBlackjackStack(cardStack: FoundationClasses.Card[]): void {
 /**
  * Draws the next card from a stack of blackjack cards.
  */
-function drawNextBlackjackCard(cardStack: FoundationClasses.Card[]): FoundationClasses.Card {
+function drawNextBlackjackCard(cardStack: FoundationClasses.Card[]) {
 	if (cardStack.length === 0) {
 		refreshBlackjackStack(cardStack);
 		const currentCard = cardStack[0];
@@ -122,6 +122,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 				}
 
 				newCardCount += 1;
+				await guildData.getFromDataBase();
 				userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
 				await guildData.writeToDataBase();
 
@@ -134,9 +135,10 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 
 				if (newUserHandScore > 21) {
 					const payAmount = betAmount * -1.0;
-					
+					await guildMemberData.getFromDataBase();
 					guildMemberData.currency.wallet += payAmount;
 					await guildMemberData.writeToDataBase();
+					await guildData.getFromDataBase();
 					if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 						guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 						guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -187,7 +189,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 						if (newDealerHandScore >= 17) {
 							break;
 						}
-
+						await guildData.getFromDataBase();
 						dealerHand.push(drawNextBlackjackCard(guildData.blackjackStack));
 						await guildData.writeToDataBase();
 
@@ -228,9 +230,10 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 						resolve(functionName);
 					} else {
 						const payAmount = betAmount;
-
+						await guildMemberData.getFromDataBase();
 						guildMemberData.currency.wallet += payAmount;
 						await guildMemberData.writeToDataBase();
+						await guildData.getFromDataBase();
 						if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 							guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 							guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -328,7 +331,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 					if (newDealerHandScore >= 17) {
 						break;
 					}
-
+					await guildData.getFromDataBase();
 					dealerHand.push(drawNextBlackjackCard(guildData.blackjackStack));
 					await guildData.writeToDataBase();
 
@@ -354,6 +357,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 						&& newUserHandScore > newDealerHandScore) || (newUserHandScore < 21
 						&& newDealerHandScore > 21)) {
 					const payAmount = betAmount;
+					await guildData.getFromDataBase();
 					if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 						guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 						guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -364,6 +368,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 					guildData.casinoStats.totalPayout += payAmount;
 					await guildData.writeToDataBase();
 					
+					await guildMemberData.getFromDataBase();
 					guildMemberData.currency.wallet += payAmount;
 					await guildMemberData.writeToDataBase();
 
@@ -402,9 +407,10 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 					resolve(functionName);
 				} else {
 					const payAmount = -1 * betAmount;
-					
+					await guildMemberData.getFromDataBase();
 					guildMemberData.currency.wallet += payAmount;
 					await guildMemberData.writeToDataBase();
+					await guildData.getFromDataBase();
 					if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 						guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 						guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -463,6 +469,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 				}
 
 				newCardCount += 1;
+				await guildData.getFromDataBase();
 				userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
 				await guildData.writeToDataBase();
 
@@ -481,7 +488,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 					if (newDealerHandScore >= 17) {
 						break;
 					}
-
+					await guildData.getFromDataBase();
 					dealerHand.push(drawNextBlackjackCard(guildData.blackjackStack));
 					await guildData.writeToDataBase();
 
@@ -510,6 +517,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 					
 					guildMemberData.currency.wallet += payAmount;
 					await guildMemberData.writeToDataBase();
+					await guildData.getFromDataBase();
 					if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 						guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 						guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -556,6 +564,7 @@ async function recurseThroughMessagePages(message: Discord.Message, betAmount: n
 					
 					guildMemberData.currency.wallet += payAmount;
 					await guildMemberData.writeToDataBase();
+					await guildData.getFromDataBase();
 					if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 						guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 						guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -680,6 +689,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		let footerMsgString = '';
 		footerMsgString = '------\n✅ to Hit, ❎ to Stand.\n------';
 
+		await guildData.getFromDataBase();
 		const userHand = [];
 		const userAceIndices: number[] = [];
 		userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
@@ -723,14 +733,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				finalMessageEmbed.fields = [{ name: `Dealer's Hand: (${newDealerHandScore})`, value: dealerHand[0]!.suit + dealerHand[0]!.type + dealerHand[1]!.suit + dealerHand[1]!.type, inline: true },
 					{ name: `Player's Hand: (${userHandScore})`, value: userHand[0]!.suit + userHand[0]!.type + userHand[1]!.suit + userHand[1]!.type, inline: true },
 					{ name: '__**Game Status: Tie**__', value: footerMsgString2, inline: false }];
-				await guildData.writeToDataBase();
 				await HelperFunctions.sendMessageWithCorrectChannel(commandData, finalMessageEmbed);
 				return commandReturnData;
 			}
-
+			await guildMemberData.getFromDataBase();
 			const payAmount = Math.trunc(1.5 * betAmount);
 			guildMemberData.currency.wallet += payAmount;
 			await guildMemberData.writeToDataBase();
+			await guildData.getFromDataBase();
 			if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
 				guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
 				guildData.casinoStats.largestBlackjackPayout.date = Date();

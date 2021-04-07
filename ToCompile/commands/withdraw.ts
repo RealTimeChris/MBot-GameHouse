@@ -81,7 +81,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		guildMemberData.currency.bank -= withdrawAmount;
 		await guildMemberData.writeToDataBase();
 
-		const msgString = `Congratulations! You've withdrawn ${withdrawAmount} ${discordUser.userData.currencyName} from your bank account to your wallet!!!!!!\n------\n__**Your new balances are:**__\n`
+		const msgString = `Congratulations! You've withdrawn ${withdrawAmount} ${discordUser.userData.currencyName} from your bank account to your wallet!\n------\n__**Your new balances are:**__\n`
 						+ `__Bank:__ ${guildMemberData.currency.bank} ${discordUser.userData.currencyName}\n`
 						+ `__Wallet:__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
 

@@ -131,7 +131,7 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
                 case 12:
                     _a.sent();
-                    msgString = "Congratulations! You've withdrawn " + withdrawAmount + " " + discordUser.userData.currencyName + " from your bank account to your wallet!!!!!!\n------\n__**Your new balances are:**__\n"
+                    msgString = "Congratulations! You've withdrawn " + withdrawAmount + " " + discordUser.userData.currencyName + " from your bank account to your wallet!\n------\n__**Your new balances are:**__\n"
                         + ("__Bank:__ " + guildMemberData.currency.bank + " " + discordUser.userData.currencyName + "\n")
                         + ("__Wallet:__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------");
                     messageEmbed = new Discord.MessageEmbed();

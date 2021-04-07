@@ -231,7 +231,7 @@ var FoundationClasses;
                         case 14:
                             _j.permsChannel = (_k.sent());
                             _k.label = 15;
-                        case 15: return [3 /*break*/, 17];
+                        case 15: return [2 /*return*/];
                         case 16:
                             error_1 = _k.sent();
                             return [2 /*return*/, new Promise(function (resolve, reject) {

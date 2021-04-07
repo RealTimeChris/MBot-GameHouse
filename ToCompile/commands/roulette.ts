@@ -49,7 +49,7 @@ const command: FoundationClasses.BotCommand = {
 /**
  * Takes an input number string and returns a string with the color value added to the front.
  */
-function getNumberString(inputString: string, redNumbers: string[], blackNumbers: string[]) {
+async function getNumberString(inputString: string, redNumbers: string[], blackNumbers: string[]) {
 	let returnString = '';
 	for (let x = 0; x < redNumbers.length; x += 1) {
 		if (redNumbers[x]!.includes(inputString)) {
@@ -73,29 +73,30 @@ function getNumberString(inputString: string, redNumbers: string[], blackNumbers
 	return returnString;
 }
 
-async function calculateResults(guildData: GuildData, finalRoll: string, commandData: FoundationClasses.CommandData, discordUser: DiscordUser,
-	redNumbers: string[], blackNumbers: string[]): Promise<void>{
+async function calculateResults(finalRoll: string, commandData: FoundationClasses.CommandData, discordUser: DiscordUser,
+	redNumbers: string[], blackNumbers: string[]) {
 	
 	let msgStringFinal: string = '';
-	const finalRollString = getNumberString(finalRoll.toString(), redNumbers, blackNumbers);
+	const finalRollString = await getNumberString(finalRoll.toString(), redNumbers, blackNumbers);
 	msgStringFinal += `------\n__**Final Roll:**__ ${finalRollString}\n------\n`;
-	for (let x = 0; x < guildData.rouletteGame.bets.length; x += 1){
-		console.log(guildData.rouletteGame.bets[x]);
+	const guildData = new GuildData({dataBase: discordUser.dataBase, name: commandData.guild!.name, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount});
+	await guildData.getFromDataBase();
+	for (let x = 0; x < guildData.rouletteGame.bets.length; x += 1) {
 		let isItAWinner = false;
 		const currentGuild = await commandData.guild?.client.guilds.fetch(commandData.guild.id);
-		const currentGuildMember = await currentGuild?.members.fetch(guildData.rouletteGame?.bets[x]?.userID!);
-		const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, displayName: currentGuildMember?.displayName!,  guildId: commandData.guild!.id, 
-			id: guildData.rouletteGame?.bets[x]?.userID!, userName: currentGuildMember?.user.username!, });
+		const currentGuildMember = await currentGuild?.members.fetch(guildData.rouletteGame.bets[x]!.userID);
+		const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, displayName: currentGuildMember!.displayName, guildId: commandData.guild!.id, 
+			id: guildData.rouletteGame.bets[x]!.userID, userName: currentGuildMember?.user.username!});
 		await guildMemberData.getFromDataBase();
 		msgStringFinal += `__**<@!${(guildMemberData.id)}>**__: `;
-		const betAmount = guildData.rouletteGame.bets[x]!.betAmount!;
-		let payoutAmount = guildData.rouletteGame.bets[x]!.payoutAmount!;
+		const betAmount = guildData.rouletteGame.bets[x]!.betAmount;
+		let payoutAmount = guildData.rouletteGame.bets[x]!.payoutAmount;
 		const winningNumbers = guildData.rouletteGame.bets[x]!.winningNumbers;
 			for (let x = 0; x < winningNumbers.length; x += 1) {
 				if (finalRoll === (37).toString()) {
 					finalRoll = '00';
 				}
-				if (getNumberString(finalRoll.toString(), redNumbers,
+				if (await getNumberString(finalRoll.toString(), redNumbers,
 					blackNumbers) === winningNumbers[x]?.toString()) {
 					isItAWinner = true;
 					break;
@@ -105,8 +106,14 @@ async function calculateResults(guildData: GuildData, finalRoll: string, command
 				payoutAmount = -betAmount;
 			}
 			if (betAmount > guildMemberData.currency.wallet){
-				msgStringFinal += `__**NSF:**__ Non-sufficient funds! __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
-				`${guildData.rouletteGame.bets[x]?.betType}, ${guildData.rouletteGame.bets[x]?.betOptions}\n`;
+				if (guildData.rouletteGame.bets[x]?.betOptions !== undefined){
+					msgStringFinal += `__**NSF:**__ Non-sufficient funds!  __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
+					`${guildData.rouletteGame.bets[x]?.betType}, ${guildData.rouletteGame.bets[x]?.betOptions}\n`;
+				}
+				else{
+					msgStringFinal += `__**NSF:**__ Non-sufficient funds! __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
+					`${guildData.rouletteGame.bets[x]?.betType}\n`;
+				}
 			}
 			else{
 				if (payoutAmount > guildData.casinoStats!.largestRoulettePayout.amount){
@@ -380,7 +387,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 							return commandReturnData;
 						}
 				
-						winningNumbers[0] = getNumberString(commandData.args[3], redNumbers, blackNumbers);
+						winningNumbers[0] = await getNumberString(commandData.args[3], redNumbers, blackNumbers);
 				
 						break;
 					case 'row':
@@ -423,8 +430,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 							return commandReturnData;
 						}
 				
-						winningNumbers[0] = getNumberString(commandData.args[3], redNumbers, blackNumbers);
-						winningNumbers[1] = getNumberString((parseInt(commandData.args[3], 10) + 1)
+						winningNumbers[0] = await getNumberString(commandData.args[3], redNumbers, blackNumbers);
+						winningNumbers[1] = await getNumberString((parseInt(commandData.args[3], 10) + 1)
 							.toString(), redNumbers, blackNumbers);
 				
 						break;
@@ -463,19 +470,19 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 							return commandReturnData;
 						}
 				
-						winningNumbers[0] = getNumberString(commandData.args[3], redNumbers, blackNumbers);
-						winningNumbers[1] = getNumberString((parseInt(commandData.args[3], 10) + 1)
+						winningNumbers[0] = await getNumberString(commandData.args[3], redNumbers, blackNumbers);
+						winningNumbers[1] = await getNumberString((parseInt(commandData.args[3], 10) + 1)
 							.toString(), redNumbers, blackNumbers);
-						winningNumbers[2] = getNumberString((parseInt(commandData.args[3], 10) + 2)
+						winningNumbers[2] = await getNumberString((parseInt(commandData.args[3], 10) + 2)
 							.toString(), redNumbers, blackNumbers);
 				
 						break;
 					case 'basket':
 						payoutAmount = betAmount * 6;
-						winningNumbers[0] = getNumberString('0', redNumbers, blackNumbers);
-						winningNumbers[1] = getNumberString('1', redNumbers, blackNumbers);
-						winningNumbers[2] = getNumberString('2', redNumbers, blackNumbers);
-						winningNumbers[3] = getNumberString('3', redNumbers, blackNumbers);
+						winningNumbers[0] = await getNumberString('0', redNumbers, blackNumbers);
+						winningNumbers[1] = await getNumberString('1', redNumbers, blackNumbers);
+						winningNumbers[2] = await getNumberString('2', redNumbers, blackNumbers);
+						winningNumbers[3] = await getNumberString('3', redNumbers, blackNumbers);
 						winningNumbers[4] = ':green_square:00';
 						break;
 					case 'sixline':
@@ -513,78 +520,78 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 							return commandReturnData;
 						}
 				
-						winningNumbers[0] = getNumberString(commandData.args[3], redNumbers, blackNumbers);
-						winningNumbers[1] = getNumberString((parseInt(commandData.args[3], 10) + 1)
+						winningNumbers[0] = await getNumberString(commandData.args[3], redNumbers, blackNumbers);
+						winningNumbers[1] = await getNumberString((parseInt(commandData.args[3], 10) + 1)
 							.toString(), redNumbers, blackNumbers);
-						winningNumbers[2] = getNumberString((parseInt(commandData.args[3], 10) + 2)
+						winningNumbers[2] = await getNumberString((parseInt(commandData.args[3], 10) + 2)
 							.toString(), redNumbers, blackNumbers);
-						winningNumbers[3] = getNumberString((parseInt(commandData.args[3], 10) + 3)
+						winningNumbers[3] = await getNumberString((parseInt(commandData.args[3], 10) + 3)
 							.toString(), redNumbers, blackNumbers);
-						winningNumbers[4] = getNumberString((parseInt(commandData.args[3], 10) + 4)
+						winningNumbers[4] = await getNumberString((parseInt(commandData.args[3], 10) + 4)
 							.toString(), redNumbers, blackNumbers);
-						winningNumbers[5] = getNumberString((parseInt(commandData.args[3], 10) + 5)
+						winningNumbers[5] = await getNumberString((parseInt(commandData.args[3], 10) + 5)
 							.toString(), redNumbers, blackNumbers);
 							
 						break;
 					case '1stcolumn':
 						payoutAmount = betAmount * 2;
-						winningNumbers = [getNumberString('1', redNumbers, blackNumbers), getNumberString('4', redNumbers, blackNumbers), getNumberString('7', redNumbers, blackNumbers), getNumberString('10', redNumbers, blackNumbers),
-							getNumberString('13', redNumbers, blackNumbers), getNumberString('16', redNumbers, blackNumbers), getNumberString('19', redNumbers, blackNumbers), getNumberString('22', redNumbers, blackNumbers),
-							getNumberString('25', redNumbers, blackNumbers), getNumberString('28', redNumbers, blackNumbers), getNumberString('31', redNumbers, blackNumbers), getNumberString('34', redNumbers, blackNumbers)];
+						winningNumbers = [await getNumberString('1', redNumbers, blackNumbers), await getNumberString('4', redNumbers, blackNumbers), await getNumberString('7', redNumbers, blackNumbers), await getNumberString('10', redNumbers, blackNumbers),
+							await getNumberString('13', redNumbers, blackNumbers), await getNumberString('16', redNumbers, blackNumbers), await getNumberString('19', redNumbers, blackNumbers), await getNumberString('22', redNumbers, blackNumbers),
+							await getNumberString('25', redNumbers, blackNumbers), await getNumberString('28', redNumbers, blackNumbers), await getNumberString('31', redNumbers, blackNumbers), await getNumberString('34', redNumbers, blackNumbers)];
 						break;
 					case '2ndcolumn':
 						payoutAmount = betAmount * 2;
-						winningNumbers = [getNumberString('2', redNumbers, blackNumbers), getNumberString('5', redNumbers, blackNumbers), getNumberString('8', redNumbers, blackNumbers), getNumberString('11', redNumbers, blackNumbers),
-							getNumberString('14', redNumbers, blackNumbers), getNumberString('17', redNumbers, blackNumbers), getNumberString('20', redNumbers, blackNumbers), getNumberString('23', redNumbers, blackNumbers),
-							getNumberString('26', redNumbers, blackNumbers), getNumberString('29', redNumbers, blackNumbers), getNumberString('32', redNumbers, blackNumbers), getNumberString('35', redNumbers, blackNumbers)];
+						winningNumbers = [await getNumberString('2', redNumbers, blackNumbers), await getNumberString('5', redNumbers, blackNumbers), await getNumberString('8', redNumbers, blackNumbers), await getNumberString('11', redNumbers, blackNumbers),
+							await getNumberString('14', redNumbers, blackNumbers), await getNumberString('17', redNumbers, blackNumbers), await getNumberString('20', redNumbers, blackNumbers), await getNumberString('23', redNumbers, blackNumbers),
+							await getNumberString('26', redNumbers, blackNumbers), await getNumberString('29', redNumbers, blackNumbers), await getNumberString('32', redNumbers, blackNumbers), await getNumberString('35', redNumbers, blackNumbers)];
 						break;
 					case '3rdcolumn':
 						payoutAmount = betAmount * 2;
-						winningNumbers = [getNumberString('3', redNumbers, blackNumbers), getNumberString('6', redNumbers, blackNumbers), getNumberString('9', redNumbers, blackNumbers), getNumberString('12', redNumbers, blackNumbers),
-							getNumberString('15', redNumbers, blackNumbers), getNumberString('18', redNumbers, blackNumbers), getNumberString('21', redNumbers, blackNumbers), getNumberString('24', redNumbers, blackNumbers),
-							getNumberString('27', redNumbers, blackNumbers), getNumberString('30', redNumbers, blackNumbers), getNumberString('33', redNumbers, blackNumbers), getNumberString('36', redNumbers, blackNumbers)];
+						winningNumbers = [await getNumberString('3', redNumbers, blackNumbers), await getNumberString('6', redNumbers, blackNumbers), await getNumberString('9', redNumbers, blackNumbers), await getNumberString('12', redNumbers, blackNumbers),
+							await getNumberString('15', redNumbers, blackNumbers), await getNumberString('18', redNumbers, blackNumbers), await getNumberString('21', redNumbers, blackNumbers), await getNumberString('24', redNumbers, blackNumbers),
+							await getNumberString('27', redNumbers, blackNumbers), await getNumberString('30', redNumbers, blackNumbers), await getNumberString('33', redNumbers, blackNumbers), await getNumberString('36', redNumbers, blackNumbers)];
 						break;
 					case '1stdozen':
 						payoutAmount = betAmount * 2;
 						for (let x = 1; x <= 12; x += 1) {
-							winningNumbers[x - 1] = getNumberString(x.toString(), redNumbers, blackNumbers);
+							winningNumbers[x - 1] = await getNumberString(x.toString(), redNumbers, blackNumbers);
 						}
 						break;
 					case '2nddozen':
 						payoutAmount = betAmount * 2;
 						for (let x = 13; x <= 24; x += 1) {
-							winningNumbers[x - 13] = getNumberString(x.toString(), redNumbers, blackNumbers);
+							winningNumbers[x - 13] = await getNumberString(x.toString(), redNumbers, blackNumbers);
 						}
 						break;
 					case '3rddozen':
 						payoutAmount = betAmount * 2;
 						for (let x = 25; x <= 36; x += 1) {
-							winningNumbers[x - 25] = getNumberString(x.toString(), redNumbers, blackNumbers);
+							winningNumbers[x - 25] = await getNumberString(x.toString(), redNumbers, blackNumbers);
 						}
 						break;
 					case 'odd':
 						payoutAmount = betAmount;
 						for (let x = 0; x < (36 / 2); x += 1) {
-							winningNumbers[x] = getNumberString(((x + 1) * 2 - 1)
+							winningNumbers[x] = await getNumberString(((x + 1) * 2 - 1)
 								.toString(), redNumbers, blackNumbers);
 						}
 						break;
 					case 'even':
 						payoutAmount = betAmount;
 						for (let x = 0; x < (36 / 2); x += 1) {
-							winningNumbers[x] = getNumberString(((x + 1) * 2).toString(), redNumbers, blackNumbers);
+							winningNumbers[x] = await getNumberString(((x + 1) * 2).toString(), redNumbers, blackNumbers);
 						}
 						break;
 					case '1to18':
 						payoutAmount = betAmount;
 						for (let x = 0; x < 18; x += 1) {
-							winningNumbers[x] = getNumberString((x + 1).toString(), redNumbers, blackNumbers);
+							winningNumbers[x] = await getNumberString((x + 1).toString(), redNumbers, blackNumbers);
 						}
 						break;
 					case '19to36':
 						payoutAmount = betAmount;
 						for (let x = 0; x < 18; x += 1) {
-							winningNumbers[x] = getNumberString((x + 19).toString(), redNumbers, blackNumbers);
+							winningNumbers[x] = await getNumberString((x + 19).toString(), redNumbers, blackNumbers);
 						}
 						break;
 					default:
@@ -620,7 +627,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				if (commandData.toTextChannel instanceof Discord.WebhookClient){
 					newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
 				}
-			
+
 				setTimeout(async () => {
 					const msgEmbed = new Discord.MessageEmbed();
 					msgEmbed
@@ -637,11 +644,11 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 							await newMessage.delete({timeout: 10000});
 						}, 10000);
 				}, 10000);
-
+				
 				setTimeout(async () => {
-					await guildData.getFromDataBase();
+					guildData.getFromDataBase();
 					let finalRoll = Math.trunc(Math.random() * 38).toString();
-					await calculateResults(guildData, finalRoll, commandData, discordUser, redNumbers, blackNumbers);
+					calculateResults(finalRoll, commandData, discordUser, redNumbers, blackNumbers);
 				}, 30000);
 			}
 	

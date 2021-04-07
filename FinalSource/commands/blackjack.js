@@ -136,7 +136,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                             }
                                         }
                                     }
-                                    if (!(reaction.emoji.name === '✅')) return [3 /*break*/, 21];
+                                    if (!(reaction.emoji.name === '✅')) return [3 /*break*/, 27];
                                     return [4 /*yield*/, guildMemberData.getFromDataBase()];
                                 case 1:
                                     _a.sent();
@@ -160,20 +160,29 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     return [2 /*return*/];
                                 case 3:
                                     newCardCount += 1;
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 4:
+                                    _a.sent();
                                     userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 4:
+                                case 5:
                                     _a.sent();
                                     checkAndSetAceValues(userHand, userAceIndices);
                                     newUserHandScore = 0;
                                     for (x = 0; x < userHand.length; x += 1) {
                                         newUserHandScore += userHand[x].value;
                                     }
-                                    if (!(newUserHandScore > 21)) return [3 /*break*/, 8];
+                                    if (!(newUserHandScore > 21)) return [3 /*break*/, 11];
                                     payAmount = betAmount * -1.0;
+                                    return [4 /*yield*/, guildMemberData.getFromDataBase()];
+                                case 6:
+                                    _a.sent();
                                     guildMemberData.currency.wallet += payAmount;
                                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                                case 5:
+                                case 7:
+                                    _a.sent();
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 8:
                                     _a.sent();
                                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
@@ -184,7 +193,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                                     guildData.casinoStats.totalPayout;
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 6:
+                                case 9:
                                     _a.sent();
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
@@ -210,35 +219,38 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Player Bust**__', value: bustFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 7:
+                                case 10:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    return [3 /*break*/, 20];
-                                case 8:
-                                    if (!(newUserHandScore === 21)) return [3 /*break*/, 18];
-                                    _a.label = 9;
-                                case 9:
-                                    if (!(newDealerHandScore < 17)) return [3 /*break*/, 11];
+                                    return [3 /*break*/, 26];
+                                case 11:
+                                    if (!(newUserHandScore === 21)) return [3 /*break*/, 24];
+                                    _a.label = 12;
+                                case 12:
+                                    if (!(newDealerHandScore < 17)) return [3 /*break*/, 15];
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         newDealerHandScore += dealerHand[x].value;
                                     }
                                     if (newDealerHandScore >= 17) {
-                                        return [3 /*break*/, 11];
+                                        return [3 /*break*/, 15];
                                     }
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 13:
+                                    _a.sent();
                                     dealerHand.push(drawNextBlackjackCard(guildData.blackjackStack));
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 10:
+                                case 14:
                                     _a.sent();
                                     checkAndSetAceValues(dealerHand, dealerAceIndices);
-                                    return [3 /*break*/, 9];
-                                case 11:
+                                    return [3 /*break*/, 12];
+                                case 15:
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         newDealerHandScore += dealerHand[x].value;
                                     }
-                                    if (!(newDealerHandScore === 21)) return [3 /*break*/, 13];
+                                    if (!(newDealerHandScore === 21)) return [3 /*break*/, 17];
                                     dealerHandString = '';
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         dealerHandString += dealerHand[x].suit + dealerHand[x].type;
@@ -259,16 +271,22 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Tie**__', value: tieFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 12:
+                                case 16:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    return [3 /*break*/, 17];
-                                case 13:
+                                    return [3 /*break*/, 23];
+                                case 17:
                                     payAmount = betAmount;
+                                    return [4 /*yield*/, guildMemberData.getFromDataBase()];
+                                case 18:
+                                    _a.sent();
                                     guildMemberData.currency.wallet += payAmount;
                                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                                case 14:
+                                case 19:
+                                    _a.sent();
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 20:
                                     _a.sent();
                                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
@@ -279,7 +297,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                                     guildData.casinoStats.totalPayout = payAmount;
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 15:
+                                case 21:
                                     _a.sent();
                                     dealerHandString = '';
                                     for (x = 0; x < dealerHand.length; x += 1) {
@@ -301,14 +319,14 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Player Wins**__', value: winFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 16:
+                                case 22:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    _a.label = 17;
-                                case 17: return [3 /*break*/, 20];
-                                case 18:
-                                    if (!(newUserHandScore < 21)) return [3 /*break*/, 20];
+                                    _a.label = 23;
+                                case 23: return [3 /*break*/, 26];
+                                case 24:
+                                    if (!(newUserHandScore < 21)) return [3 /*break*/, 26];
                                     newDealerHandScore = dealerHand[0].value;
                                     dealerHandString = '';
                                     dealerHandString += dealerHand[0].suit + dealerHand[0].type;
@@ -328,18 +346,18 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: In Play**__', value: inPlayFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 19:
+                                case 25:
                                     _a.sent();
-                                    _a.label = 20;
-                                case 20: return [3 /*break*/, 55];
-                                case 21:
-                                    if (!(reaction.emoji.name === '❎')) return [3 /*break*/, 38];
+                                    _a.label = 26;
+                                case 26: return [3 /*break*/, 70];
+                                case 27:
+                                    if (!(reaction.emoji.name === '❎')) return [3 /*break*/, 49];
                                     return [4 /*yield*/, guildMemberData.getFromDataBase()];
-                                case 22:
+                                case 28:
                                     _a.sent();
                                     fineAmount = 0;
                                     fineAmount = 1 * betAmount;
-                                    if (!(fineAmount > guildMemberData.currency.wallet)) return [3 /*break*/, 24];
+                                    if (!(fineAmount > guildMemberData.currency.wallet)) return [3 /*break*/, 30];
                                     inPlayFooterString = '';
                                     inPlayFooterString = '------\n__***Sorry, but you have insufficient funds for placing that wager now!***__\n------';
                                     messageEmbed = new Discord.MessageEmbed()
@@ -350,33 +368,36 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description);
                                     messageEmbed.fields = [message.embeds[0].fields[0], message.embeds[0].fields[1], { name: '__**Game Status: Failed Wager**__', value: inPlayFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 23:
+                                case 29:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
                                     return [2 /*return*/];
-                                case 24:
+                                case 30:
                                     newUserHandScore = 0;
                                     for (x = 0; x < userHand.length; x += 1) {
                                         newUserHandScore += userHand[x].value;
                                     }
-                                    _a.label = 25;
-                                case 25:
-                                    if (!(newDealerHandScore < 17)) return [3 /*break*/, 27];
+                                    _a.label = 31;
+                                case 31:
+                                    if (!(newDealerHandScore < 17)) return [3 /*break*/, 34];
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         newDealerHandScore += dealerHand[x].value;
                                     }
                                     if (newDealerHandScore >= 17) {
-                                        return [3 /*break*/, 27];
+                                        return [3 /*break*/, 34];
                                     }
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 32:
+                                    _a.sent();
                                     dealerHand.push(drawNextBlackjackCard(guildData.blackjackStack));
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 26:
+                                case 33:
                                     _a.sent();
                                     checkAndSetAceValues(dealerHand, dealerAceIndices);
-                                    return [3 /*break*/, 25];
-                                case 27:
+                                    return [3 /*break*/, 31];
+                                case 34:
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         newDealerHandScore += dealerHand[x].value;
@@ -391,8 +412,11 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     }
                                     if (!((newUserHandScore === 21 && newDealerHandScore !== 21) || (newUserHandScore < 21
                                         && newUserHandScore > newDealerHandScore) || (newUserHandScore < 21
-                                        && newDealerHandScore > 21))) return [3 /*break*/, 31];
+                                        && newDealerHandScore > 21))) return [3 /*break*/, 40];
                                     payAmount = betAmount;
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 35:
+                                    _a.sent();
                                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
                                         guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -402,11 +426,14 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                                     guildData.casinoStats.totalPayout += payAmount;
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 28:
+                                case 36:
+                                    _a.sent();
+                                    return [4 /*yield*/, guildMemberData.getFromDataBase()];
+                                case 37:
                                     _a.sent();
                                     guildMemberData.currency.wallet += payAmount;
                                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                                case 29:
+                                case 38:
                                     _a.sent();
                                     winFooterString = '';
                                     winFooterString = "------\n__**Payout Amount:**__ " + payAmount + " " + discordUser.userData.currencyName + "\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
@@ -420,13 +447,13 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Player Wins**__', value: winFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 30:
+                                case 39:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    return [3 /*break*/, 37];
-                                case 31:
-                                    if (!(newUserHandScore === newDealerHandScore)) return [3 /*break*/, 33];
+                                    return [3 /*break*/, 48];
+                                case 40:
+                                    if (!(newUserHandScore === newDealerHandScore)) return [3 /*break*/, 42];
                                     tieFooterString = '';
                                     tieFooterString = "------\n__**Your Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
                                     messageEmbed = new Discord.MessageEmbed();
@@ -439,16 +466,22 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Tie**__', value: tieFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 32:
+                                case 41:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    return [3 /*break*/, 37];
-                                case 33:
+                                    return [3 /*break*/, 48];
+                                case 42:
                                     payAmount = -1 * betAmount;
+                                    return [4 /*yield*/, guildMemberData.getFromDataBase()];
+                                case 43:
+                                    _a.sent();
                                     guildMemberData.currency.wallet += payAmount;
                                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                                case 34:
+                                case 44:
+                                    _a.sent();
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 45:
                                     _a.sent();
                                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
@@ -459,7 +492,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                                     guildData.casinoStats.totalPayout += payAmount;
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 35:
+                                case 46:
                                     _a.sent();
                                     bustFooterString = '';
                                     bustFooterString = "------\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
@@ -473,16 +506,16 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true },
                                         { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Player Bust**__', value: bustFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 36:
+                                case 47:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    _a.label = 37;
-                                case 37: return [3 /*break*/, 55];
-                                case 38:
-                                    if (!(reaction.emoji.name === '⏬')) return [3 /*break*/, 55];
+                                    _a.label = 48;
+                                case 48: return [3 /*break*/, 70];
+                                case 49:
+                                    if (!(reaction.emoji.name === '⏬')) return [3 /*break*/, 70];
                                     fineAmount = 2 * betAmount;
-                                    if (!(fineAmount > guildMemberData.currency.wallet || !(message.embeds[0].fields[2].value.includes('⏬')) || newCardCount > 2)) return [3 /*break*/, 41];
+                                    if (!(fineAmount > guildMemberData.currency.wallet || !(message.embeds[0].fields[2].value.includes('⏬')) || newCardCount > 2)) return [3 /*break*/, 52];
                                     reactionsArray = message.reactions.cache.array();
                                     for (x = 0; x < reactionsArray.length; x += 1) {
                                         if (reactionsArray[x].emoji.name === '⏬') {
@@ -492,7 +525,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     }
                                     failedFooterString = '';
                                     return [4 /*yield*/, guildMemberData.getFromDataBase()];
-                                case 39:
+                                case 50:
                                     _a.sent();
                                     if (!(message.embeds[0].fields[2].value.includes('⏬')) || newCardCount > 2) {
                                         failedFooterString = '__***Sorry, but you do not have the option to double down!***__\n------\n✅ to Hit, ❎ to Stand.\n------';
@@ -508,37 +541,43 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setDescription(message.embeds[0].description);
                                     messageEmbed.fields = [message.embeds[0].fields[0], message.embeds[0].fields[1], { name: '__**Game Status: In Play**__', value: failedFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 40:
+                                case 51:
                                     _a.sent();
                                     return [2 /*return*/];
-                                case 41:
+                                case 52:
                                     newCardCount += 1;
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 53:
+                                    _a.sent();
                                     userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 42:
+                                case 54:
                                     _a.sent();
                                     checkAndSetAceValues(userHand, userAceIndices);
                                     newUserHandScore = 0;
                                     for (x = 0; x < userHand.length; x += 1) {
                                         newUserHandScore += userHand[x].value;
                                     }
-                                    _a.label = 43;
-                                case 43:
-                                    if (!(newDealerHandScore < 17)) return [3 /*break*/, 45];
+                                    _a.label = 55;
+                                case 55:
+                                    if (!(newDealerHandScore < 17)) return [3 /*break*/, 58];
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         newDealerHandScore += dealerHand[x].value;
                                     }
                                     if (newDealerHandScore >= 17) {
-                                        return [3 /*break*/, 45];
+                                        return [3 /*break*/, 58];
                                     }
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 56:
+                                    _a.sent();
                                     dealerHand.push(drawNextBlackjackCard(guildData.blackjackStack));
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 44:
+                                case 57:
                                     _a.sent();
                                     checkAndSetAceValues(dealerHand, dealerAceIndices);
-                                    return [3 /*break*/, 43];
-                                case 45:
+                                    return [3 /*break*/, 55];
+                                case 58:
                                     newDealerHandScore = 0;
                                     for (x = 0; x < dealerHand.length; x += 1) {
                                         newDealerHandScore += dealerHand[x].value;
@@ -553,11 +592,14 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     }
                                     if (!((newUserHandScore === 21 && newDealerHandScore !== 21)
                                         || (newUserHandScore < 21 && newUserHandScore > newDealerHandScore)
-                                        || (newUserHandScore < 21 && newDealerHandScore > 21))) return [3 /*break*/, 49];
+                                        || (newUserHandScore < 21 && newDealerHandScore > 21))) return [3 /*break*/, 63];
                                     payAmount = 2 * betAmount;
                                     guildMemberData.currency.wallet += payAmount;
                                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                                case 46:
+                                case 59:
+                                    _a.sent();
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 60:
                                     _a.sent();
                                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
@@ -568,7 +610,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                                     guildData.casinoStats.totalPayout += payAmount;
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 47:
+                                case 61:
                                     _a.sent();
                                     winFooterString = '';
                                     winFooterString = "------\n__**Payout Amount:**__ " + payAmount + " " + discordUser.userData.currencyName + "\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
@@ -581,13 +623,13 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setFooter("Cards Remaining: " + guildData.blackjackStack.length)
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true }, { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Player Wins**__', value: winFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 48:
+                                case 62:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    return [3 /*break*/, 55];
-                                case 49:
-                                    if (!(newUserHandScore === newDealerHandScore)) return [3 /*break*/, 51];
+                                    return [3 /*break*/, 70];
+                                case 63:
+                                    if (!(newUserHandScore === newDealerHandScore)) return [3 /*break*/, 65];
                                     tieFooterString = '';
                                     tieFooterString = "------\n__**Your Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
                                     messageEmbed = new Discord.MessageEmbed();
@@ -599,16 +641,19 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setFooter("Cards Remaining: " + guildData.blackjackStack.length)
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true }, { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Tie**__', value: tieFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 50:
+                                case 64:
                                     _a.sent();
                                     reactionCollector.stop('close');
                                     resolve(functionName);
-                                    return [3 /*break*/, 55];
-                                case 51:
+                                    return [3 /*break*/, 70];
+                                case 65:
                                     payAmount = -2 * betAmount;
                                     guildMemberData.currency.wallet += payAmount;
                                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                                case 52:
+                                case 66:
+                                    _a.sent();
+                                    return [4 /*yield*/, guildData.getFromDataBase()];
+                                case 67:
                                     _a.sent();
                                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
@@ -619,7 +664,7 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                                     guildData.casinoStats.totalPayout += payAmount;
                                     return [4 /*yield*/, guildData.writeToDataBase()];
-                                case 53:
+                                case 68:
                                     _a.sent();
                                     bustFooterString = '';
                                     bustFooterString = "------\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
@@ -632,11 +677,11 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
                                         .setFooter("Cards Remaining: " + guildData.blackjackStack.length)
                                         .setDescription(message.embeds[0].description).fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHandString, inline: true }, { name: "Player's Hand: (" + newUserHandScore + ")", value: userHandString, inline: true }, { name: '__**Game Status: Player Bust**__', value: bustFooterString, inline: false }];
                                     return [4 /*yield*/, message.edit(messageEmbed)];
-                                case 54:
+                                case 69:
                                     _a.sent();
                                     reactionCollector.stop('close');
-                                    _a.label = 55;
-                                case 55: return [2 /*return*/];
+                                    _a.label = 70;
+                                case 70: return [2 /*return*/];
                             }
                         });
                     }); });
@@ -688,7 +733,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    _c.trys.push([0, 25, , 26]);
+                    _c.trys.push([0, 27, , 28]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -762,6 +807,9 @@ function execute(commandData, discordUser) {
                     }
                     footerMsgString = '';
                     footerMsgString = '------\n✅ to Hit, ❎ to Stand.\n------';
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 11:
+                    _c.sent();
                     userHand = [];
                     userAceIndices = [];
                     userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
@@ -777,12 +825,12 @@ function execute(commandData, discordUser) {
                     checkAndSetAceValues(dealerHand, dealerAceIndices);
                     newDealerHandScore = dealerHand[0].value;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 11:
+                case 12:
                     _c.sent();
                     if ((userHandScore === 9) || (userHandScore === 10) || (userHandScore === 11)) {
                         footerMsgString = footerMsgString.slice(0, footerMsgString.length - 8) + ", \u23EC to Double Down.\n------";
                     }
-                    if (!(userHandScore === 21)) return [3 /*break*/, 18];
+                    if (!(userHandScore === 21)) return [3 /*break*/, 20];
                     if (dealerHand[0].value === 10 && dealerHand[1].type === 'Ace') {
                         dealerHand[1].value = 11;
                     }
@@ -801,18 +849,20 @@ function execute(commandData, discordUser) {
                         .setFooter("Cards Remaining: " + guildData.blackjackStack.length);
                     finalMessageEmbed.fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHand[0].suit + dealerHand[0].type + dealerHand[1].suit + dealerHand[1].type, inline: true },
                         { name: "Player's Hand: (" + userHandScore + ")", value: userHand[0].suit + userHand[0].type + userHand[1].suit + userHand[1].type, inline: true }, { name: '__**Game Status: Tie**__', value: footerMsgString2_1, inline: false }];
-                    return [4 /*yield*/, guildData.writeToDataBase()];
-                case 12:
-                    _c.sent();
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMessageEmbed)];
                 case 13:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 14:
+                case 14: return [4 /*yield*/, guildMemberData.getFromDataBase()];
+                case 15:
+                    _c.sent();
                     payAmount = Math.trunc(1.5 * betAmount);
                     guildMemberData.currency.wallet += payAmount;
                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                case 15:
+                case 16:
+                    _c.sent();
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 17:
                     _c.sent();
                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
@@ -823,7 +873,7 @@ function execute(commandData, discordUser) {
                     guildData.casinoStats.totalBlackjackPayout += payAmount;
                     guildData.casinoStats.totalPayout;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 16:
+                case 18:
                     _c.sent();
                     footerMsgString2 = "\n------\n__**Payout Amount:**__ " + payAmount + " " + discordUser.userData.currencyName + "\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
                     finalMessageEmbed
@@ -836,10 +886,10 @@ function execute(commandData, discordUser) {
                     finalMessageEmbed.fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHand[0].suit + dealerHand[0].type + dealerHand[1].suit + dealerHand[1].type, inline: true },
                         { name: "Player's Hand: (" + userHandScore + ")", value: userHand[0].suit + userHand[0].type + userHand[1].suit + userHand[1].type, inline: true }, { name: '__**Game Status: Player Wins**__', value: footerMsgString2, inline: false }];
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMessageEmbed)];
-                case 17:
+                case 19:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 18:
+                case 20:
                     finalMessageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setTimestamp(Date.now())
@@ -850,33 +900,33 @@ function execute(commandData, discordUser) {
                     finalMessageEmbed.fields = [{ name: "Dealer's Hand: (" + newDealerHandScore + ")", value: dealerHand[0].suit + dealerHand[0].type, inline: true },
                         { name: "Player's Hand: (" + userHandScore + ")", value: userHand[0].suit + userHand[0].type + userHand[1].suit + userHand[1].type, inline: true }, { name: '__**Game Status: In Play**__', value: footerMsgString, inline: false }];
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMessageEmbed)];
-                case 19:
+                case 21:
                     newMessage = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guildMember.client, newMessage, commandData.fromTextChannel);
                     }
                     newCardCount = 2;
                     return [4 /*yield*/, newMessage.react('✅')];
-                case 20:
-                    _c.sent();
-                    return [4 /*yield*/, newMessage.react('❎')];
-                case 21:
-                    _c.sent();
-                    if (!(newCardCount === 2 && (newMessage.embeds[0].fields[2].value.includes('⏬')))) return [3 /*break*/, 23];
-                    return [4 /*yield*/, newMessage.react('⏬')];
                 case 22:
                     _c.sent();
-                    _c.label = 23;
-                case 23: return [4 /*yield*/, recurseThroughMessagePages(newMessage, betAmount, userHand, userHandScore, userAceIndices, dealerHand, newDealerHandScore, dealerAceIndices, userID, commandData.guildMember, guildMemberData, guildData, newCardCount, discordUser, command.name)];
+                    return [4 /*yield*/, newMessage.react('❎')];
+                case 23:
+                    _c.sent();
+                    if (!(newCardCount === 2 && (newMessage.embeds[0].fields[2].value.includes('⏬')))) return [3 /*break*/, 25];
+                    return [4 /*yield*/, newMessage.react('⏬')];
                 case 24:
                     _c.sent();
+                    _c.label = 25;
+                case 25: return [4 /*yield*/, recurseThroughMessagePages(newMessage, betAmount, userHand, userHandScore, userAceIndices, dealerHand, newDealerHandScore, dealerAceIndices, userID, commandData.guildMember, guildMemberData, guildData, newCardCount, discordUser, command.name)];
+                case 26:
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 25:
+                case 27:
                     error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 26: return [2 /*return*/];
+                case 28: return [2 /*return*/];
             }
         });
     });
