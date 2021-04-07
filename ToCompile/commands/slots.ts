@@ -204,7 +204,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString3 = `__**Slot Results:**__\n[:x:] [:x:] [:x:]\n
                 [:x:] [:x:] [:x:]\n
                 [:x:] [:x:] [:x:]\n------\n__**Your Wager:**__ ${betAmountOld}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}\n
-                __**Game Results:**__\n__**Payout:**__ NSF __**Result Type:**__ Non-Sufficient Funcds\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
+                __**Game Results:**__\n__**Payout:**__ NSF __**Result Type:**__ Non-Sufficient Funds\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
 
                 msgStrings.push(msgString3);
                 let msgEmbed = new Discord.MessageEmbed()
