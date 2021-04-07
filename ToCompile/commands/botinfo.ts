@@ -26,15 +26,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
            commandName: command.name
        };
 
-       const guildData = new GuildData({dataBase: discordUser.dataBase, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount, id: commandData.guild!.id});
-       await guildData.getFromDataBase();
-
        if (commandData.args[0]?.toLowerCase() !== 'janny' && commandData.args[0]?.toLowerCase() !== 'musichouse' && commandData.args[0]?.toLowerCase() !== 'gamehouse'){
            const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'
            const msgEmbed = new Discord.MessageEmbed();
            msgEmbed
-               .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-               .setColor(guildData.borderColor)
+               .setAuthor(discordUser.userData.userName, commandData.guildMember?.client.users.resolve(discordUser.userData.userID)?.avatarURL()!)
+               .setColor([254, 254, 254])
                .setDescription(msgString)
                .setTimestamp(Date() as unknown as Date)
                .setTitle("__**Invalid Or Missing Arguments:**__")

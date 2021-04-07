@@ -44,7 +44,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
     name: 'botinfo',
@@ -55,41 +54,37 @@ var command = {
 * Displays the data about the currend user.
 */
 function execute(commandData, discordUser) {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, guildData, msgString, msgEmbed, msg, fields, field1, field2, field3, field4, messageEmbed, error_1;
-        return __generator(this, function (_g) {
-            switch (_g.label) {
+        var commandReturnData, msgString, msgEmbed, msg, fields, field1, field2, field3, field4, messageEmbed, error_1;
+        return __generator(this, function (_j) {
+            switch (_j.label) {
                 case 0:
-                    _g.trys.push([0, 6, , 7]);
+                    _j.trys.push([0, 5, , 6]);
                     commandReturnData = {
                         commandName: command.name
                     };
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, name: commandData.guild.name, memberCount: commandData.guild.memberCount, id: commandData.guild.id });
-                    return [4 /*yield*/, guildData.getFromDataBase()];
-                case 1:
-                    _g.sent();
-                    if (!(((_a = commandData.args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== 'janny' && ((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) !== 'musichouse' && ((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) !== 'gamehouse')) return [3 /*break*/, 4];
+                    if (!(((_a = commandData.args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== 'janny' && ((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) !== 'musichouse' && ((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) !== 'gamehouse')) return [3 /*break*/, 3];
                     msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------';
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setAuthor(discordUser.userData.userName, (_e = (_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.client.users.resolve(discordUser.userData.userID)) === null || _e === void 0 ? void 0 : _e.avatarURL())
+                        .setColor([254, 254, 254])
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Invalid Or Missing Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 2:
-                    msg = _g.sent();
+                case 1:
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 2:
+                    _j.sent();
+                    _j.label = 3;
                 case 3:
-                    _g.sent();
-                    _g.label = 4;
-                case 4:
-                    if (((_d = commandData.args[0]) === null || _d === void 0 ? void 0 : _d.toLowerCase()) !== 'gamehouse') {
+                    if (((_f = commandData.args[0]) === null || _f === void 0 ? void 0 : _f.toLowerCase()) !== 'gamehouse') {
                         return [2 /*return*/, commandReturnData];
                     }
                     commandReturnData.commandName = command.name;
@@ -103,21 +98,21 @@ function execute(commandData, discordUser) {
                     field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
                     fields.push(field4);
                     messageEmbed = new Discord.MessageEmbed()
-                        .setImage((_f = (_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.client.user) === null || _f === void 0 ? void 0 : _f.avatarURL())
+                        .setImage((_h = (_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.client.user) === null || _h === void 0 ? void 0 : _h.avatarURL())
                         .setColor([254, 254, 254])
                         .setTitle('__**Bot Info:**__')
                         .setTimestamp(Date());
                     messageEmbed.fields = fields;
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 5:
-                    _g.sent();
+                case 4:
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
-                case 6:
-                    error_1 = _g.sent();
+                case 5:
+                    error_1 = _j.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 7: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });
