@@ -272,7 +272,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			blackNumbers = [':black_large_square:15', ':black_large_square:4', ':black_large_square:2', ':black_large_square:17', ':black_large_square:6', ':black_large_square:13', ':black_large_square:11', ':black_large_square:8', ':black_large_square:10',
 				':black_large_square:24', ':black_large_square:33', ':black_large_square:20', ':black_large_square:31', ':black_large_square:22', ':black_large_square:29', ':black_large_square:28', ':black_large_square:35', ':black_large_square:26'];
 
-
 			if (whatAreWeDoing === 'bet'){
 
 				const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, id: commandData.guildMember!.id, guildId: commandData.guild!.id,
@@ -600,7 +599,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					let newRouletteBet: FoundationClasses.RouletteBet = {betAmount: betAmount, payoutAmount: payoutAmount, betOptions: betOptions!, betType: betType!, userID: commandData.guildMember!.id, winningNumbers: winningNumbers};
 					
 					guildData.rouletteGame.bets.push(newRouletteBet);
-
+					
 					await guildData.writeToDataBase();
 					const msgEmbed = new Discord.MessageEmbed();
 					msgEmbed

@@ -193,6 +193,9 @@ function execute(commandData, discordUser) {
                                     case 6:
                                         _a.sent();
                                         guildMemberData_1.currency.wallet += betAmount_1;
+                                        return [4 /*yield*/, guildMemberData_1.writeToDataBase()];
+                                    case 7:
+                                        _a.sent();
                                         guildData_1.casinoStats.totalPayout += betAmount_1;
                                         guildData_1.casinoStats.totalCoinFlipPayout += betAmount_1;
                                         if (betAmount_1 > guildData_1.casinoStats.largestCoinFlipPayout.amount) {
@@ -202,12 +205,9 @@ function execute(commandData, discordUser) {
                                             guildData_1.casinoStats.largestCoinFlipPayout.username = guildMemberData_1.userName;
                                         }
                                         return [4 /*yield*/, guildData_1.writeToDataBase()];
-                                    case 7:
-                                        _a.sent();
-                                        newBalance = guildMemberData_1.currency.wallet;
-                                        return [4 /*yield*/, guildMemberData_1.writeToDataBase()];
                                     case 8:
                                         _a.sent();
+                                        newBalance = guildMemberData_1.currency.wallet;
                                         completionString += "\n\n__**NICELY DONE FAGGOT! YOU WON!**__\nYour new wallet balance is: " + newBalance + " " + discordUser.userData.currencyName;
                                         messageEmbed_1.setColor([0, 255, 0]).setDescription(completionString).setTimestamp(Date.now()).setTitle('__**Heads, or Tails!?**__')
                                             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL());
@@ -218,15 +218,15 @@ function execute(commandData, discordUser) {
                                     case 10:
                                         _a.sent();
                                         guildMemberData_1.currency.wallet -= betAmount_1;
+                                        return [4 /*yield*/, guildMemberData_1.writeToDataBase()];
+                                    case 11:
+                                        _a.sent();
                                         guildData_1.casinoStats.totalPayout -= betAmount_1;
                                         guildData_1.casinoStats.totalCoinFlipPayout -= betAmount_1;
                                         return [4 /*yield*/, guildData_1.writeToDataBase()];
-                                    case 11:
-                                        _a.sent();
-                                        newBalance = guildMemberData_1.currency.wallet;
-                                        return [4 /*yield*/, guildMemberData_1.writeToDataBase()];
                                     case 12:
                                         _a.sent();
+                                        newBalance = guildMemberData_1.currency.wallet;
                                         completionString += "\n\n__**OWNED! YOU LOST, FUCKFACE!**__\nYour new wallet balance is: " + newBalance + " " + discordUser.userData.currencyName;
                                         messageEmbed_1.setColor([255, 0, 0]).setDescription(completionString).setTimestamp(Date.now()).setTitle('__**Heads, or Tails!?**__')
                                             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL());

@@ -26,6 +26,8 @@ import deletedbentry from './commands/deletedbentry';
 botCommands.set(deletedbentry.name, deletedbentry);
 import deposit from './commands/deposit';
 botCommands.set(deposit.name, deposit);
+import displayguildsdata from './commands/displayguildsdata';
+botCommands.set(displayguildsdata.name, displayguildsdata);
 import duel from './commands/duel';
 botCommands.set(duel.name, duel);
 import gamehouseoptions from './commands/gamehouseoptions';

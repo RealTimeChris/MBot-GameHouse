@@ -81,9 +81,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			userName: (commandData.guildMember as Discord.GuildMember)!.user.username, displayName: (commandData.guildMember as Discord.GuildMember).displayName});
 		await fromGuildMemberData.getFromDataBase();
 
-		const toUserMember = commandData.guild!.members.resolve(toUserID);
+		const toGuildMember = commandData.guild!.members.resolve(toUserID);
 
-		if (toUserMember === null) {
+		if (toGuildMember === null) {
 			const msgString = `------\n**Sorry, but that user could not be found!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -99,8 +99,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			return commandReturnData;
 		}
 
-		const toGuildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, id: toUserMember.id, guildId: commandData.guild!.id,
-			userName: toUserMember.user.username, displayName: toUserMember.displayName});
+		const toGuildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, id: toGuildMember.id, guildId: commandData.guild!.id,
+			userName: toGuildMember.user.username, displayName: toGuildMember.displayName});
 		await toGuildMemberData.getFromDataBase();
 
 		if (toGuildMemberData == null) {

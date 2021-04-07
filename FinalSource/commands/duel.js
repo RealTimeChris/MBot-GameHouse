@@ -55,7 +55,7 @@ var command = {
 function execute(commandData, discordUser) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData_1, areWeInADM, areWeAllowed, guildData, numberRegExp, idRegExp, msgString, msgEmbed, msg, msgString, msgEmbed, msg, betAmount_1, toUserID_1, fromUserID_1, fromGuildMemberData_1, toUserMember, msgString, msgEmbed, msg, toGuildMemberData_1, msgString, msgEmbed, msg, fromUserCurrency_1, toUserCurrency_1, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgEmbedString_1, messageEmbed, newMessage_1, filter, error_1;
+        var commandReturnData_1, areWeInADM, areWeAllowed, guildData, numberRegExp, idRegExp, msgString, msgEmbed, msg, msgString, msgEmbed, msg, betAmount_1, toUserID_1, fromUserID_1, fromGuildMemberData_1, toGuildMember, msgString, msgEmbed, msg, toGuildMemberData_1, msgString, msgEmbed, msg, fromUserCurrency_1, toUserCurrency_1, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgEmbedString_1, messageEmbed, newMessage_1, filter, error_1;
         var _this = this;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -129,8 +129,8 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, fromGuildMemberData_1.getFromDataBase()];
                 case 10:
                     _b.sent();
-                    toUserMember = commandData.guild.members.resolve(toUserID_1);
-                    if (!(toUserMember === null)) return [3 /*break*/, 13];
+                    toGuildMember = commandData.guild.members.resolve(toUserID_1);
+                    if (!(toGuildMember === null)) return [3 /*break*/, 13];
                     msgString = "------\n**Sorry, but that user could not be found!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -149,7 +149,7 @@ function execute(commandData, discordUser) {
                     _b.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 13:
-                    toGuildMemberData_1 = new GuildMemberData_1.default({ dataBase: discordUser.dataBase, id: toUserMember.id, guildId: commandData.guild.id, userName: toUserMember.user.username, displayName: toUserMember.displayName });
+                    toGuildMemberData_1 = new GuildMemberData_1.default({ dataBase: discordUser.dataBase, id: toGuildMember.id, guildId: commandData.guild.id, userName: toGuildMember.user.username, displayName: toGuildMember.displayName });
                     return [4 /*yield*/, toGuildMemberData_1.getFromDataBase()];
                 case 14:
                     _b.sent();

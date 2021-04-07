@@ -88,6 +88,10 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		const depositAmount = options_full[0].value;
 		commandData.args[0] = depositAmount.toString();
 	}
+	if (name_full === "displayguildsdata"){
+		const name = 'gamehouse';
+		commandData.args[0] = name;
+	}
 	if (name_full === 'duel'){
 		const betAmount = options_full[0].value;
 		const user = options_full[1].value;

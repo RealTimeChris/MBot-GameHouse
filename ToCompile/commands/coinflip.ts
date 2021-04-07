@@ -134,6 +134,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				if ((number > 1 && collected.first()!.emoji.name === '🤯') || (number < 1 && collected.first()!.emoji.name === '🐍')) {
 					await guildData.getFromDataBase();
 					guildMemberData.currency.wallet += betAmount;
+					await guildMemberData.writeToDataBase();
 					guildData.casinoStats.totalPayout += betAmount;
 					guildData.casinoStats.totalCoinFlipPayout += betAmount;
 					if (betAmount > guildData.casinoStats.largestCoinFlipPayout.amount) {
@@ -144,7 +145,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					}
 					await guildData.writeToDataBase();
 					newBalance = guildMemberData.currency.wallet;
-					await guildMemberData.writeToDataBase();
 					completionString += `\n\n__**NICELY DONE FAGGOT! YOU WON!**__\nYour new wallet balance is: ${newBalance} ${discordUser.userData.currencyName}`;
 
 					messageEmbed.setColor([0, 255, 0]).setDescription(completionString).setTimestamp(Date.now()).setTitle('__**Heads, or Tails!?**__')
@@ -152,11 +152,11 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				} else if ((number < 1 && collected.first()!.emoji.name === '🤯') || (number > 1 && collected.first()!.emoji.name === '🐍')) {
 					await guildData.getFromDataBase();
 					guildMemberData.currency.wallet -= betAmount;
+					await guildMemberData.writeToDataBase();
 					guildData.casinoStats.totalPayout -= betAmount;
 					guildData.casinoStats.totalCoinFlipPayout -= betAmount;
 					await guildData.writeToDataBase();
 					newBalance = guildMemberData.currency.wallet;
-					await guildMemberData.writeToDataBase();
 					completionString += `\n\n__**OWNED! YOU LOST, FUCKFACE!**__\nYour new wallet balance is: ${newBalance} ${discordUser.userData.currencyName}`;
 
 					messageEmbed.setColor([255, 0, 0]).setDescription(completionString).setTimestamp(Date.now()).setTitle('__**Heads, or Tails!?**__')

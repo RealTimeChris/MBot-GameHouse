@@ -26,6 +26,8 @@ var deletedbentry_1 = __importDefault(require("./commands/deletedbentry"));
 botCommands.set(deletedbentry_1.default.name, deletedbentry_1.default);
 var deposit_1 = __importDefault(require("./commands/deposit"));
 botCommands.set(deposit_1.default.name, deposit_1.default);
+var displayguildsdata_1 = __importDefault(require("./commands/displayguildsdata"));
+botCommands.set(displayguildsdata_1.default.name, displayguildsdata_1.default);
 var duel_1 = __importDefault(require("./commands/duel"));
 botCommands.set(duel_1.default.name, duel_1.default);
 var gamehouseoptions_1 = __importDefault(require("./commands/gamehouseoptions"));

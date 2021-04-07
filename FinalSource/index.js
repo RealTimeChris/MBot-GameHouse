@@ -51,7 +51,7 @@ var config = require("../ToCompile/config.json");
 var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, itemName, itemSelfMod, itemOppMod, itemCost, itemEmoji, roleName, roleColor, roleCost, user, objectName, betAmount, betAmount, value1, depositAmount, betAmount, user, value, user, objectName, user, itemName, roleName, targetUser, betAmount, betType, betOptions, amount, targetBalance, targetUser, redChannelValue, greenChannelValue, blueChannelValue, betAmount, amount, user, amount, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, itemName, itemSelfMod, itemOppMod, itemCost, itemEmoji, roleName, roleColor, roleCost, user, objectName, betAmount, betAmount, value1, depositAmount, name_3, betAmount, user, value, user, objectName, user, itemName, roleName, targetUser, betAmount, betType, betOptions, amount, targetBalance, targetUser, redChannelValue, greenChannelValue, blueChannelValue, betAmount, amount, user, amount, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -134,6 +134,10 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 if (name_full === 'deposit') {
                     depositAmount = options_full[0].value;
                     commandData.args[0] = depositAmount.toString();
+                }
+                if (name_full === "displayguildsdata") {
+                    name_3 = 'gamehouse';
+                    commandData.args[0] = name_3;
                 }
                 if (name_full === 'duel') {
                     betAmount = options_full[0].value;

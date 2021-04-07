@@ -195,6 +195,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         // Create Global Command
         await interaction.createApplicationCommand(deposit).then(value => console.log(value)).catch(error => console.log(error.message));
 
+        const displayguildsdata = {
+            "name": "displayguildsdata",
+            "description": "Display info about the servers that the bot is in.",
+            "options":[]                        
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(displayguildsdata).then(error => console.log(error)).catch(error => console.log(error.message));
+
         const duel = {
             "name": "duel",
             "description": "Challenges another user to a duel.",
