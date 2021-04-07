@@ -150,7 +150,7 @@ function execute(commandData, discordUser) {
                         newValue = value;
                         if (isItFound === false) {
                             areAnyFound = true;
-                            msgString += "__**Key:**__ " + key + " __**Guild ID:**__ " + newValue.guildID + " __**Guild Name:**__ " + newValue.guildName + "\n";
+                            msgString += "__**Key/Guild ID:**__ " + key + " __**Guild Name:**__ " + newValue.guildName + "\n";
                         }
                     }
                     _c.label = 13;

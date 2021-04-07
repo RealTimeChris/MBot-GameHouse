@@ -16,6 +16,8 @@ import balance from './commands/balance';
 botCommands.set(balance.name, balance);
 import blackjack from './commands/blackjack';
 botCommands.set(blackjack.name, blackjack);
+import botinfo from './commands/botinfo';
+botCommands.set(botinfo.name, botinfo);
 import buy from './commands/buy';
 botCommands.set(buy.name, buy);
 import casinostats from './commands/casinostats';

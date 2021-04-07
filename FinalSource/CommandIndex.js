@@ -16,6 +16,8 @@ var balance_1 = __importDefault(require("./commands/balance"));
 botCommands.set(balance_1.default.name, balance_1.default);
 var blackjack_1 = __importDefault(require("./commands/blackjack"));
 botCommands.set(blackjack_1.default.name, blackjack_1.default);
+var botinfo_1 = __importDefault(require("./commands/botinfo"));
+botCommands.set(botinfo_1.default.name, botinfo_1.default);
 var buy_1 = __importDefault(require("./commands/buy"));
 botCommands.set(buy_1.default.name, buy_1.default);
 var casinostats_1 = __importDefault(require("./commands/casinostats"));
