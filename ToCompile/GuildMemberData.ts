@@ -11,7 +11,7 @@ import Level from 'level-ts';
 /**
  * Class representing the init data for a guild member data structure.
  */
-export interface GuildMemberDataInitData {
+interface GuildMemberDataInitData {
     dataBase: Level;
     displayName: string;
     guildId: string;
