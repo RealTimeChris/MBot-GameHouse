@@ -9,7 +9,7 @@ import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import HelperFunctions from '../HelperFunctions';
-import {DiscordInteractions} from 'slash-commands';
+import DiscordInteractions from 'slash-commands';
 import SlashCommands = require('slash-commands');
 
 const command: FoundationClasses.BotCommand = {
