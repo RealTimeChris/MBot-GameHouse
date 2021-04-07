@@ -8,7 +8,6 @@
 import FoundationClasses from './FoundationClasses';
 
 const botCommands = new Map<string, FoundationClasses.BotCommand>();
-
 import addshopitem from './commands/addshopitem';
 botCommands.set(addshopitem.name, addshopitem);
 import addshoprole from './commands/addshoprole';
