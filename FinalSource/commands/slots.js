@@ -54,12 +54,12 @@ var command = {
 };
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeAllowed, guildData, betAmount, msgString, msgEmbed, msg_1, msgString, msgEmbed, msg_2, guildMemberData, msgString, msgEmbed, msg_3, payoutAmount, gameResultType_1, slotReel, reelStartIndex1, reelIndices1, x, reelStartIndex2, reelIndices2, x, reelStartIndex3, reelIndices3, x, msgStrings_1, msgString0, msgEmbed0, msg_4, msgString1, msgString2, msgString3, error_1;
+        var commandReturnData, areWeInADM, areWeAllowed, guildData_1, betAmountOld_1, msgString, msgEmbed, msg_1, msgString, msgEmbed, msg_2, guildMemberData_1, msgString, msgEmbed, msg_3, payoutAmount_1, gameResultType_1, slotReel_1, reelStartIndex1, reelIndices1_1, x, reelStartIndex2, reelIndices2_1, x, reelStartIndex3, reelIndices3_1, x, msgStrings_1, msgString0, msgEmbed0, msg_4, error_1;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 18, , 19]);
+                    _a.trys.push([0, 16, , 17]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -76,16 +76,15 @@ function execute(commandData, discordUser) {
                     if (areWeAllowed === false) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
-                    return [4 /*yield*/, guildData.getFromDataBase()];
+                    guildData_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
+                    return [4 /*yield*/, guildData_1.getFromDataBase()];
                 case 3:
                     _a.sent();
-                    betAmount = void 0;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 6];
                     msgString = "------\n**Please, enter a bet amount as the first argument of the command! (!slots = BETAMOUNT)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -104,7 +103,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter a valid bet amount as the first argument of the command! (!slots = BETAMOUNT)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -119,19 +118,19 @@ function execute(commandData, discordUser) {
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 9:
-                    betAmount = parseInt(commandData.args[0], 10);
+                    betAmountOld_1 = parseInt(commandData.args[0], 10);
                     _a.label = 10;
                 case 10:
-                    guildMemberData = new GuildMemberData_1.default({ dataBase: discordUser.dataBase, id: commandData.guildMember.id, guildId: commandData.guild.id,
+                    guildMemberData_1 = new GuildMemberData_1.default({ dataBase: discordUser.dataBase, id: commandData.guildMember.id, guildId: commandData.guild.id,
                         userName: commandData.guildMember.user.username, displayName: commandData.guildMember.displayName });
-                    return [4 /*yield*/, guildMemberData.getFromDataBase()];
+                    return [4 /*yield*/, guildMemberData_1.getFromDataBase()];
                 case 11:
                     _a.sent();
-                    if (!(parseInt(commandData.args[0], 10) > guildMemberData.currency.wallet)) return [3 /*break*/, 14];
+                    if (!(parseInt(commandData.args[0], 10) > guildMemberData_1.currency.wallet)) return [3 /*break*/, 14];
                     msgString = "------\n**Sorry, but you don't have sufficient funds in your wallet for placing that bet!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Insufficient Funds:**__');
@@ -146,25 +145,24 @@ function execute(commandData, discordUser) {
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 14:
-                    payoutAmount = void 0;
-                    slotReel = [":crossed_swords:", ":apple:", ":ring:", ":gun:", ":swan:", ":rocket:", ":coin:", ":star:", ":jack_o_lantern:", ":christmas_tree:"];
+                    slotReel_1 = [":crossed_swords:", ":apple:", ":ring:", ":gun:", ":swan:", ":rocket:", ":coin:", ":star:", ":jack_o_lantern:", ":christmas_tree:"];
                     reelStartIndex1 = Math.trunc(Math.random() * 10);
-                    reelIndices1 = [];
+                    reelIndices1_1 = [];
                     for (x = 0; x < 10; x += 1) {
-                        reelIndices1[x] = (reelStartIndex1 + x) % 10;
+                        reelIndices1_1[x] = (reelStartIndex1 + x) % 10;
                     }
                     reelStartIndex2 = Math.trunc(Math.random() * 10);
-                    reelIndices2 = [];
+                    reelIndices2_1 = [];
                     for (x = 0; x < 10; x += 1) {
-                        reelIndices2[x] = (reelStartIndex2 + x) % 10;
+                        reelIndices2_1[x] = (reelStartIndex2 + x) % 10;
                     }
                     reelStartIndex3 = Math.trunc(Math.random() * 10);
-                    reelIndices3 = [];
+                    reelIndices3_1 = [];
                     for (x = 0; x < 10; x += 1) {
-                        reelIndices3[x] = (reelStartIndex3 + x) % 10;
+                        reelIndices3_1[x] = (reelStartIndex3 + x) % 10;
                     }
                     msgStrings_1 = [];
-                    msgString0 = "__**Slot Results:**__\n[:question:] [:question:] [:question:]\n\n            [:question:] [:question:] [:question:]\n\n            [:question:] [:question:] [:question:]\n\n__**Your Wager:**__ " + betAmount + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmount).toString() + " " + discordUser.userData.currencyName;
+                    msgString0 = "__**Slot Results:**__\n[:question:] [:question:] [:question:]\n\n            [:question:] [:question:] [:question:]\n\n            [:question:] [:question:] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
                     msgStrings_1.push(msgString0);
                     msgEmbed0 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -178,13 +176,13 @@ function execute(commandData, discordUser) {
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg_4 = new Discord.Message(commandData.guild.client, msg_4, commandData.fromTextChannel);
                     }
-                    msgString1 = "__**Slot Results:**__\n[" + slotReel[reelIndices1[7]] + "] [:question:] [:question:]\n\n            [" + slotReel[reelIndices1[8]] + "] [:question:] [:question:]\n\n            [" + slotReel[reelIndices1[9]] + "] [:question:] [:question:]\n\n__**Your Wager:**__ " + betAmount + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmount).toString() + " " + discordUser.userData.currencyName;
-                    msgStrings_1.push(msgString1);
                     setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var msgEmbed;
+                        var msgString1, msgEmbed;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
+                                    msgString1 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + "] [:question:] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[8]] + "] [:question:] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[9]] + "] [:question:] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
+                                    msgStrings_1.push(msgString1);
                                     msgEmbed = new Discord.MessageEmbed()
                                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                                         .setColor([0, 0, 255])
@@ -198,13 +196,13 @@ function execute(commandData, discordUser) {
                             }
                         });
                     }); }, 3000);
-                    msgString2 = "__**Slot Results:**__\n[" + slotReel[reelIndices1[7]] + " [" + slotReel[reelIndices2[7]] + "] [:question:]\n\n            [" + slotReel[reelIndices1[8]] + "] [" + slotReel[reelIndices2[8]] + "] [:question:]\n\n            [" + slotReel[reelIndices1[9]] + "] [" + slotReel[reelIndices2[9]] + "] [:question:]\n\n__**Your Wager:**__ " + betAmount + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmount).toString() + " " + discordUser.userData.currencyName;
-                    msgStrings_1.push(msgString2);
                     setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var msgEmbed;
+                        var msgString2, msgEmbed;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
+                                    msgString2 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + " [" + slotReel_1[reelIndices2_1[7]] + "] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[8]] + "] [" + slotReel_1[reelIndices2_1[8]] + "] [:question:]\n\n            [" + slotReel_1[reelIndices1_1[9]] + "] [" + slotReel_1[reelIndices2_1[9]] + "] [:question:]\n\n__**Your Wager:**__ " + betAmountOld_1 + " " + discordUser.userData.currencyName + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName;
+                                    msgStrings_1.push(msgString2);
                                     msgEmbed = new Discord.MessageEmbed()
                                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                                         .setColor([0, 0, 255])
@@ -218,51 +216,57 @@ function execute(commandData, discordUser) {
                             }
                         });
                     }); }, 6000);
-                    if (slotReel[reelIndices1[8]] === slotReel[reelIndices2[8]] && slotReel[reelIndices2[8]] === slotReel[reelIndices3[8]]) {
-                        gameResultType_1 = 'Triple Straight';
-                        payoutAmount = betAmount * 15;
-                    }
-                    else if ((slotReel[reelIndices1[9]] === slotReel[reelIndices2[8]] && slotReel[reelIndices2[8]] === slotReel[reelIndices3[7]]) ||
-                        (slotReel[reelIndices1[7]] === slotReel[reelIndices2[8]] && slotReel[reelIndices2[8]] === slotReel[reelIndices3[9]])) {
-                        gameResultType_1 = 'Triple Diagonal';
-                        payoutAmount = betAmount * 7;
-                    }
-                    else if (slotReel[reelIndices1[8]] === slotReel[reelIndices2[8]] || slotReel[reelIndices3[8]] === slotReel[reelIndices2[8]]) {
-                        gameResultType_1 = 'Double Straight';
-                        payoutAmount = betAmount * 1;
-                    }
-                    else if ((slotReel[reelIndices1[9]] === slotReel[reelIndices2[8]]) || (slotReel[reelIndices1[7]] === slotReel[reelIndices2[8]]) ||
-                        (slotReel[reelIndices3[9]] === slotReel[reelIndices2[8]]) || (slotReel[reelIndices3[7]] === slotReel[reelIndices2[8]])) {
-                        gameResultType_1 = 'Double Diagonal';
-                        payoutAmount = betAmount * 1;
-                    }
-                    else {
-                        gameResultType_1 = 'Loss';
-                        payoutAmount = -1 * betAmount;
-                    }
-                    guildData.casinoStats.totalPayout += payoutAmount;
-                    guildData.casinoStats.totalSlotsPayout += payoutAmount;
-                    if (payoutAmount > guildData.casinoStats.largestSlotsPayout.amount) {
-                        guildData.casinoStats.largestSlotsPayout.amount = payoutAmount;
-                        guildData.casinoStats.largestSlotsPayout.date = Date();
-                        guildData.casinoStats.largestSlotsPayout.userID = guildMemberData.id;
-                        guildData.casinoStats.largestSlotsPayout.username = guildMemberData.userName;
-                    }
-                    return [4 /*yield*/, guildData.writeToDataBase()];
-                case 16:
-                    _a.sent();
-                    guildMemberData.currency.wallet += payoutAmount;
-                    return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                case 17:
-                    _a.sent();
-                    msgString3 = "__**Slot Results:**__\n[" + slotReel[reelIndices1[7]] + "] [" + slotReel[reelIndices2[7]] + "] [" + slotReel[reelIndices3[7]] + "]\n\n            [" + slotReel[reelIndices1[8]] + "] [" + slotReel[reelIndices2[8]] + "] [" + slotReel[reelIndices3[8]] + "]\n\n            [" + slotReel[reelIndices1[9]] + "] [" + slotReel[reelIndices2[9]] + "] [" + slotReel[reelIndices3[9]] + "]\n------\n__**Your Wager:**__ " + betAmount + "\n__**Maximum Payout:**__ " + (15 * betAmount).toString() + " " + discordUser.userData.currencyName + "\n\n            __**Game Results:**__\n__**Payout:**__ " + payoutAmount + " " + discordUser.userData.currencyName + " __**Result Type:**__ " + gameResultType_1 + "\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
-                    msgStrings_1.push(msgString3);
                     setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var msgEmbed;
+                        var msgString3, msgEmbed;
                         var _a, _b;
                         return __generator(this, function (_c) {
                             switch (_c.label) {
                                 case 0:
+                                    if (slotReel_1[reelIndices1_1[8]] === slotReel_1[reelIndices2_1[8]] && slotReel_1[reelIndices2_1[8]] === slotReel_1[reelIndices3_1[8]]) {
+                                        gameResultType_1 = 'Triple Straight';
+                                        payoutAmount_1 = betAmountOld_1 * 15;
+                                    }
+                                    else if ((slotReel_1[reelIndices1_1[9]] === slotReel_1[reelIndices2_1[8]] && slotReel_1[reelIndices2_1[8]] === slotReel_1[reelIndices3_1[7]]) ||
+                                        (slotReel_1[reelIndices1_1[7]] === slotReel_1[reelIndices2_1[8]] && slotReel_1[reelIndices2_1[8]] === slotReel_1[reelIndices3_1[9]])) {
+                                        gameResultType_1 = 'Triple Diagonal';
+                                        payoutAmount_1 = betAmountOld_1 * 7;
+                                    }
+                                    else if (slotReel_1[reelIndices1_1[8]] === slotReel_1[reelIndices2_1[8]] || slotReel_1[reelIndices3_1[8]] === slotReel_1[reelIndices2_1[8]]) {
+                                        gameResultType_1 = 'Double Straight';
+                                        payoutAmount_1 = betAmountOld_1 * 1;
+                                    }
+                                    else if ((slotReel_1[reelIndices1_1[9]] === slotReel_1[reelIndices2_1[8]]) || (slotReel_1[reelIndices1_1[7]] === slotReel_1[reelIndices2_1[8]]) ||
+                                        (slotReel_1[reelIndices3_1[9]] === slotReel_1[reelIndices2_1[8]]) || (slotReel_1[reelIndices3_1[7]] === slotReel_1[reelIndices2_1[8]])) {
+                                        gameResultType_1 = 'Double Diagonal';
+                                        payoutAmount_1 = betAmountOld_1 * 1;
+                                    }
+                                    else {
+                                        gameResultType_1 = 'Loss';
+                                        payoutAmount_1 = -1 * betAmountOld_1;
+                                    }
+                                    return [4 /*yield*/, guildData_1.getFromDataBase()];
+                                case 1:
+                                    _c.sent();
+                                    guildData_1.casinoStats.totalPayout += payoutAmount_1;
+                                    guildData_1.casinoStats.totalSlotsPayout += payoutAmount_1;
+                                    if (payoutAmount_1 > guildData_1.casinoStats.largestSlotsPayout.amount) {
+                                        guildData_1.casinoStats.largestSlotsPayout.amount = payoutAmount_1;
+                                        guildData_1.casinoStats.largestSlotsPayout.date = Date();
+                                        guildData_1.casinoStats.largestSlotsPayout.userID = guildMemberData_1.id;
+                                        guildData_1.casinoStats.largestSlotsPayout.username = guildMemberData_1.userName;
+                                    }
+                                    return [4 /*yield*/, guildData_1.writeToDataBase()];
+                                case 2:
+                                    _c.sent();
+                                    return [4 /*yield*/, guildMemberData_1.getFromDataBase()];
+                                case 3:
+                                    _c.sent();
+                                    guildMemberData_1.currency.wallet += payoutAmount_1;
+                                    return [4 /*yield*/, guildMemberData_1.writeToDataBase()];
+                                case 4:
+                                    _c.sent();
+                                    msgString3 = "__**Slot Results:**__\n[" + slotReel_1[reelIndices1_1[7]] + "] [" + slotReel_1[reelIndices2_1[7]] + "] [" + slotReel_1[reelIndices3_1[7]] + "]\n\n                [" + slotReel_1[reelIndices1_1[8]] + "] [" + slotReel_1[reelIndices2_1[8]] + "] [" + slotReel_1[reelIndices3_1[8]] + "]\n\n                [" + slotReel_1[reelIndices1_1[9]] + "] [" + slotReel_1[reelIndices2_1[9]] + "] [" + slotReel_1[reelIndices3_1[9]] + "]\n------\n__**Your Wager:**__ " + betAmountOld_1 + "\n__**Maximum Payout:**__ " + (15 * betAmountOld_1).toString() + " " + discordUser.userData.currencyName + "\n\n                __**Game Results:**__\n__**Payout:**__ " + payoutAmount_1 + " " + discordUser.userData.currencyName + " __**Result Type:**__ " + gameResultType_1 + "\n__**Your New Wallet Balance:**__ " + guildMemberData_1.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
+                                    msgStrings_1.push(msgString3);
                                     msgEmbed = new Discord.MessageEmbed();
                                     if (gameResultType_1 === 'Loss') {
                                         msgEmbed
@@ -281,19 +285,19 @@ function execute(commandData, discordUser) {
                                             .setTitle('__**Slots Game:**__');
                                     }
                                     return [4 /*yield*/, msg_4.edit(msgEmbed)];
-                                case 1:
+                                case 5:
                                     _c.sent();
                                     return [2 /*return*/];
                             }
                         });
                     }); }, 9000);
                     return [2 /*return*/, commandReturnData];
-                case 18:
+                case 16:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 19: return [2 /*return*/];
+                case 17: return [2 /*return*/];
             }
         });
     });

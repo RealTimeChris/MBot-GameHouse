@@ -282,7 +282,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				let currentBetAmount: number = 0;
 
 				for (let x = 0; x < guildData.rouletteGame.bets.length; x += 1){
-					if (guildMemberData.id === commandData.guildMember?.id){
+					if (guildMemberData.id === guildData.rouletteGame.bets[x]?.userID){
 						const number = guildData.rouletteGame.bets[x]?.betAmount;
 						currentBetAmount += number!;
 					}

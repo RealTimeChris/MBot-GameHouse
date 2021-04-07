@@ -40,7 +40,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount, name: commandData.guild!.name});
         await guildData.getFromDataBase();
 
-        let betAmount;
+        let betAmountOld: number;
         if (commandData.args[0] === undefined){
             const msgString = "------\n**Please, enter a bet amount as the first argument of the command! (!slots = BETAMOUNT)**\n------"
             let msgEmbed = new Discord.MessageEmbed()
@@ -72,7 +72,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			return commandReturnData;
         }
         else {
-            betAmount = parseInt(commandData.args[0], 10);
+            betAmountOld = parseInt(commandData.args[0], 10);
         }
 
         const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, id: commandData.guildMember!.id, guildId: commandData.guild!.id,
@@ -118,7 +118,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const msgStrings: string[] = [];
         const msgString0 = `__**Slot Results:**__\n[:question:] [:question:] [:question:]\n
             [:question:] [:question:] [:question:]\n
-            [:question:] [:question:] [:question:]\n\n__**Your Wager:**__ ${betAmount} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmount).toString()} ${discordUser.userData.currencyName}`;
+            [:question:] [:question:] [:question:]\n\n__**Your Wager:**__ ${betAmountOld} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}`;
 
         msgStrings.push(msgString0);
 
@@ -134,12 +134,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
         }
 
-        const msgString1 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7] as number]}] [:question:] [:question:]\n
-            [${slotReel[reelIndices1[8] as number]}] [:question:] [:question:]\n
-            [${slotReel[reelIndices1[9] as number]}] [:question:] [:question:]\n\n__**Your Wager:**__ ${betAmount} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmount).toString()} ${discordUser.userData.currencyName}`;
-         
-        msgStrings.push(msgString1);
         setTimeout(async () => {
+            const msgString1 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7] as number]}] [:question:] [:question:]\n
+            [${slotReel[reelIndices1[8] as number]}] [:question:] [:question:]\n
+            [${slotReel[reelIndices1[9] as number]}] [:question:] [:question:]\n\n__**Your Wager:**__ ${betAmountOld} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}`;
+         
+            msgStrings.push(msgString1);
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor([0, 0, 255])
@@ -149,13 +149,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await msg.edit(msgEmbed);
         }, 3000);
 
-        const msgString2 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7]!]} [${slotReel[reelIndices2[7]!]}] [:question:]\n
-            [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [:question:]\n
-            [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [:question:]\n\n__**Your Wager:**__ ${betAmount} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmount).toString()} ${discordUser.userData.currencyName}`;
-
-        msgStrings.push(msgString2);
-
         setTimeout(async () => {
+            const msgString2 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7]!]} [${slotReel[reelIndices2[7]!]}] [:question:]\n
+            [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [:question:]\n
+            [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [:question:]\n\n__**Your Wager:**__ ${betAmountOld} ${discordUser.userData.currencyName}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}`;
+
+            msgStrings.push(msgString2);
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor([0, 0, 255])
@@ -165,50 +164,52 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await msg.edit(msgEmbed);
         }, 6000);
     
-        if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] ===  slotReel[reelIndices3[8]!]){
-            gameResultType = 'Triple Straight';
-            payoutAmount = betAmount * 15;
-        }
-        else if ((slotReel[reelIndices1[9]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[7]!]) ||
-        (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[9]!])){
-            gameResultType = 'Triple Diagonal';
-            payoutAmount = betAmount * 7;
-        }
-        else if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] || slotReel[reelIndices3[8]!] === slotReel[reelIndices2[8]!]){
-            gameResultType = 'Double Straight';
-            payoutAmount = betAmount * 1;
-        }
-        else if ((slotReel[reelIndices1[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!]) || 
-        (slotReel[reelIndices3[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices3[7]!] === slotReel[reelIndices2[8]!])){
-            gameResultType = 'Double Diagonal';
-            payoutAmount = betAmount * 1;
-        }
-        else {
-            gameResultType = 'Loss';
-            payoutAmount = -1 * betAmount;
-        }
-
-        guildData.casinoStats.totalPayout += payoutAmount;
-        guildData.casinoStats.totalSlotsPayout += payoutAmount;
-        if (payoutAmount > guildData.casinoStats.largestSlotsPayout.amount){
-            guildData.casinoStats.largestSlotsPayout.amount = payoutAmount;
-            guildData.casinoStats.largestSlotsPayout.date = Date();
-            guildData.casinoStats.largestSlotsPayout.userID = guildMemberData.id;
-            guildData.casinoStats.largestSlotsPayout.username = guildMemberData.userName;
-        }
-        await guildData.writeToDataBase();
-
-        guildMemberData.currency.wallet += payoutAmount;
-        await guildMemberData.writeToDataBase();
-
-        const msgString3 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7]!]}] [${slotReel[reelIndices2[7]!]}] [${slotReel[reelIndices3[7]!]}]\n
-            [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [${slotReel[reelIndices3[8]!]}]\n
-            [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [${slotReel[reelIndices3[9]!]}]\n------\n__**Your Wager:**__ ${betAmount}\n__**Maximum Payout:**__ ${(15 * betAmount).toString()} ${discordUser.userData.currencyName}\n
-            __**Game Results:**__\n__**Payout:**__ ${payoutAmount} ${discordUser.userData.currencyName} __**Result Type:**__ ${gameResultType}\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
-
-        msgStrings.push(msgString3);
-
         setTimeout(async () => {
+            if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] ===  slotReel[reelIndices3[8]!]){
+                gameResultType = 'Triple Straight';
+                payoutAmount = betAmountOld * 15;
+            }
+            else if ((slotReel[reelIndices1[9]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[7]!]) ||
+            (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[9]!])){
+                gameResultType = 'Triple Diagonal';
+                payoutAmount = betAmountOld * 7;
+            }
+            else if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] || slotReel[reelIndices3[8]!] === slotReel[reelIndices2[8]!]){
+                gameResultType = 'Double Straight';
+                payoutAmount = betAmountOld * 1;
+            }
+            else if ((slotReel[reelIndices1[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!]) || 
+            (slotReel[reelIndices3[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices3[7]!] === slotReel[reelIndices2[8]!])){
+                gameResultType = 'Double Diagonal';
+                payoutAmount = betAmountOld * 1;
+            }
+            else {
+                gameResultType = 'Loss';
+                payoutAmount = -1 * betAmountOld;
+            }
+    
+            await guildData.getFromDataBase();
+            guildData.casinoStats.totalPayout += payoutAmount;
+            guildData.casinoStats.totalSlotsPayout += payoutAmount;
+            if (payoutAmount > guildData.casinoStats.largestSlotsPayout.amount){
+                guildData.casinoStats.largestSlotsPayout.amount = payoutAmount;
+                guildData.casinoStats.largestSlotsPayout.date = Date();
+                guildData.casinoStats.largestSlotsPayout.userID = guildMemberData.id;
+                guildData.casinoStats.largestSlotsPayout.username = guildMemberData.userName;
+            }
+            await guildData.writeToDataBase();
+
+            await guildMemberData.getFromDataBase();
+            guildMemberData.currency.wallet += payoutAmount;
+            await guildMemberData.writeToDataBase();
+    
+            const msgString3 = `__**Slot Results:**__\n[${slotReel[reelIndices1[7]!]}] [${slotReel[reelIndices2[7]!]}] [${slotReel[reelIndices3[7]!]}]\n
+                [${slotReel[reelIndices1[8]!]}] [${slotReel[reelIndices2[8]!]}] [${slotReel[reelIndices3[8]!]}]\n
+                [${slotReel[reelIndices1[9]!]}] [${slotReel[reelIndices2[9]!]}] [${slotReel[reelIndices3[9]!]}]\n------\n__**Your Wager:**__ ${betAmountOld}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}\n
+                __**Game Results:**__\n__**Payout:**__ ${payoutAmount} ${discordUser.userData.currencyName} __**Result Type:**__ ${gameResultType}\n__**Your New Wallet Balance:**__ ${guildMemberData.currency.wallet} ${discordUser.userData.currencyName}\n------`;
+    
+            msgStrings.push(msgString3);
+    
             let msgEmbed = new Discord.MessageEmbed();
             if (gameResultType === 'Loss'){
                 msgEmbed

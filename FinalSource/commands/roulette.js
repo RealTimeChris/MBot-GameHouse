@@ -383,7 +383,7 @@ function execute(commandData, discordUser) {
                     _30.sent();
                     currentBetAmount = 0;
                     for (x = 0; x < guildData_1.rouletteGame.bets.length; x += 1) {
-                        if (guildMemberData.id === ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.id)) {
+                        if (guildMemberData.id === ((_c = guildData_1.rouletteGame.bets[x]) === null || _c === void 0 ? void 0 : _c.userID)) {
                             number = (_d = guildData_1.rouletteGame.bets[x]) === null || _d === void 0 ? void 0 : _d.betAmount;
                             currentBetAmount += number;
                         }
