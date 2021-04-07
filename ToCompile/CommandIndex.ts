@@ -7,7 +7,7 @@
 
 import FoundationClasses from './FoundationClasses';
 
-export const botCommands = new Map<string, FoundationClasses.BotCommand>();
+const botCommands = new Map<string, FoundationClasses.BotCommand>();
 
 import addshopitem from './commands/addshopitem';
 botCommands.set(addshopitem.name, addshopitem);
