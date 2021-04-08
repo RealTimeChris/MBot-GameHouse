@@ -44,7 +44,7 @@ export default class DiscordUser {
     /**
      * Initializes the instance of Discord, within the DiscordUser export class.
      */
-    async initializeInstance(client: Discord.Client): Promise<void> {
+    public async initializeInstance(client: Discord.Client): Promise<void> {
         try {
             const dataBaseFilePath = `${config.dataBaseFilePath} + ${client.user!.id}`;
             this.dataBase = new Level(dataBaseFilePath);
@@ -64,13 +64,11 @@ export default class DiscordUser {
     /**
      * Collects user data from the database, or alternatively, from the live objects.
      */
-    public async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
+    private async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
         try {
             console.log('Loading user data from the database!');
             const userData = await this.dataBase.get(client.user!.id);
-            return new Promise((resolve, reject) => {
-                resolve(userData);
-            });
+            return userData;
         } catch (error) {
             if (error.type === 'NotFoundError') {
                 console.log("Adding new entry for the current user's data!");
