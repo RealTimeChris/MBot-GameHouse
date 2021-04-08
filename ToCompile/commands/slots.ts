@@ -27,7 +27,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
-        if (areWeInADM){
+        if (areWeInADM) {
             return commandReturnData;
         }
         
@@ -95,7 +95,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			return commandReturnData;
         }
 
-        let payoutAmount;
+        let payoutAmount: number;
         let gameResultType: string;
         const slotReel = [":crossed_swords:", ":apple:", ":ring:", ":gun:", ":swan:", ":rocket:", ":coin:", ":star:", ":jack_o_lantern:", ":christmas_tree:"];
 
