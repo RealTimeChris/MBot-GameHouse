@@ -43,7 +43,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			userName: (commandData.guildMember as Discord.GuildMember)!.user.username, displayName: (commandData.guildMember as Discord.GuildMember).displayName});
 		await guildMemberData.getFromDataBase();
 
-		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guildMember as Discord.GuildMember)?.has('MANAGE_MESSAGES')){
+		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')){
 			const msgString = `------\n**I need the Manage Messages permission in this channel, for this game!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
