@@ -52,26 +52,26 @@ var command = {
     function: Function()
 };
 function execute(commandData, discordUser) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeAllowed, rolesArray, guildData, x, isRoleFound, y, msgString, msgEmbed, msg, maxIdx, tempItem, len, x, y, tempRole, x, y, itemsMsgString, itemsMessageEmbeds, currentPage, x, itemsMsgStringTemp, rolesMsgStrings, rolesMsgEmbeds, currentPage2, x, rolesMsgStringTemp, x, x, finalMsgEmbedsArray, x, x, msgString, messageEmbed, currentPageIndex, userID, newMessage, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var commandReturnData, areWeInADM, areWeAllowed, rolesArray, guildData, msgString, msgEmbed, msg, x, isRoleFound, y, msgString, msgEmbed, msg, maxIdx, tempItem, len, x, y, tempRole, x, y, itemsMsgString, itemsMessageEmbeds, currentPage, x, itemsMsgStringTemp, rolesMsgStrings, rolesMsgEmbeds, currentPage2, x, rolesMsgStringTemp, x, x, finalMsgEmbedsArray, x, x, msgString, messageEmbed, currentPageIndex, userID, newMessage, error_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _b.trys.push([0, 14, , 15]);
+                    _c.trys.push([0, 17, , 18]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _b.sent();
+                    areWeInADM = _c.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.checkIfAllowedInChannel(commandData, discordUser)];
                 case 2:
-                    areWeAllowed = _b.sent();
+                    areWeAllowed = _c.sent();
                     if (areWeAllowed === false) {
                         return [2 /*return*/, commandReturnData];
                     }
@@ -79,11 +79,30 @@ function execute(commandData, discordUser) {
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _b.sent();
-                    x = 0;
-                    _b.label = 4;
+                    _c.sent();
+                    if (!!((_a = commandData.fromTextChannel.permissionsFor(commandData.guildMember)) === null || _a === void 0 ? void 0 : _a.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
+                    msgString = "------\n**I need the Manage Messages permission in this channel, for this command!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.borderColor)
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Permissions Issue:**__');
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    if (!(x < guildData.guildShop.roles.length)) return [3 /*break*/, 8];
+                    msg = _c.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 5:
+                    _c.sent();
+                    _c.label = 6;
+                case 6:
+                    x = 0;
+                    _c.label = 7;
+                case 7:
+                    if (!(x < guildData.guildShop.roles.length)) return [3 /*break*/, 11];
                     isRoleFound = false;
                     for (y = 0; y < rolesArray.length; y += 1) {
                         if (guildData.guildShop.roles[x].roleID === rolesArray[y].id) {
@@ -91,29 +110,29 @@ function execute(commandData, discordUser) {
                             break;
                         }
                     }
-                    if (!(isRoleFound === false)) return [3 /*break*/, 7];
+                    if (!(isRoleFound === false)) return [3 /*break*/, 10];
                     msgString = "------\n**Removing guild role " + guildData.guildShop.roles[x].roleName + " from guild cache!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Removed Guild Role:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 5:
-                    msg = _b.sent();
+                case 8:
+                    msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 6:
-                    _b.sent();
+                case 9:
+                    _c.sent();
                     guildData.guildShop.roles.splice(x, 1);
-                    _b.label = 7;
-                case 7:
+                    _c.label = 10;
+                case 10:
                     x += 1;
-                    return [3 /*break*/, 4];
-                case 8:
+                    return [3 /*break*/, 7];
+                case 11:
                     maxIdx = 0;
                     tempItem = void 0;
                     len = guildData.guildShop.items.length;
@@ -195,38 +214,38 @@ function execute(commandData, discordUser) {
                     for (x = 0; x < itemsMessageEmbeds.length; x += 1) {
                         finalMsgEmbedsArray.push(itemsMessageEmbeds[x]);
                     }
-                    if (!(rolesMsgEmbeds.length === 0 && itemsMessageEmbeds.length === 0)) return [3 /*break*/, 10];
+                    if (!(rolesMsgEmbeds.length === 0 && itemsMessageEmbeds.length === 0)) return [3 /*break*/, 13];
                     msgString = '';
                     msgString = 'Sorry, but we are all out of inventory!';
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed.setDescription(msgString).setTimestamp(Date.now()).setTitle('__**Empty Inventory:**__').setColor(guildData.borderColor)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL());
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 9:
-                    _b.sent();
+                case 12:
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 10:
+                case 13:
                     currentPageIndex = 0;
                     userID = commandData.guildMember.user.id;
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMsgEmbedsArray[currentPageIndex])];
-                case 11:
-                    newMessage = _b.sent();
+                case 14:
+                    newMessage = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guild.client, newMessage, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.recurseThroughMessagePages(userID, newMessage, currentPageIndex, finalMsgEmbedsArray, true)];
-                case 12:
-                    _b.sent();
+                case 15:
+                    _c.sent();
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 13:
-                    _b.sent();
+                case 16:
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 14:
-                    error_1 = _b.sent();
+                case 17:
+                    error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 15: return [2 /*return*/];
+                case 18: return [2 /*return*/];
             }
         });
     });

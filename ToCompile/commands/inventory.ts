@@ -40,6 +40,21 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		await guildData.getFromDataBase();
 		let userID = '';
 
+		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guildMember as Discord.GuildMember)?.has('MANAGE_MESSAGES')){
+			const msgString = `------\n**I need the Manage Messages permission in this channel, for this command!**\n------`;
+			let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setColor(guildData.borderColor as [number, number, number])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Permissions Issue:**__')
+			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+			}
+			await msg.delete({timeout: 20000});
+		}
+
 		const userIDRegExp = /.{2,3}\d{18}>/;
 		const idRegExp = /\d{18}/;
 		if (commandData.args[0] === undefined) {
