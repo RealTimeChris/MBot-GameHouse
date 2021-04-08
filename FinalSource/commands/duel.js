@@ -53,35 +53,35 @@ var command = {
     function: Function()
 };
 function execute(commandData, discordUser) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData_1, areWeInADM, areWeAllowed, guildData, msgString, msgEmbed, msg, numberRegExp, idRegExp, msgString, msgEmbed, msg, msgString, msgEmbed, msg, betAmount_1, toUserID_1, fromUserID_1, fromGuildMemberData_1, toGuildMember, msgString, msgEmbed, msg, toGuildMemberData_1, msgString, msgEmbed, msg, fromUserCurrency_1, toUserCurrency_1, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgEmbedString_1, messageEmbed, newMessage_1, filter, error_1;
         var _this = this;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
-                    _c.trys.push([0, 28, , 29]);
+                    _d.trys.push([0, 28, , 29]);
                     commandReturnData_1 = {
                         commandName: command.name
                     };
                     commandReturnData_1.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _c.sent();
+                    areWeInADM = _d.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData_1];
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.checkIfAllowedInChannel(commandData, discordUser)];
                 case 2:
-                    areWeAllowed = _c.sent();
+                    areWeAllowed = _d.sent();
                     if (areWeAllowed === false) {
                         return [2 /*return*/, commandReturnData_1];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _c.sent();
-                    if (!!((_a = commandData.fromTextChannel.permissionsFor(commandData.guildMember)) === null || _a === void 0 ? void 0 : _a.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
+                    _d.sent();
+                    if (!!((_b = commandData.fromTextChannel.permissionsFor((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.user)) === null || _b === void 0 ? void 0 : _b.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
                     msgString = "------\n**I need the Manage Messages permission in this channel, for this game!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -91,14 +91,14 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Permissions Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 5:
-                    _c.sent();
-                    _c.label = 6;
+                    _d.sent();
+                    _d.label = 6;
                 case 6:
                     numberRegExp = /\d{1,18}/;
                     idRegExp = /\d{18}/;
@@ -112,13 +112,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 8:
-                    _c.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 9:
                     if (!(commandData.args[1] === undefined || !idRegExp.test(commandData.args[1]))) return [3 /*break*/, 12];
@@ -131,13 +131,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 10:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 11:
-                    _c.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 12:
                     betAmount_1 = parseInt(commandData.args[0].match(numberRegExp)[0], 10);
@@ -147,7 +147,7 @@ function execute(commandData, discordUser) {
                         userName: commandData.guildMember.user.username, displayName: commandData.guildMember.displayName });
                     return [4 /*yield*/, fromGuildMemberData_1.getFromDataBase()];
                 case 13:
-                    _c.sent();
+                    _d.sent();
                     toGuildMember = commandData.guild.members.resolve(toUserID_1);
                     if (!(toGuildMember === null)) return [3 /*break*/, 16];
                     msgString = "------\n**Sorry, but that user could not be found!**\n------";
@@ -159,19 +159,19 @@ function execute(commandData, discordUser) {
                         .setTitle('__**User Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 14:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 15:
-                    _c.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 16:
                     toGuildMemberData_1 = new GuildMemberData_1.default({ dataBase: discordUser.dataBase, id: toGuildMember.id, guildId: commandData.guild.id, userName: toGuildMember.user.username, displayName: toGuildMember.displayName });
                     return [4 /*yield*/, toGuildMemberData_1.getFromDataBase()];
                 case 17:
-                    _c.sent();
+                    _d.sent();
                     if (!(toGuildMemberData_1 == null)) return [3 /*break*/, 20];
                     msgString = "------\n**Sorry, but the specified user data could not be found!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
@@ -182,13 +182,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 18:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 19:
-                    _c.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 20:
                     fromUserCurrency_1 = fromGuildMemberData_1.currency.wallet;
@@ -203,32 +203,32 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Insufficient Funds:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 21:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 22:
-                    _c.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 23:
                     if (!(betAmount_1 > toUserCurrency_1)) return [3 /*break*/, 26];
                     msgString = "------\n**Sorry, but they have insufficient funds in their wallet for accepting that wager!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Insufficient Funds:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 24:
-                    msg = _c.sent();
+                    msg = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 25:
-                    _c.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData_1];
                 case 26:
                     msgEmbedString_1 = '';
@@ -237,7 +237,7 @@ function execute(commandData, discordUser) {
                     messageEmbed.setDescription(msgEmbedString_1).setTimestamp(Date.now()).setTitle("__**IT'S TIME TO DUEL!**__").setColor([0, 0, 255]);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed, toUserID_1)];
                 case 27:
-                    newMessage_1 = _c.sent();
+                    newMessage_1 = _d.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage_1 = new Discord.Message(commandData.guild.client, newMessage_1, commandData.fromTextChannel);
                     }
@@ -508,7 +508,7 @@ function execute(commandData, discordUser) {
                     }); });
                     return [2 /*return*/, commandReturnData_1];
                 case 28:
-                    error_1 = _c.sent();
+                    error_1 = _d.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

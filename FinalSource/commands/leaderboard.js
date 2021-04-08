@@ -53,32 +53,52 @@ var command = {
     function: Function()
 };
 function execute(commandData, discordUser) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeAllowed, guildData, minIdx, temp, membersArray_1, len, x, y, membersPerPage, totalPageCount, currentPage, pageEmbeds, pageStrings, x, msgString, currentPageIndex, userID, newMessage, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, areWeInADM, areWeAllowed, guildData, msgString, msgEmbed, msg, minIdx, temp, membersArray_1, len, x, y, membersPerPage, totalPageCount, currentPage, pageEmbeds, pageStrings, x, msgString, currentPageIndex, userID, newMessage, error_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
+                    _c.trys.push([0, 10, , 11]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _a.sent();
+                    areWeInADM = _c.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.checkIfAllowedInChannel(commandData, discordUser)];
                 case 2:
-                    areWeAllowed = _a.sent();
+                    areWeAllowed = _c.sent();
                     if (areWeAllowed === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _a.sent();
+                    _c.sent();
+                    if (!!((_b = commandData.fromTextChannel.permissionsFor((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.user)) === null || _b === void 0 ? void 0 : _b.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
+                    msgString = "------\n**I need the Manage Messages permission in this channel, for this command!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.borderColor)
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Permissions Issue:**__');
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                case 4:
+                    msg = _c.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 5:
+                    _c.sent();
+                    _c.label = 6;
+                case 6:
                     minIdx = 0;
                     temp = void 0;
                     membersArray_1 = [];
@@ -135,24 +155,24 @@ function execute(commandData, discordUser) {
                     currentPageIndex = 0;
                     userID = commandData.guildMember.id;
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, pageEmbeds[currentPageIndex])];
-                case 4:
-                    newMessage = _a.sent();
+                case 7:
+                    newMessage = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guild.client, newMessage, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.recurseThroughMessagePages(userID, newMessage, currentPageIndex, pageEmbeds, true)];
-                case 5:
-                    _a.sent();
+                case 8:
+                    _c.sent();
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 6:
-                    _a.sent();
+                case 9:
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 7:
-                    error_1 = _a.sent();
+                case 10:
+                    error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 8: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });

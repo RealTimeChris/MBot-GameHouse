@@ -64,7 +64,7 @@ export default class DiscordUser {
     /**
      * Collects user data from the database, or alternatively, from the live objects.
      */
-    private async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
+    public async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
         try {
             console.log('Loading user data from the database!');
             const userData = await this.dataBase.get(client.user!.id);

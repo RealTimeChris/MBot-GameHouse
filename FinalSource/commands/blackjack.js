@@ -727,34 +727,34 @@ function recurseThroughMessagePages(message, betAmount, userHand, userHandScore,
     });
 }
 function execute(commandData, discordUser) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, areWeInADM, areWeAllowed, guildData, msgString, msgEmbed, msg, betRegExp, msgString, msgEmbed, msg, betAmount, userID, guildMemberData, msgString, msgEmbed, msg, finalMessageEmbed, finalMsgString, x, footerMsgString, userHand, userAceIndices, userHandScore, dealerHand, dealerAceIndices, newDealerHandScore, footerMsgString2_1, payAmount, footerMsgString2, newMessage, newCardCount, error_1;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        return __generator(this, function (_e) {
+            switch (_e.label) {
                 case 0:
-                    _d.trys.push([0, 30, , 31]);
+                    _e.trys.push([0, 30, , 31]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _d.sent();
+                    areWeInADM = _e.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.checkIfAllowedInChannel(commandData, discordUser)];
                 case 2:
-                    areWeAllowed = _d.sent();
+                    areWeAllowed = _e.sent();
                     if (areWeAllowed === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _d.sent();
-                    if (!!((_a = commandData.fromTextChannel.permissionsFor(commandData.guildMember)) === null || _a === void 0 ? void 0 : _a.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
+                    _e.sent();
+                    if (!!((_b = commandData.fromTextChannel.permissionsFor((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.user)) === null || _b === void 0 ? void 0 : _b.has('MANAGE_MESSAGES'))) return [3 /*break*/, 6];
                     msgString = "------\n**I need the Manage Messages permission in this channel, for this game!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -764,14 +764,14 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Permissions Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    msg = _d.sent();
+                    msg = _e.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 5:
-                    _d.sent();
-                    _d.label = 6;
+                    _e.sent();
+                    _e.label = 6;
                 case 6:
                     betRegExp = /\d{1,18}/;
                     if (!(commandData.args[0] === undefined || !betRegExp.test(commandData.args[0]) || parseInt(commandData.args[0], 10) < 1)) return [3 /*break*/, 9];
@@ -784,39 +784,39 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
-                    msg = _d.sent();
+                    msg = _e.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 8:
-                    _d.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
                 case 9:
                     betAmount = parseInt(commandData.args[0].match(betRegExp)[0], 10);
-                    userID = (_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.id;
+                    userID = (_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.id;
                     guildMemberData = new GuildMemberData_1.default({ dataBase: discordUser.dataBase, id: userID, guildId: commandData.guild.id,
                         userName: commandData.guildMember.user.username, displayName: commandData.guildMember.displayName });
                     return [4 /*yield*/, guildMemberData.getFromDataBase()];
                 case 10:
-                    _d.sent();
+                    _e.sent();
                     if (!(betAmount > guildMemberData.currency.wallet)) return [3 /*break*/, 13];
                     msgString = "------\n**Sorry, but you have insufficient funds for placing that wager!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Funds:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 11:
-                    msg = _d.sent();
+                    msg = _e.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 12:
-                    _d.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
                 case 13:
                     finalMessageEmbed = new Discord.MessageEmbed();
@@ -828,7 +828,7 @@ function execute(commandData, discordUser) {
                     footerMsgString = '------\n✅ to Hit, ❎ to Stand.\n------';
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 14:
-                    _d.sent();
+                    _e.sent();
                     userHand = [];
                     userAceIndices = [];
                     userHand.push(drawNextBlackjackCard(guildData.blackjackStack));
@@ -845,7 +845,7 @@ function execute(commandData, discordUser) {
                     newDealerHandScore = dealerHand[0].value;
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 15:
-                    _d.sent();
+                    _e.sent();
                     if ((userHandScore === 9) || (userHandScore === 10) || (userHandScore === 11)) {
                         footerMsgString = footerMsgString.slice(0, footerMsgString.length - 8) + ", \u23EC to Double Down.\n------";
                     }
@@ -870,19 +870,19 @@ function execute(commandData, discordUser) {
                         { name: "Player's Hand: (" + userHandScore + ")", value: userHand[0].suit + userHand[0].type + userHand[1].suit + userHand[1].type, inline: true }, { name: '__**Game Status: Tie**__', value: footerMsgString2_1, inline: false }];
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMessageEmbed)];
                 case 16:
-                    _d.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
                 case 17: return [4 /*yield*/, guildMemberData.getFromDataBase()];
                 case 18:
-                    _d.sent();
+                    _e.sent();
                     payAmount = Math.trunc(1.5 * betAmount);
                     guildMemberData.currency.wallet += payAmount;
                     return [4 /*yield*/, guildMemberData.writeToDataBase()];
                 case 19:
-                    _d.sent();
+                    _e.sent();
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 20:
-                    _d.sent();
+                    _e.sent();
                     if (payAmount > guildData.casinoStats.largestBlackjackPayout.amount) {
                         guildData.casinoStats.largestBlackjackPayout.amount = payAmount;
                         guildData.casinoStats.largestBlackjackPayout.date = Date();
@@ -893,7 +893,7 @@ function execute(commandData, discordUser) {
                     guildData.casinoStats.totalPayout;
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 21:
-                    _d.sent();
+                    _e.sent();
                     footerMsgString2 = "\n------\n__**Payout Amount:**__ " + payAmount + " " + discordUser.userData.currencyName + "\n__**Your New Wallet Balance:**__ " + guildMemberData.currency.wallet + " " + discordUser.userData.currencyName + "\n------";
                     finalMessageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -906,7 +906,7 @@ function execute(commandData, discordUser) {
                         { name: "Player's Hand: (" + userHandScore + ")", value: userHand[0].suit + userHand[0].type + userHand[1].suit + userHand[1].type, inline: true }, { name: '__**Game Status: Player Wins**__', value: footerMsgString2, inline: false }];
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMessageEmbed)];
                 case 22:
-                    _d.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
                 case 23:
                     finalMessageEmbed
@@ -920,28 +920,28 @@ function execute(commandData, discordUser) {
                         { name: "Player's Hand: (" + userHandScore + ")", value: userHand[0].suit + userHand[0].type + userHand[1].suit + userHand[1].type, inline: true }, { name: '__**Game Status: In Play**__', value: footerMsgString, inline: false }];
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, finalMessageEmbed)];
                 case 24:
-                    newMessage = _d.sent();
+                    newMessage = _e.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guildMember.client, newMessage, commandData.fromTextChannel);
                     }
                     newCardCount = 2;
                     return [4 /*yield*/, newMessage.react('✅')];
                 case 25:
-                    _d.sent();
+                    _e.sent();
                     return [4 /*yield*/, newMessage.react('❎')];
                 case 26:
-                    _d.sent();
+                    _e.sent();
                     if (!(newCardCount === 2 && (newMessage.embeds[0].fields[2].value.includes('⏬')))) return [3 /*break*/, 28];
                     return [4 /*yield*/, newMessage.react('⏬')];
                 case 27:
-                    _d.sent();
-                    _d.label = 28;
+                    _e.sent();
+                    _e.label = 28;
                 case 28: return [4 /*yield*/, recurseThroughMessagePages(newMessage, betAmount, userHand, userHandScore, userAceIndices, dealerHand, newDealerHandScore, dealerAceIndices, userID, commandData.guildMember, guildMemberData, guildData, newCardCount, discordUser, command.name)];
                 case 29:
-                    _d.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
                 case 30:
-                    error_1 = _d.sent();
+                    error_1 = _e.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

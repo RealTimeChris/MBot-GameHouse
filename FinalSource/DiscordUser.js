@@ -94,7 +94,7 @@ var DiscordUser = /** @class */ (function () {
      */
     DiscordUser.prototype.getUserDataFromDB = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData_1, error_2, userData;
+            var userData, error_2, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -102,10 +102,8 @@ var DiscordUser = /** @class */ (function () {
                         console.log('Loading user data from the database!');
                         return [4 /*yield*/, this.dataBase.get(client.user.id)];
                     case 1:
-                        userData_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(userData_1);
-                            })];
+                        userData = _a.sent();
+                        return [2 /*return*/, userData];
                     case 2:
                         error_2 = _a.sent();
                         if (error_2.type === 'NotFoundError') {
