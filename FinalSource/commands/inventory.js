@@ -98,7 +98,7 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 5:
                     _c.sent();
-                    _c.label = 6;
+                    return [2 /*return*/, commandReturnData];
                 case 6:
                     userIDRegExp = /.{2,3}\d{18}>/;
                     idRegExp = /\d{18}/;

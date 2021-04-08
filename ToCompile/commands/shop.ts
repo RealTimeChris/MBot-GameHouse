@@ -53,8 +53,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
+			return commandReturnData;
 		}
-
 
 		for (let x = 0; x < guildData.guildShop.roles.length; x += 1) {
 			let isRoleFound = false;

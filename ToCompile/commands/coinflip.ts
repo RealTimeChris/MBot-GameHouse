@@ -56,6 +56,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
+			return commandReturnData;
 		}
 
 		const betAmountRegExp = /\d{1,18}/;

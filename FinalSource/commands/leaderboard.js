@@ -97,7 +97,7 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 5:
                     _c.sent();
-                    _c.label = 6;
+                    return [2 /*return*/, commandReturnData];
                 case 6:
                     minIdx = 0;
                     temp = void 0;

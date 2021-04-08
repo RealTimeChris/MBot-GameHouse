@@ -103,7 +103,7 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 6:
                     _e.sent();
-                    _e.label = 7;
+                    return [2 /*return*/, commandReturnData_1];
                 case 7:
                     betAmountRegExp = /\d{1,18}/;
                     if (!(commandData.args[0] === undefined || !betAmountRegExp.test(commandData.args[0]) || parseInt(commandData.args[0], 10) < 1)) return [3 /*break*/, 10];
