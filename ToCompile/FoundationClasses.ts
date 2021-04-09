@@ -220,7 +220,7 @@ module FoundationClasses {
         public permsChannel: Discord.GuildChannel | null = null;
         public toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel |  null = null;
     
-        public async initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction: any = null, guildMemberID: string = '', guildID: string = ''): Promise<void>{
+        public async initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction: any = null, guildMemberID: string = '', guildID: string = ''): Promise<void> {
             try{
                 this.fromTextChannelType = fromTextChannelType;
                 this.fromTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel | Discord.DMChannel;

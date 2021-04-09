@@ -6,6 +6,7 @@
 'use strict';
 
 import Discord = require('discord.js');
+import EventEmitter from 'events';
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
@@ -614,41 +615,41 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				await guildData.getFromDataBase();
 				guildData.rouletteGame.currentlySpinning = true;
 				await guildData.writeToDataBase();
+				
+				const eventEmitter = new EventEmitter();
+				let currentIndex = 3;
 
-				const msgEmbed = new Discord.MessageEmbed();
-					msgEmbed
-						.setAuthor(commandData.guild!.client.user!.username, commandData.guild!.client.user!.avatarURL()!)
-						.setColor([0, 0, 255])
-						.setDescription('------\n__**30 seconds remaining to place your roulette bets!**__\n------')
-						.setTimestamp(Date() as unknown as Date)
-						.setTitle('__**Roulette Ball Rolling:**__');
-				let newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-				if (commandData.toTextChannel instanceof Discord.WebhookClient){
-					newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
-				}
-
-				setTimeout(async () => {
+				let newMessage: Discord.Message;
+				eventEmitter.on('rouletteCountdown', async () => {
 					const msgEmbed = new Discord.MessageEmbed();
 					msgEmbed
 						.setAuthor(commandData.guild?.client.user?.username, commandData.guild?.client.user?.avatarURL()!)
 						.setColor([0, 0, 255])
-						.setDescription(`------\n__**20 seconds remaining to place your roulette bets!**__\n------`)
+						.setDescription(`------\n__**${currentIndex * 10} seconds remaining to place your roulette bets!**__\n------`)
 						.setTimestamp((Date() as unknown) as Date)
 						.setTitle('__**Roulette Ball Rolling:**__');
+					if (currentIndex === 3){
+						newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+						if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
+						}
+					}
+					else{
 						await newMessage.edit(msgEmbed);
-
-						setTimeout(async () => {
-							msgEmbed.setDescription(`------\n__**10 seconds remaining to place your roulette bets!**__\n------`);
-							await newMessage.edit(msgEmbed);
-							await newMessage.delete({timeout: 10000});
-						}, 10000);
-				}, 10000);
+					}										
+					currentIndex -= 1;
+					if (currentIndex === -1){
+						await newMessage.delete();
+						let finalRoll = Math.trunc(Math.random() * 38).toString();
+						await calculateResults(finalRoll, commandData, discordUser, redNumbers, blackNumbers);
+					}
+				});
 				
-				setTimeout(async () => {
-					guildData.getFromDataBase();
-					let finalRoll = Math.trunc(Math.random() * 38).toString();
-					calculateResults(finalRoll, commandData, discordUser, redNumbers, blackNumbers);
-				}, 30000);
+				for (let x = 0; x <= 3; x += 1){
+					setTimeout(() => {
+						eventEmitter.emit('rouletteCountdown');
+					}, x * 10000);
+				}
 			}
 	
 		return commandReturnData;

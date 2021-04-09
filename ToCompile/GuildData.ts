@@ -44,7 +44,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     public guildShop: FoundationClasses.Shop = {roles: [], items: []};
     public rouletteGame: FoundationClasses.Roulette = {bets:[], currentlySpinning: false};
     
-    async getFromDataBase(){
+    public async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase.get(this.dataBaseKey) as GuildData;
             this.blackjackStack = guildData.blackjackStack;
@@ -61,7 +61,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    async writeToDataBase(){
+    public async writeToDataBase(): Promise<void> {
         if (this.guildName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";

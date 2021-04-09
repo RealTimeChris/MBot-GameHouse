@@ -44,6 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
+var events_1 = __importDefault(require("events"));
 var GuildData_1 = __importDefault(require("../GuildData"));
 var GuildMemberData_1 = __importDefault(require("../GuildMemberData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
@@ -225,12 +226,12 @@ function calculateResults(finalRoll, commandData, discordUser, redNumbers, black
 function execute(commandData, discordUser) {
     var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeAllowed, guildData_1, whatAreWeDoing, betAmount, betType, betOptions, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, digitRegExp, betTypes, redNumbers_1, blackNumbers_1, guildMemberData, currentBetAmount, x, number, msgString, msgEmbed_1, msg, isValidType, x, msgString, msgEmbed_2, msg, payoutAmount, winningNumbers, _e, msgString, msgEmbed_3, msg, msgString, msgEmbed_4, msg, _f, _g, msgString, msgEmbed_5, msg, msgString, msgEmbed_6, msg, _h, _j, _k, _l, msgString, msgEmbed_7, msg, msgString, msgEmbed_8, msg, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, msgString, msgEmbed_9, msg, msgString, msgEmbed_10, msg, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, x, _16, _17, x, _18, _19, x, _20, _21, x, _22, _23, x, _24, _25, x, _26, _27, x, _28, _29, newRouletteBet, msgEmbed, msgEmbed, newMessage_1, error_1;
+        var commandReturnData, areWeInADM, areWeAllowed, guildData, whatAreWeDoing, betAmount, betType, betOptions, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, digitRegExp, betTypes, redNumbers_1, blackNumbers_1, guildMemberData, currentBetAmount, x, number, msgString, msgEmbed_1, msg, isValidType, x, msgString, msgEmbed_2, msg, payoutAmount, winningNumbers, _e, msgString, msgEmbed_3, msg, msgString, msgEmbed_4, msg, _f, _g, msgString, msgEmbed_5, msg, msgString, msgEmbed_6, msg, _h, _j, _k, _l, msgString, msgEmbed_7, msg, msgString, msgEmbed_8, msg, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, msgString, msgEmbed_9, msg, msgString, msgEmbed_10, msg, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, x, _16, _17, x, _18, _19, x, _20, _21, x, _22, _23, x, _24, _25, x, _26, _27, x, _28, _29, newRouletteBet, msgEmbed, eventEmitter_1, currentIndex_1, newMessage_1, x, error_1;
         var _this = this;
         return __generator(this, function (_30) {
             switch (_30.label) {
                 case 0:
-                    _30.trys.push([0, 165, , 166]);
+                    _30.trys.push([0, 164, , 165]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -246,8 +247,8 @@ function execute(commandData, discordUser) {
                     if (areWeAllowed === false) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    guildData_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
-                    return [4 /*yield*/, guildData_1.getFromDataBase()];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
                     _30.sent();
                     whatAreWeDoing = void 0;
@@ -258,7 +259,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter either 'start' or 'bet  as the first argument! (!roulette = bet, BETAMOUNT, BETTYPE, BETOPTIONS)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -277,7 +278,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter either a 'start' or 'bet' as the first arguments! (!roulette = bet, BETAMOUNT, BETTYPE, BETOPTIONS)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -293,14 +294,14 @@ function execute(commandData, discordUser) {
                     return [2 /*return*/, commandReturnData];
                 case 9:
                     if (!(commandData.args[0].toLowerCase() === 'start')) return [3 /*break*/, 14];
-                    return [4 /*yield*/, guildData_1.getFromDataBase()];
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 10:
                     _30.sent();
-                    if (!(guildData_1.rouletteGame.currentlySpinning === true)) return [3 /*break*/, 13];
+                    if (!(guildData.rouletteGame.currentlySpinning === true)) return [3 /*break*/, 13];
                     msgString = "------\n**Please, wait until the current game is over, before starting another one!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Game Issue:**__');
@@ -319,14 +320,14 @@ function execute(commandData, discordUser) {
                     return [3 /*break*/, 19];
                 case 14:
                     if (!(commandData.args[0].toLowerCase() === 'bet')) return [3 /*break*/, 19];
-                    return [4 /*yield*/, guildData_1.getFromDataBase()];
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 15:
                     _30.sent();
-                    if (!(guildData_1.rouletteGame.currentlySpinning === false)) return [3 /*break*/, 18];
+                    if (!(guildData.rouletteGame.currentlySpinning === false)) return [3 /*break*/, 18];
                     msgString = "------\n**Please, start a roulette game before placing any bets!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Game Issue:**__');
@@ -348,7 +349,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter a valid betting amount! (!roulette = bet, BETAMOUNT, BETTYPE, BETOPTIONS)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -381,9 +382,9 @@ function execute(commandData, discordUser) {
                 case 24:
                     _30.sent();
                     currentBetAmount = 0;
-                    for (x = 0; x < guildData_1.rouletteGame.bets.length; x += 1) {
-                        if (guildMemberData.id === ((_c = guildData_1.rouletteGame.bets[x]) === null || _c === void 0 ? void 0 : _c.userID)) {
-                            number = (_d = guildData_1.rouletteGame.bets[x]) === null || _d === void 0 ? void 0 : _d.betAmount;
+                    for (x = 0; x < guildData.rouletteGame.bets.length; x += 1) {
+                        if (guildMemberData.id === ((_c = guildData.rouletteGame.bets[x]) === null || _c === void 0 ? void 0 : _c.userID)) {
+                            number = (_d = guildData.rouletteGame.bets[x]) === null || _d === void 0 ? void 0 : _d.betAmount;
                             currentBetAmount += number;
                         }
                     }
@@ -391,7 +392,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Sorry, but you have insufficient funds in your wallet for placing that bet!**\n------";
                     msgEmbed_1 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Insufficient Funds:**__');
@@ -417,7 +418,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a valid bet type! Enter '!help = roulette' for more info! (!roulette = BETAMOUNT, BETTYPE, BETOPTIONS)**\n------";
                     msgEmbed_2 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -484,7 +485,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a valid value from the roulette wheel! (1-36)**\n------";
                     msgEmbed_3 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -504,7 +505,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a value between 1 and 36!**\n------";
                     msgEmbed_4 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -536,7 +537,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a valid starting value for your split! (1-35)**\n------";
                     msgEmbed_5 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -556,7 +557,7 @@ function execute(commandData, discordUser) {
                     msgString = "-------\n**Please enter a value between 1 and 35!**\n------";
                     msgEmbed_6 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -589,7 +590,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a valid starting value for your street! (1-34)**\n------";
                     msgEmbed_7 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -609,7 +610,7 @@ function execute(commandData, discordUser) {
                     msgString = "-------\n**Please enter a value between 1 and 34!**\n------";
                     msgEmbed_8 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -672,7 +673,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a valid starting value for your sixline!**\n------";
                     msgEmbed_9 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -692,7 +693,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a value between 1 and 31!**\n------";
                     msgEmbed_10 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -976,8 +977,8 @@ function execute(commandData, discordUser) {
                 case 156: return [3 /*break*/, 157];
                 case 157:
                     newRouletteBet = { betAmount: betAmount, payoutAmount: payoutAmount, betOptions: betOptions, betType: betType, userID: commandData.guildMember.id, winningNumbers: winningNumbers };
-                    guildData_1.rouletteGame.bets.push(newRouletteBet);
-                    return [4 /*yield*/, guildData_1.writeToDataBase()];
+                    guildData.rouletteGame.bets.push(newRouletteBet);
+                    return [4 /*yield*/, guildData.writeToDataBase()];
                 case 158:
                     _30.sent();
                     msgEmbed = new Discord.MessageEmbed();
@@ -990,32 +991,20 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 159:
                     _30.sent();
-                    return [3 /*break*/, 164];
+                    return [3 /*break*/, 163];
                 case 160:
-                    if (!(whatAreWeDoing === 'start')) return [3 /*break*/, 164];
-                    return [4 /*yield*/, guildData_1.getFromDataBase()];
+                    if (!(whatAreWeDoing === 'start')) return [3 /*break*/, 163];
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 161:
                     _30.sent();
-                    guildData_1.rouletteGame.currentlySpinning = true;
-                    return [4 /*yield*/, guildData_1.writeToDataBase()];
+                    guildData.rouletteGame.currentlySpinning = true;
+                    return [4 /*yield*/, guildData.writeToDataBase()];
                 case 162:
                     _30.sent();
-                    msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed
-                        .setAuthor(commandData.guild.client.user.username, commandData.guild.client.user.avatarURL())
-                        .setColor([0, 0, 255])
-                        .setDescription('------\n__**30 seconds remaining to place your roulette bets!**__\n------')
-                        .setTimestamp(Date())
-                        .setTitle('__**Roulette Ball Rolling:**__');
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 163:
-                    newMessage_1 = _30.sent();
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
-                        newMessage_1 = new Discord.Message(commandData.guild.client, newMessage_1, commandData.fromTextChannel);
-                    }
-                    setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var msgEmbed;
-                        var _this = this;
+                    eventEmitter_1 = new events_1.default();
+                    currentIndex_1 = 3;
+                    eventEmitter_1.on('rouletteCountdown', function () { return __awaiter(_this, void 0, void 0, function () {
+                        var msgEmbed, finalRoll;
                         var _a, _b, _c, _d;
                         return __generator(this, function (_e) {
                             switch (_e.label) {
@@ -1024,48 +1013,49 @@ function execute(commandData, discordUser) {
                                     msgEmbed
                                         .setAuthor((_b = (_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.user) === null || _b === void 0 ? void 0 : _b.username, (_d = (_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.client.user) === null || _d === void 0 ? void 0 : _d.avatarURL())
                                         .setColor([0, 0, 255])
-                                        .setDescription("------\n__**20 seconds remaining to place your roulette bets!**__\n------")
+                                        .setDescription("------\n__**" + currentIndex_1 * 10 + " seconds remaining to place your roulette bets!**__\n------")
                                         .setTimestamp(Date())
                                         .setTitle('__**Roulette Ball Rolling:**__');
-                                    return [4 /*yield*/, newMessage_1.edit(msgEmbed)];
+                                    if (!(currentIndex_1 === 3)) return [3 /*break*/, 2];
+                                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                                 case 1:
+                                    newMessage_1 = _e.sent();
+                                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                                        newMessage_1 = new Discord.Message(commandData.guild.client, newMessage_1, commandData.fromTextChannel);
+                                    }
+                                    return [3 /*break*/, 4];
+                                case 2: return [4 /*yield*/, newMessage_1.edit(msgEmbed)];
+                                case 3:
                                     _e.sent();
-                                    setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                                        return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    msgEmbed.setDescription("------\n__**10 seconds remaining to place your roulette bets!**__\n------");
-                                                    return [4 /*yield*/, newMessage_1.edit(msgEmbed)];
-                                                case 1:
-                                                    _a.sent();
-                                                    return [4 /*yield*/, newMessage_1.delete({ timeout: 10000 })];
-                                                case 2:
-                                                    _a.sent();
-                                                    return [2 /*return*/];
-                                            }
-                                        });
-                                    }); }, 10000);
-                                    return [2 /*return*/];
+                                    _e.label = 4;
+                                case 4:
+                                    currentIndex_1 -= 1;
+                                    if (!(currentIndex_1 === -1)) return [3 /*break*/, 7];
+                                    return [4 /*yield*/, newMessage_1.delete()];
+                                case 5:
+                                    _e.sent();
+                                    finalRoll = Math.trunc(Math.random() * 38).toString();
+                                    return [4 /*yield*/, calculateResults(finalRoll, commandData, discordUser, redNumbers_1, blackNumbers_1)];
+                                case 6:
+                                    _e.sent();
+                                    _e.label = 7;
+                                case 7: return [2 /*return*/];
                             }
                         });
-                    }); }, 10000);
-                    setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                        var finalRoll;
-                        return __generator(this, function (_a) {
-                            guildData_1.getFromDataBase();
-                            finalRoll = Math.trunc(Math.random() * 38).toString();
-                            calculateResults(finalRoll, commandData, discordUser, redNumbers_1, blackNumbers_1);
-                            return [2 /*return*/];
-                        });
-                    }); }, 30000);
-                    _30.label = 164;
-                case 164: return [2 /*return*/, commandReturnData];
-                case 165:
+                    }); });
+                    for (x = 0; x <= 3; x += 1) {
+                        setTimeout(function () {
+                            eventEmitter_1.emit('rouletteCountdown');
+                        }, x * 10000);
+                    }
+                    _30.label = 163;
+                case 163: return [2 /*return*/, commandReturnData];
+                case 164:
                     error_1 = _30.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 166: return [2 /*return*/];
+                case 165: return [2 /*return*/];
             }
         });
     });
