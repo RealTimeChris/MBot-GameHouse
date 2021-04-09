@@ -35,7 +35,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     public lastTimeRobbed: number = 0;
     public lastTimeWorked: number = 0;
     public roles: FoundationClasses.InventoryRole[] = [];
-    async getFromDataBase(){
+    public async getFromDataBase(){
         try{
             const guildMemberData = await this.dataBase.get(this.dataBaseKey) as GuildMemberData;
             this.currency = guildMemberData.currency;
@@ -51,7 +51,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    async writeToDataBase(){
+    public async writeToDataBase(){
         if (this.userName === ''|| this.displayName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";
