@@ -140,21 +140,19 @@ var DiscordUser = /** @class */ (function () {
      */
     DiscordUser.prototype.updateUserDataInDB = function (newUserData) {
         return __awaiter(this, void 0, void 0, function () {
-            var userDataNew, error_3;
+            var error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        this.userData = newUserData;
-                        userDataNew = this.userData;
-                        return [4 /*yield*/, this.dataBase.put(this.userData.userID, userDataNew)];
+                        return [4 /*yield*/, this.dataBase.put(this.userData.userID, newUserData)];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, this.dataBase.get(this.userData.userID)];
                     case 2:
-                        userDataNew = _a.sent();
+                        newUserData = _a.sent();
                         console.log('New User Cache:');
-                        console.log(userDataNew);
+                        console.log(newUserData);
                         return [2 /*return*/];
                     case 3:
                         error_3 = _a.sent();
@@ -192,7 +190,7 @@ var DiscordUser = /** @class */ (function () {
                             msBetweenCacheBackup: config.msBetweenCacheBackup,
                             prefix: config.prefix,
                             publicKey: config.publicKey,
-                            startupCall: userData.startupCall,
+                            startupCall: this.userData.startupCall,
                             timeOfLastUpdateAndSave: new Date().getTime(),
                             userID: client.user.id,
                             userName: client.user.username,

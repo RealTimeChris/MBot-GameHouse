@@ -101,12 +101,10 @@ export default class DiscordUser {
      */
     public async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
         try {
-            this.userData = newUserData;
-            let userDataNew = this.userData;
-            await this.dataBase.put(this.userData.userID, userDataNew);
-            userDataNew = await this.dataBase.get(this.userData.userID);
+            await this.dataBase.put(this.userData.userID, newUserData);
+            newUserData = await this.dataBase.get(this.userData.userID);
             console.log('New User Cache:');
-            console.log(userDataNew);
+            console.log(newUserData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
@@ -134,7 +132,7 @@ export default class DiscordUser {
                 msBetweenCacheBackup: config.msBetweenCacheBackup,
                 prefix: config.prefix,
                 publicKey: config.publicKey,
-                startupCall: userData.startupCall,
+                startupCall: this.userData.startupCall,
                 timeOfLastUpdateAndSave: new Date().getTime(),
                 userID: client.user!.id,
                 userName: client.user!.username,
