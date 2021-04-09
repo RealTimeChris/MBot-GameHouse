@@ -159,7 +159,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
 
         // Create Global Commande
-        await interaction.createApplicationCommand(casinostats).then(value => console.log(value)).catch(error => consol.log(error.message));
+        await interaction.createApplicationCommand(casinostats).then(value => console.log(value)).catch(error => console.log(error.message));
 
         const coinflip = {
             "name": "coinflip",
