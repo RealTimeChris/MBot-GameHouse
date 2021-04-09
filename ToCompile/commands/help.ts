@@ -29,22 +29,17 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
         if (commandData.args[0] === undefined) {
             const commandNames: string[] = [];
 
-            commandFiles.forEach((value: any, key: string, map) => {
-                commandNames[key as any] = value.name;
-                return commandNames;
-            });
-
+            let currentIndex = 0;
             let msgString = '';
             msgString += '!help = COMMANDNAMEHERE\n\n__**List of command names:**__ ';
 
-            let currentIndex = 0;
-            commandFiles.forEach((value, key, map) => {
+            commandFiles.forEach((value: FoundationClasses.BotCommand, key: string) => {
+                commandNames[key as any] = value.name;
                 msgString += commandNames[key as any];
                 currentIndex += 1;
                 if (currentIndex < commandFiles.size) {
                     msgString += ', ';
                 }
-                return commandNames;
             });
 
             const messageEmbed = new Discord.MessageEmbed();
@@ -90,14 +85,12 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
         let commandDescription;
         let commandName = '';
 
-        commandFiles.forEach((value, key, map) => {
-            const command = value;
-            if (commandData.args[0] === command.name) {
+        commandFiles.forEach((value: FoundationClasses.BotCommand) => {
+            if (commandData.args[0] === value.name) {
                 isFound = true;
-                commandDescription = command.description;
-                commandName = command.name;
+                commandDescription = value.description;
+                commandName = value.name;
             }
-            return commandName;
         });
 
         if (isFound === false) {

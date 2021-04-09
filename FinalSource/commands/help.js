@@ -56,7 +56,7 @@ var command = {
  */
 function execute(commandData) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, commandFiles_1, commandNames_1, msgString_1, currentIndex_1, messageEmbed, dmChannel, msgString_2, msgEmbed, isFound_1, commandDescription_1, commandName_1, msgString, msgEmbed, messageEmbed, error_1;
+        var commandReturnData, commandFiles_1, commandNames_1, currentIndex_1, msgString_1, messageEmbed, dmChannel, msgString_2, msgEmbed, isFound_1, commandDescription_1, commandName_1, msgString, msgEmbed, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -67,20 +67,16 @@ function execute(commandData) {
                     commandFiles_1 = CommandIndex_1.default;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 7];
                     commandNames_1 = [];
-                    commandFiles_1.forEach(function (value, key, map) {
-                        commandNames_1[key] = value.name;
-                        return commandNames_1;
-                    });
+                    currentIndex_1 = 0;
                     msgString_1 = '';
                     msgString_1 += '!help = COMMANDNAMEHERE\n\n__**List of command names:**__ ';
-                    currentIndex_1 = 0;
-                    commandFiles_1.forEach(function (value, key, map) {
+                    commandFiles_1.forEach(function (value, key) {
+                        commandNames_1[key] = value.name;
                         msgString_1 += commandNames_1[key];
                         currentIndex_1 += 1;
                         if (currentIndex_1 < commandFiles_1.size) {
                             msgString_1 += ', ';
                         }
-                        return commandNames_1;
                     });
                     messageEmbed = new Discord.MessageEmbed();
                     if (commandData.guildMember instanceof Discord.GuildMember) {
@@ -129,14 +125,12 @@ function execute(commandData) {
                 case 7:
                     isFound_1 = false;
                     commandName_1 = '';
-                    commandFiles_1.forEach(function (value, key, map) {
-                        var command = value;
-                        if (commandData.args[0] === command.name) {
+                    commandFiles_1.forEach(function (value) {
+                        if (commandData.args[0] === value.name) {
                             isFound_1 = true;
-                            commandDescription_1 = command.description;
-                            commandName_1 = command.name;
+                            commandDescription_1 = value.description;
+                            commandName_1 = value.name;
                         }
-                        return commandName_1;
                     });
                     if (!(isFound_1 === false)) return [3 /*break*/, 9];
                     msgString = "------\n**Sorry, but that command was not found!**\n------";
