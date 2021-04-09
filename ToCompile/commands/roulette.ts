@@ -156,7 +156,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			const commandReturnData: FoundationClasses.CommandReturnData = {
 				commandName: command.name
 			};
-			commandReturnData.commandName = command.name;
+			
 			const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
 			if (areWeInADM === true) {
@@ -599,7 +599,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					let newRouletteBet: FoundationClasses.RouletteBet = {betAmount: betAmount, payoutAmount: payoutAmount, betOptions: betOptions!, betType: betType!, userID: commandData.guildMember!.id, winningNumbers: winningNumbers};
 					
 					guildData.rouletteGame.bets.push(newRouletteBet);
-					
+
 					await guildData.writeToDataBase();
 					const msgEmbed = new Discord.MessageEmbed();
 					msgEmbed

@@ -21,7 +21,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
 
         if (commandData.guildMember instanceof Discord.User){
             const msgString = '------\n**TEST!**\n------';

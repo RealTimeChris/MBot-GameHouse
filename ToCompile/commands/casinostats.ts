@@ -22,7 +22,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		const commandReturnData: FoundationClasses.CommandReturnData = {
 			commandName: command.name
 		};
-		commandReturnData.commandName = command.name;
+		
 		const areWeAllowedHere = await HelperFunctions.checkIfAllowedInChannel(commandData, discordUser);
 
 		if (!areWeAllowedHere) {

@@ -23,7 +23,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-        commandReturnData.commandName = command.name;
 
         let areWeInADM = await HelperFunctions.areWeInADM(commandData);
 

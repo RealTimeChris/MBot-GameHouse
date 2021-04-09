@@ -25,7 +25,6 @@ async function execute(commandData : FoundationClasses.CommandData, discordUser:
 		const commandReturnData: FoundationClasses.CommandReturnData = {
 			commandName: command.name
 		};
-		commandReturnData.commandName = command.name;
 
 		if (commandData.args[0]?.toLowerCase() !== 'janny' && commandData.args[0]?.toLowerCase() !== 'musichouse' && commandData.args[0]?.toLowerCase() !== 'gamehouse'){
 			const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'

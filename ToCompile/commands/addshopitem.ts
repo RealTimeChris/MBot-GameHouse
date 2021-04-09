@@ -20,7 +20,10 @@ const command: FoundationClasses.BotCommand = {
 
 async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
-		const commandReturnData: FoundationClasses.CommandReturnData = {commandName: command.name};
+		const commandReturnData: FoundationClasses.CommandReturnData = {
+			commandName: command.name
+		};
+		
 		const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
 		if (areWeInADM === true) {
