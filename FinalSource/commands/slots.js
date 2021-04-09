@@ -63,7 +63,6 @@ function execute(commandData, discordUser) {
                     commandReturnData_1 = {
                         commandName: command.name
                     };
-                    commandReturnData_1.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _a.sent();

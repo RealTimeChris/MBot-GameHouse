@@ -60,7 +60,9 @@ function execute(commandData, discordUser) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 13, , 14]);
-                    commandReturnData = { commandName: command.name };
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _b.sent();

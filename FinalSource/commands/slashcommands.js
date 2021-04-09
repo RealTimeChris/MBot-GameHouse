@@ -62,7 +62,6 @@ function execute(commandData, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.default({ applicationId: discordUser.userData.userID,
                         publicKey: discordUser.userData.publicKey,
                         authToken: discordUser.userData.botToken });
