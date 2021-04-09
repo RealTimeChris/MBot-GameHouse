@@ -17,9 +17,9 @@ class Data{
 }
 
 class DeletedCounter {
-	deletedCount: number = 0;
+	private deletedCount: number = 0;
 
-	data: Data = new Data();
+	private data: Data = new Data();
 
 	setData(key: string, value: any): void {
 		const newData = new Data();
@@ -84,8 +84,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			return commandReturnData;
 		}
 
-		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount, name: commandData.guild!.name});
-		await guildData.getFromDataBase();
+		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+        await guildData.getFromDataBase();
 
 		if (commandData.args[0] === undefined) {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
@@ -148,7 +148,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			console.log(key + ' = ' + value);
             if (key.includes(dbKey)){
 				deletedCounter.setData(key, value);
-				await onData(dbKey, discordUser, deletedCounter)
+				await onData(dbKey, discordUser, deletedCounter);
 			}
         }
 
