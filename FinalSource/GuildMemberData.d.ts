@@ -1,5 +1,5 @@
-import FoundationClasses from './FoundationClasses';
 import Level from 'level-ts';
+import FoundationClasses from './FoundationClasses';
 /**
  * Class representing the init data for a guild member data structure.
  */

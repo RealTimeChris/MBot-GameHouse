@@ -6,11 +6,11 @@
 'use strict';
 
 import Discord = require('discord.js');
+import DiscordInteractions from 'slash-commands';
+import SlashCommands = require('slash-commands');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import HelperFunctions from '../HelperFunctions';
-import DiscordInteractions from 'slash-commands';
-import SlashCommands = require('slash-commands');
 
 const command: FoundationClasses.BotCommand = {
     name: 'slashcommands',

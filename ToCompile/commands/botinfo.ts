@@ -8,7 +8,6 @@
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
-import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
