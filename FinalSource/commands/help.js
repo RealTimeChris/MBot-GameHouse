@@ -64,7 +64,6 @@ function execute(commandData) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     commandFiles_1 = CommandIndex_1.default;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 7];
                     commandNames_1 = [];

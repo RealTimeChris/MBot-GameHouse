@@ -142,7 +142,7 @@ function execute(commandData, discordUser) {
                     if (!areWeACommander) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, memberCount: commandData.guild.memberCount, name: commandData.guild.name });
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
                     _c.sent();

@@ -24,7 +24,6 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-        commandReturnData.commandName = command.name;
         const commandFiles = botCommands;
 
         if (commandData.args[0] === undefined) {

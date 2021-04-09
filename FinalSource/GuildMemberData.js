@@ -87,16 +87,15 @@ var GuildMemberData = /** @class */ (function (_super) {
         return _this;
     }
     GuildMemberData.prototype.getFromDataBase = function () {
-        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var guildMemberData, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, ((_a = this.dataBase) === null || _a === void 0 ? void 0 : _a.get(this.dataBaseKey))];
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.dataBase.get(this.dataBaseKey)];
                     case 1:
-                        guildMemberData = _b.sent();
+                        guildMemberData = _a.sent();
                         this.currency = guildMemberData.currency;
                         this.items = guildMemberData.items;
                         this.lastTimeRobbed = guildMemberData.lastTimeRobbed;
@@ -104,7 +103,7 @@ var GuildMemberData = /** @class */ (function (_super) {
                         this.roles = guildMemberData.roles;
                         return [3 /*break*/, 3];
                     case 2:
-                        error_1 = _b.sent();
+                        error_1 = _a.sent();
                         if (error_1.type === 'NotFoundError') {
                             console.log("No entry found for user by the Id of " + this.id + " with name " + this.userName + ", creating one!");
                             console.log(this);
@@ -116,11 +115,10 @@ var GuildMemberData = /** @class */ (function (_super) {
         });
     };
     GuildMemberData.prototype.writeToDataBase = function () {
-        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var error;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         if (this.userName === '' || this.displayName === '') {
                             error = new Error();
@@ -128,9 +126,9 @@ var GuildMemberData = /** @class */ (function (_super) {
                             error.message = "You've forgotten to initialize the GuildMemberData structure!";
                             throw error;
                         }
-                        return [4 /*yield*/, ((_a = this.dataBase) === null || _a === void 0 ? void 0 : _a.put(this.dataBaseKey, this))];
+                        return [4 /*yield*/, this.dataBase.put(this.dataBaseKey, this)];
                     case 1:
-                        _b.sent();
+                        _a.sent();
                         GuildMemberData.guildMembersData.set(this.dataBaseKey, this);
                         return [2 /*return*/];
                 }
