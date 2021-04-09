@@ -43,8 +43,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		fields.push(field1);
 		const field2 = {
 			name: '__**Largest Roulette Payout:**__',
-			value: `__User:__ <@!${guildData.casinoStats.largestCoinFlipPayout.userID}> (${guildData.casinoStats.largestCoinFlipPayout.username})
-			__Amount:__ ${guildData.casinoStats.largestCoinFlipPayout.amount} ${userData.currencyName}\n__Date:__ ${guildData.casinoStats.largestCoinFlipPayout.date}`,
+			value: `__User:__ <@!${guildData.casinoStats.largestRoulettePayout.userID}> (${guildData.casinoStats.largestRoulettePayout.username})
+			__Amount:__ ${guildData.casinoStats.largestRoulettePayout.amount} ${userData.currencyName}\n__Date:__ ${guildData.casinoStats.largestRoulettePayout.date}`,
 			inline: true,
 		};
 		fields.push(field2);

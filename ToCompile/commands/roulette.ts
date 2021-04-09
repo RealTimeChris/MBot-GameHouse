@@ -82,9 +82,9 @@ async function calculateResults(finalRoll: string, commandData: FoundationClasse
 	msgStringFinal += `------\n__**Final Roll:**__ ${finalRollString}\n------\n`;
 	const guildData = new GuildData({dataBase: discordUser.dataBase, name: commandData.guild!.name, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount});
 	await guildData.getFromDataBase();
+	const currentGuild = await commandData.guild?.client.guilds.fetch(commandData.guild.id);
 	for (let x = 0; x < guildData.rouletteGame.bets.length; x += 1) {
 		let isItAWinner = false;
-		const currentGuild = await commandData.guild?.client.guilds.fetch(commandData.guild.id);
 		const currentGuildMember = await currentGuild?.members.fetch(guildData.rouletteGame.bets[x]!.userID);
 		const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, displayName: currentGuildMember!.displayName, guildId: commandData.guild!.id, 
 			id: guildData.rouletteGame.bets[x]!.userID, userName: currentGuildMember?.user.username!});
@@ -118,14 +118,15 @@ async function calculateResults(finalRoll: string, commandData: FoundationClasse
 			}
 			else{
 				if (payoutAmount > guildData.casinoStats!.largestRoulettePayout.amount){
-					let largestPayout: FoundationClasses.LargestPayout = {amount: payoutAmount, date: Date(), userID: guildMemberData.id!, username: guildMemberData.userName!};
-					guildData.casinoStats!.largestRoulettePayout = largestPayout;
+					guildData.casinoStats.largestRoulettePayout.amount = payoutAmount;
+					guildData.casinoStats.largestRoulettePayout.date = Date();
+					guildData.casinoStats.largestRoulettePayout.userID = guildMemberData.id;
+					guildData.casinoStats.largestRoulettePayout.username = guildMemberData.userName;
 				}
 				guildData.casinoStats.totalRoulettePayout += payoutAmount;
 				guildData.casinoStats.totalPayout += payoutAmount;
 				guildMemberData.currency.wallet += payoutAmount;
 				await guildMemberData.writeToDataBase();
-	
 				
 				if (guildData.rouletteGame.bets[x]?.betOptions !== undefined){
 					msgStringFinal += `${payoutAmount.toString()} ${discordUser.userData.currencyName} __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
@@ -135,7 +136,7 @@ async function calculateResults(finalRoll: string, commandData: FoundationClasse
 					msgStringFinal += `${payoutAmount.toString()} ${discordUser.userData.currencyName} __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
 					`${guildData.rouletteGame.bets[x]?.betType}\n`;
 				}
-			}			
+			}
 	}
 	msgStringFinal += '------';
 	let msgEmbed = new Discord.MessageEmbed();

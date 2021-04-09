@@ -114,7 +114,7 @@ function getNumberString(inputString, redNumbers, blackNumbers) {
 function calculateResults(finalRoll, commandData, discordUser, redNumbers, blackNumbers) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
     return __awaiter(this, void 0, void 0, function () {
-        var msgStringFinal, finalRollString, guildData, x, isItAWinner, currentGuild, currentGuildMember, guildMemberData, betAmount, payoutAmount, winningNumbers, x_1, largestPayout, msgEmbed;
+        var msgStringFinal, finalRollString, guildData, currentGuild, x, isItAWinner, currentGuildMember, guildMemberData, betAmount, payoutAmount, winningNumbers, x_1, msgEmbed;
         return __generator(this, function (_q) {
             switch (_q.label) {
                 case 0:
@@ -127,14 +127,14 @@ function calculateResults(finalRoll, commandData, discordUser, redNumbers, black
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 2:
                     _q.sent();
-                    x = 0;
-                    _q.label = 3;
+                    return [4 /*yield*/, ((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(commandData.guild.id))];
                 case 3:
+                    currentGuild = _q.sent();
+                    x = 0;
+                    _q.label = 4;
+                case 4:
                     if (!(x < guildData.rouletteGame.bets.length)) return [3 /*break*/, 14];
                     isItAWinner = false;
-                    return [4 /*yield*/, ((_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(commandData.guild.id))];
-                case 4:
-                    currentGuild = _q.sent();
                     return [4 /*yield*/, (currentGuild === null || currentGuild === void 0 ? void 0 : currentGuild.members.fetch(guildData.rouletteGame.bets[x].userID))];
                 case 5:
                     currentGuildMember = _q.sent();
@@ -180,8 +180,10 @@ function calculateResults(finalRoll, commandData, discordUser, redNumbers, black
                     return [3 /*break*/, 13];
                 case 11:
                     if (payoutAmount > guildData.casinoStats.largestRoulettePayout.amount) {
-                        largestPayout = { amount: payoutAmount, date: Date(), userID: guildMemberData.id, username: guildMemberData.userName };
-                        guildData.casinoStats.largestRoulettePayout = largestPayout;
+                        guildData.casinoStats.largestRoulettePayout.amount = payoutAmount;
+                        guildData.casinoStats.largestRoulettePayout.date = Date();
+                        guildData.casinoStats.largestRoulettePayout.userID = guildMemberData.id;
+                        guildData.casinoStats.largestRoulettePayout.username = guildMemberData.userName;
                     }
                     guildData.casinoStats.totalRoulettePayout += payoutAmount;
                     guildData.casinoStats.totalPayout += payoutAmount;
@@ -200,7 +202,7 @@ function calculateResults(finalRoll, commandData, discordUser, redNumbers, black
                     _q.label = 13;
                 case 13:
                     x += 1;
-                    return [3 /*break*/, 3];
+                    return [3 /*break*/, 4];
                 case 14:
                     msgStringFinal += '------';
                     msgEmbed = new Discord.MessageEmbed();

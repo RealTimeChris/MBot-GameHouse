@@ -83,7 +83,7 @@ function execute(commandData, discordUser) {
                     fields.push(field1);
                     field2 = {
                         name: '__**Largest Roulette Payout:**__',
-                        value: "__User:__ <@!" + guildData.casinoStats.largestCoinFlipPayout.userID + "> (" + guildData.casinoStats.largestCoinFlipPayout.username + ")\n\t\t\t__Amount:__ " + guildData.casinoStats.largestCoinFlipPayout.amount + " " + userData.currencyName + "\n__Date:__ " + guildData.casinoStats.largestCoinFlipPayout.date,
+                        value: "__User:__ <@!" + guildData.casinoStats.largestRoulettePayout.userID + "> (" + guildData.casinoStats.largestRoulettePayout.username + ")\n\t\t\t__Amount:__ " + guildData.casinoStats.largestRoulettePayout.amount + " " + userData.currencyName + "\n__Date:__ " + guildData.casinoStats.largestRoulettePayout.date,
                         inline: true,
                     };
                     fields.push(field2);
