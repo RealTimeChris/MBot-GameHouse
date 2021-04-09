@@ -122,21 +122,24 @@ export default class DiscordUser {
         try {
             const userData = await this.getUserDataFromDB(client);
             console.log('Updating the user data!');
-            userData.botCommanders = config.botCommanders;
-            userData.botToken = config.botToken;
-            userData.currencyName = config.currencyName;
-            userData.guildCount = client.guilds.cache.array().length;
-            userData.hoursOfDepositCooldown = config.hoursOfDepositCooldown;
-            userData.hoursOfDrugSaleCooldown = config.hoursOfDrugSaleCooldown;
-            userData.hoursOfRobberyCooldown = config.hoursOfRobberyCooldown;
-            userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
-            userData.prefix = config.prefix;
-            userData.publicKey = config.publicKey;
-            userData.startupCall = this.userData.startupCall;
-            userData.timeOfLastUpdateAndSave = new Date().getTime();
-            userData.userID = client.user!.id;
-            userData.userName = client.user!.username;
-            await this.updateUserDataInDB(userData);
+            const newUserData: DiscordUserData = {
+                botCommanders: config.botCommanders,
+                botToken: config.botToken,
+                currencyName: config.currencyName,
+                dataBaseFilePath: userData.dataBaseFilePath,
+                guildCount: client.guilds.cache.size,
+                hoursOfDepositCooldown: config.hoursOfDepositCooldown,
+                hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
+                hoursOfRobberyCooldown: config.hoursOfRobberyCooldown,
+                msBetweenCacheBackup: config.msBetweenCacheBackup,
+                prefix: config.prefix,
+                publicKey: config.publicKey,
+                startupCall: userData.startupCall,
+                timeOfLastUpdateAndSave: new Date().getTime(),
+                userID: client.user!.id,
+                userName: client.user!.username,
+            }
+            await this.updateUserDataInDB(newUserData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
