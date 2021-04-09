@@ -49,8 +49,8 @@ async function onData(dbKey: string, discordUser: DiscordUser, deletedCounter: D
 				await discordUser.dataBase.del(deletedCounter.getData().key);
 				deletedCounter.incrementDeletedCount();
 			}
-			catch(error){
-				if (error.message.includes('Unexpected token')){
+			catch(error) {
+				if (error.message.includes('Unexpected token')) {
 					await discordUser.dataBase.del(deletedCounter.getData().key);
 					deletedCounter.incrementDeletedCount();
 				}
@@ -74,7 +74,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		
 		const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
-		if (areWeInADM){
+		if (areWeInADM) {
 			return commandReturnData;
 		}
 
@@ -96,7 +96,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -111,7 +111,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -129,7 +129,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -144,9 +144,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
 		const deletedCounter = new DeletedCounter();
 		const iterator = discordUser.dataBase.iterate({});
-		for await (const {key, value} of iterator){
+		for await (const {key, value} of iterator) {
 			console.log(key + ' = ' + value);
-            if (key.includes(dbKey)){
+            if (key.includes(dbKey)) {
 				deletedCounter.setData(key, value);
 				await onData(dbKey, discordUser, deletedCounter);
 			}

@@ -22,7 +22,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             commandName: command.name
         };
 
-        if (commandData.guildMember instanceof Discord.User){
+        if (commandData.guildMember instanceof Discord.User) {
             const msgString = '------\n**TEST!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL()!)

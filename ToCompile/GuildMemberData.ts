@@ -44,7 +44,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             this.lastTimeWorked = guildMemberData.lastTimeWorked;
             this.roles = guildMemberData.roles;
         }
-        catch(error){
+        catch(error) {
             if (error.type === 'NotFoundError') {
                 console.log(`No entry found for user by the Id of ${this.id} with name ${this.userName}, creating one!`);
                 console.log(this);
@@ -52,7 +52,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
         }
     }
     public async writeToDataBase(): Promise<void> {
-        if (this.userName === ''|| this.displayName === ''){
+        if (this.userName === ''|| this.displayName === '') {
             const error = new Error();
             error.name = "Non-Initialized Structure";
             error.message = "You've forgotten to initialize the GuildMemberData structure!";
@@ -69,7 +69,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
         this.guildId = initData.guildId.trim();
         this.id = initData.id.trim();
         this.userName = initData.userName.trim();
-        if (!IdRegExp.test(this.id)|| !IdRegExp.test(this.guildId)){
+        if (!IdRegExp.test(this.id)|| !IdRegExp.test(this.guildId)) {
             const error = new Error();
             error.name = "Guild Member Id and/or Guild Id Issue";
             error.message = "You've passed an invalid guild member Id and/or guild Id to the constructor:\n" + this.id + "\n" + this.guildId;

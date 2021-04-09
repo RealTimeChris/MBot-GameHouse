@@ -157,7 +157,7 @@ export default class DiscordUser {
             for (let x = 0; x < liveDataGuildArray.length; x += 1) {
                 const guildData = new GuildData({dataBase: this.dataBase, id: liveDataGuildArray[x]!.id, memberCount: liveDataGuildArray[x]!.memberCount, name: liveDataGuildArray[x]!.name});
                 await guildData.getFromDataBase();
-                if (this.userData.startupCall === true){
+                if (this.userData.startupCall === true) {
                     guildData.rouletteGame = {currentlySpinning: false, bets: []};
                 }
                 await guildData.writeToDataBase();

@@ -25,7 +25,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		
         const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
-        if (areWeInADM){
+        if (areWeInADM) {
             return commandReturnData;
         }
 
@@ -47,7 +47,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -62,7 +62,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -77,7 +77,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const iterator = discordUser.dataBase.iterate({});
 		let areAnyFound = false;
 		let msgString = '------\n';
-        for await (const {key, value} of iterator){
+        for await (const {key, value} of iterator) {
             if (key.length === 18 && key !== discordUser.userData.userID) {
                 let isItFound = false;
                 for (let x = 0; x < guildsArray.length; x += 1) {
@@ -93,7 +93,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 }
             }
         }
-		if (areAnyFound){
+		if (areAnyFound) {
 			msgString += '\n------';
 			await iterator.end();
 			let msgEmbed = new Discord.MessageEmbed()
@@ -105,7 +105,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		}		
         
-		if (!areAnyFound){
+		if (!areAnyFound) {
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)

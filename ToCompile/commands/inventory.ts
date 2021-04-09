@@ -40,7 +40,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		await guildData.getFromDataBase();
 		let userID = '';
 
-		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')){
+		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')) {
 			const msgString = `------\n**I need the Manage Messages permission in this channel, for this command!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -49,7 +49,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Permissions Issue:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -69,7 +69,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -91,7 +91,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**User Issue:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -111,7 +111,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**User Issue:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -125,7 +125,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		for (let x = 0; x < guildMemberData.roles.length; x += 1) {
 			let isRoleFound = false;
 			for (let y = 0; y < rolesArray.length; y += 1) {
-				if (guildMemberData.roles[x] === undefined){
+				if (guildMemberData.roles[x] === undefined) {
 					continue;
 				}
 				if (guildMemberData.roles[x]!.roleID === rolesArray[y]!.id) {
@@ -142,7 +142,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Role Issue:**__');
 				let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-				if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 					msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 				}
 				await msg.delete({timeout: 20000});
@@ -218,7 +218,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
 		const currentPageIndex = 0;
 		let newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, finalMsgEmbedsArray[currentPageIndex] as Discord.MessageEmbed);
-		if (commandData.toTextChannel instanceof Discord.WebhookClient){
+		if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 			newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
 		}		
 		await HelperFunctions.recurseThroughMessagePages(commandData.guildMember!.id,

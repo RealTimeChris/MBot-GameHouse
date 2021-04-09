@@ -39,7 +39,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount, name: commandData.guild!.name});
 		await guildData.getFromDataBase();
 
-		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')){
+		if (!(commandData.fromTextChannel as Discord.TextChannel).permissionsFor(commandData.guild?.client.user as Discord.User)?.has('MANAGE_MESSAGES')) {
 			const msgString = `------\n**I need the Manage Messages permission in this channel, for this game!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -48,7 +48,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Permissions Issue:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -65,7 +65,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -80,7 +80,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -107,7 +107,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**User Issue:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -127,7 +127,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -146,7 +146,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Insufficient Funds:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -161,7 +161,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Insufficient Funds:**__')
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -174,7 +174,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		const messageEmbed = new Discord.MessageEmbed();
 		messageEmbed.setDescription(msgEmbedString).setTimestamp(Date.now()).setTitle("__**IT'S TIME TO DUEL!**__").setColor([0, 0, 255]);
 		let newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed, toUserID);
-		if (commandData.toTextChannel instanceof Discord.WebhookClient){
+		if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 			newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
 		}
 		newMessage.react('✅');
@@ -420,7 +420,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				}
 				const currentPageIndex = 0;
 				const newerMessage = await newMessage.channel.send(messageEmbeds[currentPageIndex]!);
-				if (newMessage.deletable){
+				if (newMessage.deletable) {
 					await newMessage.delete();
 				}
 				await HelperFunctions.recurseThroughMessagePages(fromUserID,
@@ -432,7 +432,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				const messageEmbed5 = new Discord.MessageEmbed();
 				messageEmbed5.setColor([255, 0, 0]).setTimestamp(Date.now()).setTitle('__**DUEL REJECTED!**__').setDescription(rejectedString);
 				await newMessage.channel.send(`<@!${fromUserID}>`, { embed: messageEmbed5 });
-				if (newMessage.deletable){
+				if (newMessage.deletable) {
 					await newMessage.delete();
 				}
 				return commandReturnData;

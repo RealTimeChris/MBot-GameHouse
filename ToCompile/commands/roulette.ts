@@ -103,11 +103,11 @@ async function calculateResults(finalRoll: string, commandData: FoundationClasse
 					break;
 				}
 			}
-			if (isItAWinner === false){
+			if (isItAWinner === false) {
 				payoutAmount = -betAmount;
 			}
-			if (betAmount > guildMemberData.currency.wallet){
-				if (guildData.rouletteGame.bets[x]?.betOptions !== undefined){
+			if (betAmount > guildMemberData.currency.wallet) {
+				if (guildData.rouletteGame.bets[x]?.betOptions !== undefined) {
 					msgStringFinal += `__**NSF:**__ Non-sufficient funds!  __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
 					`${guildData.rouletteGame.bets[x]?.betType}, ${guildData.rouletteGame.bets[x]?.betOptions}\n`;
 				}
@@ -117,7 +117,7 @@ async function calculateResults(finalRoll: string, commandData: FoundationClasse
 				}
 			}
 			else{
-				if (payoutAmount > guildData.casinoStats!.largestRoulettePayout.amount){
+				if (payoutAmount > guildData.casinoStats!.largestRoulettePayout.amount) {
 					guildData.casinoStats.largestRoulettePayout.amount = payoutAmount;
 					guildData.casinoStats.largestRoulettePayout.date = Date();
 					guildData.casinoStats.largestRoulettePayout.userID = guildMemberData.id;
@@ -128,7 +128,7 @@ async function calculateResults(finalRoll: string, commandData: FoundationClasse
 				guildMemberData.currency.wallet += payoutAmount;
 				await guildMemberData.writeToDataBase();
 				
-				if (guildData.rouletteGame.bets[x]?.betOptions !== undefined){
+				if (guildData.rouletteGame.bets[x]?.betOptions !== undefined) {
 					msgStringFinal += `${payoutAmount.toString()} ${discordUser.userData.currencyName} __**Bet:**__ ${guildData.rouletteGame.bets[x]?.betAmount} ${discordUser.userData.currencyName} __**On:**__ ` +
 					`${guildData.rouletteGame.bets[x]?.betType}, ${guildData.rouletteGame.bets[x]?.betOptions}\n`;
 				}
@@ -178,7 +178,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			let betAmount;
 			let betType: string;
 			let betOptions;
-			if (commandData.args[0] === undefined){
+			if (commandData.args[0] === undefined) {
 				const msgString = `------\n**Please, enter either 'start' or 'bet  as the first argument! (!roulette = bet, BETAMOUNT, BETTYPE, BETOPTIONS)**\n------`;
 				let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -187,13 +187,13 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Missing Or Invalid Arguments:**__');
 				let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-				if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 					msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 				}
 				await msg.delete({timeout: 20000});
 				return commandReturnData;
 			}
-			if (commandData.args[0]!.toLowerCase() !== 'start' && (commandData.args[0]!).toLowerCase() !== 'bet'){
+			if (commandData.args[0]!.toLowerCase() !== 'start' && (commandData.args[0]!).toLowerCase() !== 'bet') {
 				const msgString = `------\n**Please, enter either a 'start' or 'bet' as the first arguments! (!roulette = bet, BETAMOUNT, BETTYPE, BETOPTIONS)**\n------`;
 				let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -202,15 +202,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Missing Or Invalid Arguments:**__');
 				let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-				if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 					msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 				}
 					await msg.delete({timeout: 20000});
 				return commandReturnData;
 			}
-			else if (commandData.args[0]!.toLowerCase() === 'start'){
+			else if (commandData.args[0]!.toLowerCase() === 'start') {
 				await guildData.getFromDataBase();
-				if (guildData.rouletteGame.currentlySpinning === true){
+				if (guildData.rouletteGame.currentlySpinning === true) {
 					const msgString = `------\n**Please, wait until the current game is over, before starting another one!**\n------`;
 					let msgEmbed = new Discord.MessageEmbed()
 						.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -219,7 +219,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						.setTimestamp(Date() as unknown as Date)
 						.setTitle('__**Game Issue:**__');
 					let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-					if (commandData.toTextChannel instanceof Discord.WebhookClient){
+					if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 						msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 					}
 					await msg.delete({timeout: 20000});
@@ -227,9 +227,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				}
 				whatAreWeDoing = 'start';
 			}
-			else if (commandData.args[0]!.toLowerCase() === 'bet'){
+			else if (commandData.args[0]!.toLowerCase() === 'bet') {
 				await guildData.getFromDataBase();
-				if (guildData.rouletteGame.currentlySpinning ===  false){
+				if (guildData.rouletteGame.currentlySpinning ===  false) {
 					const msgString = `------\n**Please, start a roulette game before placing any bets!**\n------`;
 					let msgEmbed = new Discord.MessageEmbed()
 						.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -238,7 +238,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						.setTimestamp(Date() as unknown as Date)
 						.setTitle('__**Game Issue:**__');
 					let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-					if (commandData.toTextChannel instanceof Discord.WebhookClient){
+					if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 						msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 					}
 					await msg.delete({timeout: 20000});
@@ -246,7 +246,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				}
 				whatAreWeDoing = 'bet';
 			}			
-			if (parseInt(commandData.args[1]?.toString()!, 10) <= 0){
+			if (parseInt(commandData.args[1]?.toString()!, 10) <= 0) {
 				const msgString = `------\n**Please, enter a valid betting amount! (!roulette = bet, BETAMOUNT, BETTYPE, BETOPTIONS)**\n------`;
 				let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -255,7 +255,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Missing Or Invalid Arguments:**__');
 				let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-				if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 					msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 				}
 				await msg.delete({timeout: 20000});
@@ -274,7 +274,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			blackNumbers = [':black_large_square:15', ':black_large_square:4', ':black_large_square:2', ':black_large_square:17', ':black_large_square:6', ':black_large_square:13', ':black_large_square:11', ':black_large_square:8', ':black_large_square:10',
 				':black_large_square:24', ':black_large_square:33', ':black_large_square:20', ':black_large_square:31', ':black_large_square:22', ':black_large_square:29', ':black_large_square:28', ':black_large_square:35', ':black_large_square:26'];
 
-			if (whatAreWeDoing === 'bet'){
+			if (whatAreWeDoing === 'bet') {
 
 				const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, id: commandData.guildMember!.id, guildId: commandData.guild!.id,
 					userName: (commandData.guildMember as Discord.GuildMember)!.user.username, displayName: (commandData.guildMember as Discord.GuildMember).displayName});
@@ -282,8 +282,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
 				let currentBetAmount: number = 0;
 
-				for (let x = 0; x < guildData.rouletteGame.bets.length; x += 1){
-					if (guildMemberData.id === guildData.rouletteGame.bets[x]?.userID){
+				for (let x = 0; x < guildData.rouletteGame.bets.length; x += 1) {
+					if (guildMemberData.id === guildData.rouletteGame.bets[x]?.userID) {
 						const number = guildData.rouletteGame.bets[x]?.betAmount;
 						currentBetAmount += number!;
 					}
@@ -298,7 +298,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						.setTimestamp(Date() as unknown as Date)
 						.setTitle('__**Insufficient Funds:**__');
 					let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-					if (commandData.toTextChannel instanceof Discord.WebhookClient){
+					if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 						msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 					}
 					await msg.delete({timeout: 20000});
@@ -322,7 +322,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						.setTimestamp(Date() as unknown as Date)
 						.setTitle('__**Missing Or Invalid Arguments:**__');
 					let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-					if (commandData.toTextChannel instanceof Discord.WebhookClient){
+					if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 					msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 					}
 					await msg.delete({timeout: 20000});
@@ -364,7 +364,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -381,7 +381,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -407,7 +407,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -424,7 +424,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -447,7 +447,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -464,7 +464,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -497,7 +497,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -514,7 +514,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 								.setTimestamp(Date() as unknown as Date)
 								.setTitle('__**Missing Or Invalid Arguments:**__');
 							let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-							if (commandData.toTextChannel instanceof Discord.WebhookClient){
+							if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 								msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 							}
 							await msg.delete({timeout: 20000});
@@ -612,7 +612,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						.setTitle('__**Roulette Bet Placed:**__');
 						await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			}
-			else if (whatAreWeDoing === 'start'){
+			else if (whatAreWeDoing === 'start') {
 				await guildData.getFromDataBase();
 				guildData.rouletteGame.currentlySpinning = true;
 				await guildData.writeToDataBase();
@@ -629,9 +629,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						.setDescription(`------\n__**${currentIndex * 10} seconds remaining to place your roulette bets!**__\n------`)
 						.setTimestamp((Date() as unknown) as Date)
 						.setTitle('__**Roulette Ball Rolling:**__');
-					if (currentIndex === 3){
+					if (currentIndex === 3) {
 						newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-						if (commandData.toTextChannel instanceof Discord.WebhookClient){
+						if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 							newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
 						}
 					}
@@ -639,14 +639,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 						await newMessage.edit(msgEmbed);
 					}										
 					currentIndex -= 1;
-					if (currentIndex === -1){
+					if (currentIndex === -1) {
 						await newMessage.delete();
 						let finalRoll = Math.trunc(Math.random() * 38).toString();
 						await calculateResults(finalRoll, commandData, discordUser, redNumbers, blackNumbers);
 					}
 				});
 				
-				for (let x = 0; x <= 3; x += 1){
+				for (let x = 0; x <= 3; x += 1) {
 					setTimeout(() => {
 						eventEmitter.emit('rouletteCountdown');
 					}, x * 10000);

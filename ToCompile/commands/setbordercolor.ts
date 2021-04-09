@@ -26,7 +26,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         let areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
-        if (areWeInADM){
+        if (areWeInADM) {
             return commandReturnData;
         }
         
@@ -34,7 +34,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         await guildData.getFromDataBase();
 
         const borderColor: number[] = [];
-        if (commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse')){
+        if (commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse')) {
             const msgString = `------\n**Please, enter a bot's name as the first argument to this command! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -46,10 +46,10 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
-        else if (commandData.args[0].toLowerCase() !== 'gamehouse'){
+        else if (commandData.args[0].toLowerCase() !== 'gamehouse') {
             return commandReturnData;
         }
-        if (parseInt(commandData.args[1]!, 10) > 255 || parseInt(commandData.args[1]!, 10) < 0 || commandData.args[1] === undefined){
+        if (parseInt(commandData.args[1]!, 10) > 255 || parseInt(commandData.args[1]!, 10) < 0 || commandData.args[1] === undefined) {
             const msgString = `------\n**Please, enter a red-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -61,7 +61,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
-        else if (parseInt(commandData.args[2]!, 10) > 255 || parseInt(commandData.args[2]!, 10) < 0 || commandData.args[2] === undefined){
+        else if (parseInt(commandData.args[2]!, 10) > 255 || parseInt(commandData.args[2]!, 10) < 0 || commandData.args[2] === undefined) {
             const msgString = `------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -73,7 +73,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
-        else if (parseInt(commandData.args[3]!, 10) > 255 || parseInt(commandData.args[3]!, 10) < 0 || commandData.args[3] === undefined){
+        else if (parseInt(commandData.args[3]!, 10) > 255 || parseInt(commandData.args[3]!, 10) < 0 || commandData.args[3] === undefined) {
             const msgString = `------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -87,15 +87,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
         else {
             borderColor[0] = parseInt(commandData.args[1]!, 10);
-            if (borderColor[0] === 255){
+            if (borderColor[0] === 255) {
                 borderColor[0] = 254;
             }
             borderColor[1] = parseInt(commandData.args[2]!, 10);
-            if (borderColor[1] === 255){
+            if (borderColor[1] === 255) {
                 borderColor[1] = 254;
             }
             borderColor[2] = parseInt(commandData.args[3]!, 10);
-            if (borderColor[2] === 255){
+            if (borderColor[2] === 255) {
                 borderColor[2] = 254;
             }
         }
@@ -113,7 +113,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         return commandReturnData;
     }
-    catch(error){
+    catch(error) {
         return new Promise((resolve, reject) => {
             reject(error);
         })

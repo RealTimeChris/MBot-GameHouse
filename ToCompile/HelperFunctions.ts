@@ -17,8 +17,8 @@ module HelperFunctions {
     export async function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message> {
         try{
             let returnMessage: Discord.Message;
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                if (atUserID !== null && messageContents instanceof Discord.MessageEmbed) {
                     const msgEmbeds: Discord.MessageEmbed[] = [];
                     msgEmbeds.push(messageContents);
                     returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}>`, {embeds: msgEmbeds, split: false});
@@ -30,8 +30,8 @@ module HelperFunctions {
                     returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`);
                 }
             }
-            else if (commandData.toTextChannel instanceof Discord.TextChannel){
-                if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
+            else if (commandData.toTextChannel instanceof Discord.TextChannel) {
+                if (atUserID !== null && messageContents instanceof Discord.MessageEmbed) {
                     returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}>`, {embed: messageContents});
                 }
                 else if (atUserID === null) {
@@ -41,13 +41,13 @@ module HelperFunctions {
                     returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`);
                 }			
             }
-            else if (commandData.toTextChannel instanceof Discord.DMChannel){
+            else if (commandData.toTextChannel instanceof Discord.DMChannel) {
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
 
             return returnMessage!;
         }
-        catch(error){
+        catch(error) {
             return new Promise((resolve, reject) => {
                 reject(error);
             })
@@ -119,7 +119,7 @@ module HelperFunctions {
 
             reactionCollector.on('end', async () => {
                 if (deleteAfter === true) {
-                    if (message.deletable){
+                    if (message.deletable) {
                         await message.delete();
                     }
                 } else {
@@ -165,7 +165,7 @@ module HelperFunctions {
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Direct Message Issue:**__');
                 let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                 }
                 msg.delete({timeout: 20000});
@@ -210,7 +210,7 @@ module HelperFunctions {
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Permissions Issue:**__");
             let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout:20000});
@@ -251,7 +251,7 @@ module HelperFunctions {
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle("__**Permissions Issue:**__")
                     let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout:20000});

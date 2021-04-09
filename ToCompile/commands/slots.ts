@@ -40,7 +40,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         await guildData.getFromDataBase();
 
         let betAmountOld: number;
-        if (commandData.args[0] === undefined){
+        if (commandData.args[0] === undefined) {
             const msgString = "------\n**Please, enter a bet amount as the first argument of the command! (!slots = BETAMOUNT)**\n------"
             let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -49,13 +49,13 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
         }
-        if (parseInt(commandData.args[0], 10) <= 0){
+        if (parseInt(commandData.args[0], 10) <= 0) {
             const msgString = "------\n**Please, enter a valid bet amount as the first argument of the command! (!slots = BETAMOUNT)**\n------"
             let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -64,7 +64,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -78,7 +78,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             userName: (commandData.guildMember as Discord.GuildMember)!.user.username, displayName: (commandData.guildMember as Discord.GuildMember).displayName});
         await guildMemberData.getFromDataBase();
 
-        if (parseInt(commandData.args[0], 10) > guildMemberData.currency.wallet){
+        if (parseInt(commandData.args[0], 10) > guildMemberData.currency.wallet) {
             const msgString = "------\n**Sorry, but you don't have sufficient funds in your wallet for placing that bet!**\n------"
             let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -87,7 +87,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Insufficient Funds:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
@@ -100,17 +100,17 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         const reelStartIndex1 = Math.trunc(Math.random() * 10);
         const reelIndices1: number[] = [];
-        for (let x = 0; x < 10; x += 1){
+        for (let x = 0; x < 10; x += 1) {
             reelIndices1[x] = (reelStartIndex1 + x) % 10;
         }
         const reelStartIndex2 = Math.trunc(Math.random() * 10);
         const reelIndices2: number[] = [];
-        for (let x = 0; x < 10; x += 1){
+        for (let x = 0; x < 10; x += 1) {
             reelIndices2[x] = (reelStartIndex2 + x) % 10;
         }
         const reelStartIndex3 = Math.trunc(Math.random() * 10);
         const reelIndices3: number[] = [];
-        for (let x = 0; x < 10; x += 1){
+        for (let x = 0; x < 10; x += 1) {
             reelIndices3[x] = (reelStartIndex3 + x) % 10;
         }
 
@@ -129,7 +129,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             .setTitle('__**Slots Game:**__');
 
         let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed0);
-        if (commandData.toTextChannel instanceof Discord.WebhookClient){
+        if (commandData.toTextChannel instanceof Discord.WebhookClient) {
             msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
         }
 
@@ -164,21 +164,21 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }, 6000);
     
         setTimeout(async () => {
-            if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] ===  slotReel[reelIndices3[8]!]){
+            if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] ===  slotReel[reelIndices3[8]!]) {
                 gameResultType = 'Triple Straight';
                 payoutAmount = betAmountOld * 15;
             }
             else if ((slotReel[reelIndices1[9]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[7]!]) ||
-            (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[9]!])){
+            (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!] && slotReel[reelIndices2[8]!] === slotReel[reelIndices3[9]!])) {
                 gameResultType = 'Triple Diagonal';
                 payoutAmount = betAmountOld * 7;
             }
-            else if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] || slotReel[reelIndices3[8]!] === slotReel[reelIndices2[8]!]){
+            else if (slotReel[reelIndices1[8]!] === slotReel[reelIndices2[8]!] || slotReel[reelIndices3[8]!] === slotReel[reelIndices2[8]!]) {
                 gameResultType = 'Double Straight';
                 payoutAmount = betAmountOld * 1;
             }
             else if ((slotReel[reelIndices1[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices1[7]!] === slotReel[reelIndices2[8]!]) || 
-            (slotReel[reelIndices3[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices3[7]!] === slotReel[reelIndices2[8]!])){
+            (slotReel[reelIndices3[9]!] === slotReel[reelIndices2[8]!]) || (slotReel[reelIndices3[7]!] === slotReel[reelIndices2[8]!])) {
                 gameResultType = 'Double Diagonal';
                 payoutAmount = betAmountOld * 1;
             }
@@ -190,7 +190,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await guildData.getFromDataBase();
             guildData.casinoStats.totalPayout += payoutAmount;
             guildData.casinoStats.totalSlotsPayout += payoutAmount;
-            if (payoutAmount > guildData.casinoStats.largestSlotsPayout.amount){
+            if (payoutAmount > guildData.casinoStats.largestSlotsPayout.amount) {
                 guildData.casinoStats.largestSlotsPayout.amount = payoutAmount;
                 guildData.casinoStats.largestSlotsPayout.date = Date();
                 guildData.casinoStats.largestSlotsPayout.userID = guildMemberData.id;
@@ -199,7 +199,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await guildData.writeToDataBase();
 
             await guildMemberData.getFromDataBase();
-            if (betAmountOld > guildMemberData.currency.wallet){
+            if (betAmountOld > guildMemberData.currency.wallet) {
                 const msgString3 = `__**Slot Results:**__\n[:x:] [:x:] [:x:]\n
                 [:x:] [:x:] [:x:]\n
                 [:x:] [:x:] [:x:]\n------\n__**Your Wager:**__ ${betAmountOld}\n__**Maximum Payout:**__ ${(15 * betAmountOld).toString()} ${discordUser.userData.currencyName}\n
@@ -227,7 +227,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             msgStrings.push(msgString3);
 
             let msgEmbed = new Discord.MessageEmbed();
-            if (gameResultType === 'Loss'){
+            if (gameResultType === 'Loss') {
                 msgEmbed
                     .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                     .setColor([255, 0, 0])
@@ -248,7 +248,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             }, 9000);
             return commandReturnData;
     }
-    catch(error){
+    catch(error) {
         return new Promise((resolve, reject) => {
             reject(error);
         })

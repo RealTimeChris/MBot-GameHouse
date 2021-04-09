@@ -43,7 +43,7 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
             });
 
             const messageEmbed = new Discord.MessageEmbed();
-            if (commandData.guildMember instanceof Discord.GuildMember){
+            if (commandData.guildMember instanceof Discord.GuildMember) {
                 messageEmbed
                     .setImage(commandData.guildMember.client.user!.avatarURL()!.toString())
                     .setTimestamp(Date() as unknown as Date)
@@ -52,7 +52,7 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
                     .setDescription(msgString)
                     .setColor([254, 254, 254]);
             }
-            else if (commandData.guildMember instanceof Discord.User){
+            else if (commandData.guildMember instanceof Discord.User) {
                 messageEmbed
                     .setImage(commandData.guildMember.client.user!.avatarURL()!.toString())
                     .setTimestamp(Date() as unknown as Date)
@@ -62,10 +62,10 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
                     .setColor([254, 254, 254]);
             }
             
-            if (commandData.guildMember instanceof Discord.User){
+            if (commandData.guildMember instanceof Discord.User) {
                 await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
-            else if (commandData.guildMember instanceof Discord.GuildMember){
+            else if (commandData.guildMember instanceof Discord.GuildMember) {
                 const dmChannel = await commandData.guildMember.user.createDM();
                 await dmChannel.send(messageEmbed);
                 const msgString = `------\n**I've sent you help info, via a message!**\n------`;
@@ -116,7 +116,7 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
         } 
         else {
             const messageEmbed = new Discord.MessageEmbed();
-            if (commandData.guildMember instanceof Discord.GuildMember){
+            if (commandData.guildMember instanceof Discord.GuildMember) {
                 messageEmbed
                     .setDescription(commandDescription)
                     .setTimestamp(Date() as unknown as Date)
@@ -124,7 +124,7 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
                     .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                     .setColor([254, 254, 254]);
             }
-            else if (commandData.guildMember instanceof Discord.User){
+            else if (commandData.guildMember instanceof Discord.User) {
                 messageEmbed
                     .setDescription(commandDescription)
                     .setTimestamp(Date() as unknown as Date)
