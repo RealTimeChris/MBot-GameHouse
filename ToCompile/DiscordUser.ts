@@ -76,7 +76,7 @@ export default class DiscordUser {
                     botCommanders: config.botCommanders,
                     botToken: config.botToken,
                     currencyName: config.currencyName,
-                    dataBaseFilePath: config.dataBaseFilePath,
+                    dataBaseFilePath: this.userData.dataBaseFilePath,
                     guildCount: client.guilds.cache.array().length,
                     hoursOfDepositCooldown: config.hoursOfDepositCooldown,
                     hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
@@ -101,10 +101,11 @@ export default class DiscordUser {
      */
     public async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
         try {
-            await this.dataBase.put(this.userData.userID, newUserData);
-            newUserData = await this.dataBase.get(this.userData.userID);
+            this.userData = newUserData;
+            await this.dataBase.put(this.userData.userID, this.userData);
+            this.userData = await this.dataBase.get(this.userData.userID);
             console.log('New User Cache:');
-            console.log(newUserData);
+            console.log(this.userData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
@@ -118,13 +119,13 @@ export default class DiscordUser {
      */
     private async updateUserData(client: Discord.Client): Promise<void> {
         try {
-            const userData = await this.getUserDataFromDB(client);
+            this.userData.timeOfLastUpdateAndSave = new Date().getTime();
             console.log('Updating the user data!');
             const newUserData: DiscordUserData = {
                 botCommanders: config.botCommanders,
                 botToken: config.botToken,
                 currencyName: config.currencyName,
-                dataBaseFilePath: userData.dataBaseFilePath,
+                dataBaseFilePath: this.userData.dataBaseFilePath,
                 guildCount: client.guilds.cache.size,
                 hoursOfDepositCooldown: config.hoursOfDepositCooldown,
                 hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
@@ -185,10 +186,8 @@ export default class DiscordUser {
                     await guildMemberData.writeToDataBase();
                 }
             }
-            const userData = await this.getUserDataFromDB(client);
-            userData.timeOfLastUpdateAndSave = new Date().getTime();
-            userData.startupCall = false;
-            await this.updateUserDataInDB(userData);
+            this.userData.startupCall = false;
+            await this.updateUserDataInDB(this.userData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
