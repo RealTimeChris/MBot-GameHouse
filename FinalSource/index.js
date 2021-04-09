@@ -51,20 +51,32 @@ var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.once('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        IndexFunctions_1.default.onReady(client, discordUser);
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onReady(client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
     });
 }); });
 client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        IndexFunctions_1.default.onMessage(msg, client, discordUser);
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onMessage(msg, client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
     });
 }); });
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        IndexFunctions_1.default.onInteractionCreate(interaction, client, discordUser);
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onInteractionCreate(interaction, client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
     });
 }); });
 client.login(config.botToken);
