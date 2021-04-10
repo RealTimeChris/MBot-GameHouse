@@ -23,7 +23,6 @@ interface DiscordUserData {
     hoursOfDepositCooldown: number;
     hoursOfDrugSaleCooldown: number;
     hoursOfRobberyCooldown: number;
-    msBetweenCacheBackup: number;
     prefix: string;
     publicKey: string;
     startupCall: boolean;
@@ -38,7 +37,7 @@ interface DiscordUserData {
 export default class DiscordUser {
     public userData: DiscordUserData = {botCommanders: [], botToken: '', currencyName: '', 
         dataBaseFilePath: '', guildCount: 0, hoursOfDepositCooldown: 0, hoursOfDrugSaleCooldown: 0, hoursOfRobberyCooldown: 0,
-        msBetweenCacheBackup: 0, prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
+        prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
     public dataBase: any;
 
     /**
@@ -81,7 +80,6 @@ export default class DiscordUser {
                     hoursOfDepositCooldown: config.hoursOfDepositCooldown,
                     hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
                     hoursOfRobberyCooldown: config.hoursOfRobberyCooldown,
-                    msBetweenCacheBackup: config.msBetweenCacheBackup,
                     prefix: config.prefix,
                     publicKey: config.publicKey,
                     startupCall: true,
@@ -130,7 +128,6 @@ export default class DiscordUser {
                 hoursOfDepositCooldown: config.hoursOfDepositCooldown,
                 hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
                 hoursOfRobberyCooldown: config.hoursOfRobberyCooldown,
-                msBetweenCacheBackup: config.msBetweenCacheBackup,
                 prefix: config.prefix,
                 publicKey: config.publicKey,
                 startupCall: this.userData.startupCall,
