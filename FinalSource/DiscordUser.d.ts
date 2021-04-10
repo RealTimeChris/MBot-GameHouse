@@ -14,7 +14,6 @@ interface DiscordUserData {
     prefix: string;
     publicKey: string;
     startupCall: boolean;
-    timeOfLastUpdateAndSave: number;
     userID: string;
     userName: string;
 }

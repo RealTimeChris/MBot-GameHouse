@@ -2,7 +2,7 @@
   "name": "mbot-gamehouse",
   "version": "1.0.0",
   "description": "The gamehouse component of my bot!",
-  "type": "commonjs",
+  "type": "module",
   "main": "/FinalSource/index.js",
   "scripts": {
     "start": "tsc && node /FinalSource/index.js",

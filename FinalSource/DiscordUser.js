@@ -54,7 +54,7 @@ var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
         this.userData = { botCommanders: [], botToken: '', currencyName: '',
             dataBaseFilePath: '', guildCount: 0, hoursOfDepositCooldown: 0, hoursOfDrugSaleCooldown: 0, hoursOfRobberyCooldown: 0,
-            prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
+            prefix: '', publicKey: '', startupCall: true, userID: '', userName: '' };
     }
     /**
      * Initializes the instance of Discord, within the DiscordUser export class.
@@ -120,7 +120,6 @@ var DiscordUser = /** @class */ (function () {
                                 prefix: config.prefix,
                                 publicKey: config.publicKey,
                                 startupCall: true,
-                                timeOfLastUpdateAndSave: new Date().getTime(),
                                 userID: client.user.id,
                                 userName: client.user.username
                             };
@@ -175,7 +174,6 @@ var DiscordUser = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.userData.timeOfLastUpdateAndSave = new Date().getTime();
                         console.log('Updating the user data!');
                         newUserData = {
                             botCommanders: config.botCommanders,
@@ -189,7 +187,6 @@ var DiscordUser = /** @class */ (function () {
                             prefix: config.prefix,
                             publicKey: config.publicKey,
                             startupCall: this.userData.startupCall,
-                            timeOfLastUpdateAndSave: new Date().getTime(),
                             userID: client.user.id,
                             userName: client.user.username,
                         };
