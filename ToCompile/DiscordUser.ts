@@ -26,7 +26,6 @@ interface DiscordUserData {
     prefix: string;
     publicKey: string;
     startupCall: boolean;
-    timeOfLastUpdateAndSave: number;
     userID: string;
     userName: string;
 }
@@ -37,7 +36,7 @@ interface DiscordUserData {
 export default class DiscordUser {
     public userData: DiscordUserData = {botCommanders: [], botToken: '', currencyName: '', 
         dataBaseFilePath: '', guildCount: 0, hoursOfDepositCooldown: 0, hoursOfDrugSaleCooldown: 0, hoursOfRobberyCooldown: 0,
-        prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
+        prefix: '', publicKey: '', startupCall: true, userID: '', userName: ''};
     public dataBase: any;
 
     /**
@@ -83,7 +82,6 @@ export default class DiscordUser {
                     prefix: config.prefix,
                     publicKey: config.publicKey,
                     startupCall: true,
-                    timeOfLastUpdateAndSave: new Date().getTime(),
                     userID: client.user!.id,
                     userName: client.user!.username};
                 return userData;
@@ -117,7 +115,6 @@ export default class DiscordUser {
      */
     private async updateUserData(client: Discord.Client): Promise<void> {
         try {
-            this.userData.timeOfLastUpdateAndSave = new Date().getTime();
             console.log('Updating the user data!');
             const newUserData: DiscordUserData = {
                 botCommanders: config.botCommanders,
@@ -131,7 +128,6 @@ export default class DiscordUser {
                 prefix: config.prefix,
                 publicKey: config.publicKey,
                 startupCall: this.userData.startupCall,
-                timeOfLastUpdateAndSave: new Date().getTime(),
                 userID: client.user!.id,
                 userName: client.user!.username,
             }
