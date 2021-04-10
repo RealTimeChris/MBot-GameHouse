@@ -11,7 +11,7 @@ import DiscordUser from './DiscordUser';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: any, discordUser: DiscordUser) {
+    export async function onReady(client: Discord.Client, discordUser: DiscordUser) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
@@ -20,12 +20,12 @@ module IndexFunctions{
         }
     }
     
-    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser) {
+    export async function onMessage(msg: Discord.Message, client: Discord.Client, discordUser: DiscordUser) {
         if (client.users.resolve(msg.author.id) === null) {
             console.log('Non-found user! Better escape!');
             return;
         }
-        if (msg.author.id === client.user.id) {
+        if (msg.author.id === client.user?.id) {
             console.log('Better not track our own messages!');
             return;
         }
@@ -73,7 +73,7 @@ module IndexFunctions{
             catch(error) {
                 console.log(error);
             }
-        } else if (msg.author.id !== client.user.id) {
+        } else if (msg.author.id !== client.user?.id) {
             const command = 'message';
     
             if (!botCommands.has(command)) {
