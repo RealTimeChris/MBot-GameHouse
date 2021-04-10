@@ -44,15 +44,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
+var events_1 = __importDefault(require("events"));
 var IndexFunctions_1 = __importDefault(require("./IndexFunctions"));
 var DiscordUser_1 = __importDefault(require("./DiscordUser"));
 var config = require("./config.json");
 var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
+var eventEmitter = new events_1.default();
+eventEmitter.on('HeartBeat', function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                setTimeout(function () {
+                    eventEmitter.emit('HeartBeat');
+                }, 60000);
+                return [4 /*yield*/, IndexFunctions_1.default.onHeartBeat(client, discordUser)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
 client.once('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onReady(client, discordUser)];
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onReady(client, discordUser, eventEmitter)];
             case 1:
                 _a.sent();
                 return [2 /*return*/];

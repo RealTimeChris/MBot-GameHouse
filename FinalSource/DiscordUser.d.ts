@@ -53,11 +53,6 @@ export default class DiscordUser {
     * Updates the current data cache from live objects and the JSON data file,
     * and saves it to the JSON file.
     */
-    private updateDataCacheAndSaveToFile;
-    /**
-    * Function that updates the data cache and saves it to disk,
-    * if a certain amount of time has passed since it was last done.
-    */
-    saveCacheIfTimeHasPassed(client: Discord.Client): Promise<void>;
+    updateDataCacheAndSaveToFile(client: Discord.Client): Promise<void>;
 }
 export {};

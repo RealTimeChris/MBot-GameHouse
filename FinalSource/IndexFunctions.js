@@ -48,9 +48,30 @@ var FoundationClasses_1 = __importDefault(require("./FoundationClasses"));
 var CommandIndex_1 = __importDefault(require("./CommandIndex"));
 var IndexFunctions;
 (function (IndexFunctions) {
-    function onReady(client, discordUser) {
+    function onHeartBeat(client, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
             var error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, discordUser.updateDataCacheAndSaveToFile(client)];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    IndexFunctions.onHeartBeat = onHeartBeat;
+    function onReady(client, discordUser, eventEmitter) {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -61,10 +82,11 @@ var IndexFunctions;
                         return [4 /*yield*/, client.user.setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } })];
                     case 2:
                         _a.sent();
+                        eventEmitter.emit('HeartBeat');
                         return [3 /*break*/, 4];
                     case 3:
-                        error_1 = _a.sent();
-                        console.log(error_1);
+                        error_2 = _a.sent();
+                        console.log(error_2);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -75,7 +97,7 @@ var IndexFunctions;
     function onMessage(msg, client, discordUser) {
         var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function () {
-            var command, args, x, commandData, cmdName, error_2, error_3, command, cmdName, error_4, error_5;
+            var command, args, x, commandData, cmdName, error_3, error_4, command, cmdName, error_5, error_6;
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
@@ -87,7 +109,7 @@ var IndexFunctions;
                             console.log('Better not track our own messages!');
                             return [2 /*return*/];
                         }
-                        if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 14];
+                        if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 13];
                         command = '';
                         args = [];
                         if (msg.content.indexOf(' =') === -1) {
@@ -105,7 +127,7 @@ var IndexFunctions;
                         }
                         _e.label = 1;
                     case 1:
-                        _e.trys.push([1, 12, , 13]);
+                        _e.trys.push([1, 11, , 12]);
                         commandData = new FoundationClasses_1.default.CommandData();
                         if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 3];
                         return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
@@ -132,51 +154,45 @@ var IndexFunctions;
                         console.log("Completed Command: " + cmdName.commandName);
                         return [3 /*break*/, 10];
                     case 9:
-                        error_2 = _e.sent();
-                        console.log(error_2);
-                        msg.reply('There was an error trying to execute that command!');
-                        return [3 /*break*/, 10];
-                    case 10: return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-                    case 11:
-                        _e.sent();
-                        return [2 /*return*/];
-                    case 12:
                         error_3 = _e.sent();
                         console.log(error_3);
-                        return [3 /*break*/, 13];
-                    case 13: return [3 /*break*/, 22];
-                    case 14:
-                        if (!(msg.author.id !== ((_c = client.user) === null || _c === void 0 ? void 0 : _c.id))) return [3 /*break*/, 22];
+                        msg.reply('There was an error trying to execute that command!');
+                        return [3 /*break*/, 10];
+                    case 10: return [2 /*return*/];
+                    case 11:
+                        error_4 = _e.sent();
+                        console.log(error_4);
+                        return [3 /*break*/, 12];
+                    case 12: return [3 /*break*/, 20];
+                    case 13:
+                        if (!(msg.author.id !== ((_c = client.user) === null || _c === void 0 ? void 0 : _c.id))) return [3 /*break*/, 20];
                         command = 'message';
                         if (!CommandIndex_1.default.has(command)) {
                             return [2 /*return*/];
                         }
+                        _e.label = 14;
+                    case 14:
+                        _e.trys.push([14, 19, , 20]);
                         _e.label = 15;
                     case 15:
-                        _e.trys.push([15, 21, , 22]);
-                        _e.label = 16;
-                    case 16:
-                        _e.trys.push([16, 18, , 19]);
+                        _e.trys.push([15, 17, , 18]);
                         console.log("Standard message entered: " + msg.author.username);
                         return [4 /*yield*/, ((_d = CommandIndex_1.default.get(command)) === null || _d === void 0 ? void 0 : _d.function(msg, discordUser))];
-                    case 17:
+                    case 16:
                         cmdName = _e.sent();
                         console.log("Completed Command: " + cmdName);
-                        return [3 /*break*/, 19];
-                    case 18:
-                        error_4 = _e.sent();
-                        console.log(error_4);
-                        msg.reply('There was an error trying to process that message!');
-                        return [3 /*break*/, 19];
-                    case 19: return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-                    case 20:
-                        _e.sent();
-                        return [2 /*return*/];
-                    case 21:
+                        return [3 /*break*/, 18];
+                    case 17:
                         error_5 = _e.sent();
                         console.log(error_5);
-                        return [3 /*break*/, 22];
-                    case 22: return [2 /*return*/];
+                        msg.reply('There was an error trying to process that message!');
+                        return [3 /*break*/, 18];
+                    case 18: return [2 /*return*/];
+                    case 19:
+                        error_6 = _e.sent();
+                        console.log(error_6);
+                        return [3 /*break*/, 20];
+                    case 20: return [2 /*return*/];
                 }
             });
         });

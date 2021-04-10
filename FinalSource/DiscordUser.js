@@ -333,39 +333,6 @@ var DiscordUser = /** @class */ (function () {
             });
         });
     };
-    /**
-    * Function that updates the data cache and saves it to disk,
-    * if a certain amount of time has passed since it was last done.
-    */
-    DiscordUser.prototype.saveCacheIfTimeHasPassed = function (client) {
-        return __awaiter(this, void 0, void 0, function () {
-            var currentTime, msPassed, timeLeft, error_8;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        currentTime = new Date().getTime();
-                        msPassed = currentTime - this.userData.timeOfLastUpdateAndSave;
-                        if (!(msPassed >= this.userData.msBetweenCacheBackup)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.updateDataCacheAndSaveToFile(client)];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        timeLeft = this.userData.msBetweenCacheBackup - msPassed;
-                        console.log("Time until next cache update and backup: " + timeLeft + "ms");
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
-                    case 4:
-                        error_8 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_8);
-                            })];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        });
-    };
     return DiscordUser;
 }());
 exports.default = DiscordUser;

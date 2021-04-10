@@ -6,15 +6,24 @@
 'use strict';
 
 import Discord = require('discord.js');
+import EventEmitter from 'events';
 import IndexFunctions from './IndexFunctions';
 import DiscordUser from './DiscordUser';
 import config = require('./config.json');
 
 const discordUser = new DiscordUser();
 const client = new Discord.Client() as any;
+const eventEmitter = new EventEmitter();
+
+eventEmitter.on('HeartBeat', async () => {
+	setTimeout(() => {
+		eventEmitter.emit('HeartBeat');
+	}, 60000);
+	await IndexFunctions.onHeartBeat(client, discordUser);
+});
 
 client.once('ready', async () => {
-	await IndexFunctions.onReady(client, discordUser);
+	await IndexFunctions.onReady(client, discordUser, eventEmitter);
 });
 
 client.on('message', async (msg: Discord.Message) => {

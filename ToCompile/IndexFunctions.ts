@@ -6,15 +6,26 @@
 'use strict';
 
 import Discord = require('discord.js');
+import EventEmitter from 'events';
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: Discord.Client, discordUser: DiscordUser) {
+    export async function onHeartBeat(client: Discord.Client, discordUser: DiscordUser){
+        try{
+            await discordUser.updateDataCacheAndSaveToFile(client);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    export async function onReady(client: Discord.Client, discordUser: DiscordUser, eventEmitter: EventEmitter) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
+            eventEmitter.emit('HeartBeat');
         } catch (error) {
             console.log(error);
         }
@@ -67,7 +78,6 @@ module IndexFunctions{
                     console.log(error);
                     msg.reply('There was an error trying to execute that command!');
                 }
-                await discordUser.saveCacheIfTimeHasPassed(client);
                 return;
             }
             catch(error) {
@@ -88,7 +98,6 @@ module IndexFunctions{
                     console.log(error);
                     msg.reply('There was an error trying to process that message!');
                 }
-                await discordUser.saveCacheIfTimeHasPassed(client);
                 return;
             }
             catch(error) {

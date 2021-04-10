@@ -200,33 +200,11 @@ export default class DiscordUser {
     * Updates the current data cache from live objects and the JSON data file,
     * and saves it to the JSON file.
     */
-    private async updateDataCacheAndSaveToFile(client: Discord.Client): Promise<void> {
+    public async updateDataCacheAndSaveToFile(client: Discord.Client): Promise<void> {
         try {
             await this.updateUserData(client);
             await this.updateGuildsData(client);
             await this.updateGuildMembersData(client);
-            return;
-        } catch (error) {
-            return new Promise((resolve, reject) => {
-                reject(error);
-            });
-        }
-    }
-
-    /**
-    * Function that updates the data cache and saves it to disk,
-    * if a certain amount of time has passed since it was last done.
-    */
-    public async saveCacheIfTimeHasPassed(client: Discord.Client): Promise<void> {
-        try {
-            const currentTime = new Date().getTime();
-            const msPassed = currentTime - this.userData.timeOfLastUpdateAndSave;
-            if (msPassed >= this.userData.msBetweenCacheBackup) {
-                await this.updateDataCacheAndSaveToFile(client);
-            } else {
-                const timeLeft = this.userData.msBetweenCacheBackup - msPassed;
-                console.log(`Time until next cache update and backup: ${timeLeft}ms`);
-            }
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
