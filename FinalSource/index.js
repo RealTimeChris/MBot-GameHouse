@@ -55,6 +55,7 @@ eventEmitter.on('HeartBeat', function () { return __awaiter(void 0, void 0, void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                console.log('HeartBeat emitted and captured!');
                 setTimeout(function () {
                     eventEmitter.emit('HeartBeat');
                 }, 60000);

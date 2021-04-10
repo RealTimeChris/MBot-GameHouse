@@ -11,7 +11,6 @@ interface DiscordUserData {
     hoursOfDepositCooldown: number;
     hoursOfDrugSaleCooldown: number;
     hoursOfRobberyCooldown: number;
-    msBetweenCacheBackup: number;
     prefix: string;
     publicKey: string;
     startupCall: boolean;

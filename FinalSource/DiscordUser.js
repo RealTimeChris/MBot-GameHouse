@@ -54,7 +54,7 @@ var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
         this.userData = { botCommanders: [], botToken: '', currencyName: '',
             dataBaseFilePath: '', guildCount: 0, hoursOfDepositCooldown: 0, hoursOfDrugSaleCooldown: 0, hoursOfRobberyCooldown: 0,
-            msBetweenCacheBackup: 0, prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
+            prefix: '', publicKey: '', startupCall: true, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
     }
     /**
      * Initializes the instance of Discord, within the DiscordUser export class.
@@ -117,7 +117,6 @@ var DiscordUser = /** @class */ (function () {
                                 hoursOfDepositCooldown: config.hoursOfDepositCooldown,
                                 hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
                                 hoursOfRobberyCooldown: config.hoursOfRobberyCooldown,
-                                msBetweenCacheBackup: config.msBetweenCacheBackup,
                                 prefix: config.prefix,
                                 publicKey: config.publicKey,
                                 startupCall: true,
@@ -187,7 +186,6 @@ var DiscordUser = /** @class */ (function () {
                             hoursOfDepositCooldown: config.hoursOfDepositCooldown,
                             hoursOfDrugSaleCooldown: config.hoursOfDrugSaleCooldown,
                             hoursOfRobberyCooldown: config.hoursOfRobberyCooldown,
-                            msBetweenCacheBackup: config.msBetweenCacheBackup,
                             prefix: config.prefix,
                             publicKey: config.publicKey,
                             startupCall: this.userData.startupCall,

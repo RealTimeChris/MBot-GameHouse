@@ -16,6 +16,7 @@ const client = new Discord.Client() as any;
 const eventEmitter = new EventEmitter();
 
 eventEmitter.on('HeartBeat', async () => {
+	console.log('HeartBeat emitted and captured!');
 	setTimeout(() => {
 		eventEmitter.emit('HeartBeat');
 	}, 60000);
