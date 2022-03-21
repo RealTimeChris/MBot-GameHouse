@@ -1,0 +1,27 @@
+{
+  "name": "mbot-gamehouse",
+  "version": "1.0.0",
+  "description": "The gamehouse component of my bot!",
+  "type": "module",
+  "main": "/FinalSource/index.js",
+  "scripts": {
+    "start": "tsc && node /FinalSource/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chris M.",
+  "license": "ISC",
+  "dependencies": {
+    "bufferutil": "^4.0.3",
+    "discord-interactions": "^2.0.2",
+    "discord.js": "^12.5.1",
+    "implement-js": "^0.0.31",
+    "level-ts": "^2.0.6",
+    "slash-commands": "^1.4.0",
+    "utf-8-validate": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.35",
+    "tslint": "^5.20.1",
+    "typescript": "^4.3.2"
+  }
+}
